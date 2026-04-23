@@ -234,6 +234,21 @@ def run(
             stats.errors += 1
             continue
 
+        # Step 3b: Date-window check using the article's confirmed date.
+        # The index scraper may not have found the date; fetch_article() always does.
+        if since and article.article_date < since:
+            logger.info("SKIP (before window %s): %s | %s", since, url, article.article_date)
+            if not dry_run:
+                dedupe.mark(url, "skipped", reason=f"date {article.article_date} before {since}")
+            stats.skipped_classifier += 1
+            continue
+        if until and article.article_date > until:
+            logger.info("SKIP (after window %s): %s | %s", until, url, article.article_date)
+            if not dry_run:
+                dedupe.mark(url, "skipped", reason=f"date {article.article_date} after {until}")
+            stats.skipped_classifier += 1
+            continue
+
         # Step 4: Classify
         try:
             qualifies, reason = _with_retry(classify, article, client)

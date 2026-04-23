@@ -255,41 +255,72 @@ def _scrape_index_page(
         if not title:
             continue
 
-        # Date: walk up the DOM
+        # Date: walk up the DOM — try every known CBP/Drupal date pattern
         article_date: Optional[date] = None
         container = anchor.find_parent(["li", "div", "article", "tr"])
         if container:
+            # 1. <time datetime="...">
             time_el = container.find("time")
             if time_el:
                 dt = time_el.get("datetime", "")
                 article_date = _parse_date(dt[:10]) or _parse_date(time_el.get_text(strip=True))
 
+            # 2. Known Drupal date CSS classes
             if not article_date:
-                for cls in ("date-display-single", "field--name-created",
-                            "field-name-post-date", "views-field-created",
-                            "views-field-field-date"):
+                for cls in (
+                    "date-display-single", "field--name-created",
+                    "field-name-post-date", "views-field-created",
+                    "views-field-field-date", "field--name-field-date",
+                    "views-field-field-news-date", "field-content",
+                    "date", "post-date", "article-date",
+                ):
                     el = container.find(class_=cls)
                     if el:
                         article_date = _parse_date(el.get_text(strip=True))
                         if article_date:
                             break
 
-        if not article_date:
-            logger.warning("No date found for %s; using today", url)
+            # 3. Any span/div whose text looks like a date (e.g. "April 8, 2026")
+            if not article_date:
+                import re as _re
+                _DATE_RE = _re.compile(
+                    r"\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?"
+                    r"|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
+                    r"\s+\d{1,2},\s+20\d{2}\b",
+                    _re.IGNORECASE,
+                )
+                for el in container.find_all(["span", "div", "p", "td"]):
+                    m = _DATE_RE.search(el.get_text())
+                    if m:
+                        article_date = _parse_date(m.group(0))
+                        if article_date:
+                            break
+
+        date_confirmed = article_date is not None
+        if not date_confirmed:
+            # Date couldn't be read from the index listing — do NOT skip.
+            # The real date will be extracted when fetch_article() is called later.
+            # We use today as a placeholder only so the Article object is valid.
+            logger.debug("No date found for %s on index; will confirm after full fetch", url)
             article_date = date.today()
 
-        # If article is older than `since`, everything below will be too — stop paging
-        if since and article_date < since:
-            return articles, True
-
-        # Skip if outside target window
-        if since and article_date < since:
-            continue
-        if until and article_date > until:
-            continue
+        # Only use confirmed dates to stop pagination or skip articles here.
+        # Unconfirmed dates are checked properly after fetch_article() in pipeline.py.
+        if date_confirmed:
+            # All remaining articles will be older — safe to stop
+            if since and article_date < since:
+                return articles, True
+            # Skip if outside the requested window
+            if since and article_date < since:
+                continue
+            if until and article_date > until:
+                continue
 
         has_image = bool(container and container.find("img")) if container else False
-        articles.append(Article(url=url, title=title, article_date=article_date, has_image=has_image))
+        articles.append(Article(
+            url=url, title=title, article_date=article_date,
+            has_image=has_image,
+        ))
 
     return articles, False
 
@@ -311,7 +342,7 @@ def list_new(
     articles: list[Article] = []
     seen_urls: set[str] = set()
     paginate = since is not None or until is not None
-    max_pages = 20 if paginate else 1  # safety cap
+    max_pages = 60 if paginate else 1  # safety cap (60 pages ≈ ~6 months of CBP news)
 
     for page in range(max_pages):
         page_articles, stop = _scrape_index_page(page, session, seen_urls, since, until)
