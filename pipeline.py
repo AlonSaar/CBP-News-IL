@@ -181,6 +181,7 @@ def run(
     since_date: "date | None" = None,
     until_date: "date | None" = None,
     reprocess: bool = False,
+    use_sitemap: bool = False,
 ) -> RunStats:
     from datetime import timedelta
     api_key = config.anthropic_api_key()
@@ -208,8 +209,10 @@ def run(
 
     logger.info("=== Pipeline start | existing articles: %d ===", len(all_articles))
 
-    # Step 1: Scrape index (paginated when month filter is active)
-    articles = list_new(since=since, until=until)
+    # Step 1: Scrape index.
+    # When a date range is requested, use the XML sitemap — CBP's index page
+    # only serves links on page 0 (later pages are JS-rendered).
+    articles = list_new(since=since, until=until, use_sitemap=use_sitemap or bool(since))
     stats.total_fetched = len(articles)
 
     for article in articles:
@@ -354,6 +357,8 @@ def main() -> int:
                         help="End date (inclusive), e.g. 2026-04-07.")
     parser.add_argument("--reprocess", action="store_true",
                         help="Ignore the dedupe store and re-translate already-seen URLs.")
+    parser.add_argument("--use-sitemap", action="store_true",
+                        help="Use CBP XML sitemap instead of index pagination (auto-enabled with --since).")
     args = parser.parse_args()
 
     _setup_logging(args.verbose)
@@ -369,6 +374,7 @@ def main() -> int:
     until_date = date.fromisoformat(args.until) if args.until else None
     stats = run(
         dry_run=args.dry_run,
+        use_sitemap=args.use_sitemap,
         limit=args.limit,
         month=args.month,
         last_week=args.last_week,

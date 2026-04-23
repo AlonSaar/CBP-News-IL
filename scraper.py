@@ -255,7 +255,7 @@ def _scrape_index_page(
         if not title:
             continue
 
-        # Date: walk up the DOM — try every known CBP/Drupal date pattern
+        # Date: look only in dedicated date elements (never free-text, to avoid false positives)
         article_date: Optional[date] = None
         container = anchor.find_parent(["li", "div", "article", "tr"])
         if container:
@@ -271,28 +271,11 @@ def _scrape_index_page(
                     "date-display-single", "field--name-created",
                     "field-name-post-date", "views-field-created",
                     "views-field-field-date", "field--name-field-date",
-                    "views-field-field-news-date", "field-content",
-                    "date", "post-date", "article-date",
+                    "views-field-field-news-date", "post-date", "article-date",
                 ):
                     el = container.find(class_=cls)
                     if el:
                         article_date = _parse_date(el.get_text(strip=True))
-                        if article_date:
-                            break
-
-            # 3. Any span/div whose text looks like a date (e.g. "April 8, 2026")
-            if not article_date:
-                import re as _re
-                _DATE_RE = _re.compile(
-                    r"\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?"
-                    r"|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
-                    r"\s+\d{1,2},\s+20\d{2}\b",
-                    _re.IGNORECASE,
-                )
-                for el in container.find_all(["span", "div", "p", "td"]):
-                    m = _DATE_RE.search(el.get_text())
-                    if m:
-                        article_date = _parse_date(m.group(0))
                         if article_date:
                             break
 
@@ -301,19 +284,21 @@ def _scrape_index_page(
             # Date couldn't be read from the index listing — do NOT skip.
             # The real date will be extracted when fetch_article() is called later.
             # We use today as a placeholder only so the Article object is valid.
-            logger.debug("No date found for %s on index; will confirm after full fetch", url)
+            logger.debug("No index date for %s — will confirm after full fetch", url)
             article_date = date.today()
+        else:
+            logger.debug("Index date confirmed %s for %s", article_date, url)
 
         # Only use confirmed dates to stop pagination or skip articles here.
         # Unconfirmed dates are checked properly after fetch_article() in pipeline.py.
         if date_confirmed:
-            # All remaining articles will be older — safe to stop
+            # All articles from here on will be older — safe to stop pagination
             if since and article_date < since:
+                logger.info("Reached articles before %s (date=%s) — stopping pagination", since, article_date)
                 return articles, True
             # Skip if outside the requested window
-            if since and article_date < since:
-                continue
             if until and article_date > until:
+                logger.debug("Skipping (date %s > until %s): %s", article_date, until, url)
                 continue
 
         has_image = bool(container and container.find("img")) if container else False
@@ -325,19 +310,106 @@ def _scrape_index_page(
     return articles, False
 
 
-def list_new(
-    max_articles: int = config.SCRAPE_MAX_ARTICLES_PER_RUN,
+# ---------------------------------------------------------------------------
+# Sitemap-based scraper (used for historical / date-range queries)
+# ---------------------------------------------------------------------------
+
+def list_from_sitemap(
     since: Optional[date] = None,
     until: Optional[date] = None,
 ) -> list[Article]:
     """
+    Extract CBP news-release URLs from the CBP XML sitemap.
+
+    CBP publishes a sitemap index at /sitemap.xml that references
+    per-content-type sitemaps. We walk them and collect every URL
+    matching /newsroom/national-media-release/.
+
+    Dates are NOT available in the sitemap — each article will be
+    fetched individually by the pipeline which then confirms the date.
+    """
+    import xml.etree.ElementTree as ET
+
+    session = _session()
+    _NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+
+    def _fetch_xml(url: str):
+        try:
+            r = session.get(url, timeout=config.HTTP_TIMEOUT_SECONDS)
+            r.raise_for_status()
+            return ET.fromstring(r.content)
+        except Exception as exc:
+            logger.warning("Could not fetch sitemap %s: %s", url, exc)
+            return None
+
+    sitemap_index_url = f"{_CBP_BASE}/sitemap.xml"
+    logger.info("Fetching sitemap index: %s", sitemap_index_url)
+    root = _fetch_xml(sitemap_index_url)
+    if root is None:
+        logger.error("Could not load sitemap index — aborting sitemap scan")
+        return []
+
+    # Collect sub-sitemap URLs that might contain news releases
+    sub_sitemaps: list[str] = []
+    for loc in root.findall(".//sm:loc", _NS):
+        url = (loc.text or "").strip()
+        if url:
+            sub_sitemaps.append(url)
+    # If no sub-sitemaps found, treat the root itself as the sitemap
+    if not sub_sitemaps:
+        sub_sitemaps = [sitemap_index_url]
+
+    logger.info("Found %d sub-sitemaps to scan", len(sub_sitemaps))
+
+    seen: set[str] = set()
+    articles: list[Article] = []
+    _PREFIX = "/newsroom/national-media-release/"
+
+    for sm_url in sub_sitemaps:
+        sm_root = _fetch_xml(sm_url)
+        if sm_root is None:
+            continue
+        for loc in sm_root.findall(".//sm:loc", _NS):
+            url = (loc.text or "").strip()
+            if not url or url in seen:
+                continue
+            # Only keep news-release article URLs (not the index itself)
+            path = url.replace(_CBP_BASE, "")
+            if not (path.startswith(_PREFIX) and len(path) > len(_PREFIX)):
+                continue
+            seen.add(url)
+            # Date unknown at this point — pipeline will confirm after fetch
+            articles.append(Article(
+                url=url,
+                title=url.split("/")[-1].replace("-", " ").title(),
+                article_date=date.today(),   # placeholder
+                has_image=False,
+            ))
+
+    logger.info("Sitemap scan complete: %d news-release URLs found", len(articles))
+    return articles
+
+
+def list_new(
+    max_articles: int = config.SCRAPE_MAX_ARTICLES_PER_RUN,
+    since: Optional[date] = None,
+    until: Optional[date] = None,
+    use_sitemap: bool = False,
+) -> list[Article]:
+    """
     Fetch the CBP Newsroom index and return Articles.
 
-    - max_articles: upper cap (ignored when since/until are set — we scan until
-      the date window is exhausted or no more pages).
-    - since / until: inclusive date bounds. When set, pagination continues
-      automatically across as many index pages as needed.
+    - max_articles: upper cap (ignored when since/until are set).
+    - since / until: inclusive date bounds.
+    - use_sitemap: bypass index pagination and use the XML sitemap instead.
+      Recommended for historical / date-range queries because CBP's index
+      only serves page 0 in static HTML; later pages are JS-rendered.
     """
+    if use_sitemap or (since is not None):
+        # For any date-filtered run, the sitemap is the only reliable source
+        # of historical URLs since CBP pagination is JavaScript-rendered.
+        return list_from_sitemap(since=since, until=until)
+
     session = _session()
     articles: list[Article] = []
     seen_urls: set[str] = set()
