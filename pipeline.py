@@ -349,6 +349,7 @@ def main() -> int:
     except ImportError:
         pass
 
+    from datetime import date
     since_date = date.fromisoformat(args.since) if args.since else None
     until_date = date.fromisoformat(args.until) if args.until else None
     stats = run(
