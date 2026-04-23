@@ -52,23 +52,59 @@ def _status_display(status: str) -> tuple[str, str]:
     return mapping.get(status, ("needs-review", status))
 
 
-def _all_quarter_tabs(quarters: dict) -> str:
-    """Generate Q1–Q4 tabs for every year present in the data."""
+def _nav_html(quarters: dict) -> str:
+    """
+    Build a two-level year → quarter navigation.
+
+    Top row : [הכל]  [2026 ▾]  [2027 ▾]  …
+    Sub-row  : shown only when a year is active → [Q1]  [Q2]  [Q3]  [Q4]
+               (empty quarters are greyed-out / disabled)
+    """
     years = sorted(
         set(q.split("-")[1] for q in quarters if "-" in q),
-        reverse=True
+        reverse=True,
     )
-    tabs = ['<button class="qtab active" data-q="all" onclick="filterQ(this,\'all\')">הכל</button>']
+
+    # ── top-level row ─────────────────────────────────────────────────
+    top_tabs = ['<button class="ytab ytab-all active" data-year="all" '
+                'onclick="selectYear(this,\'all\')">הכל</button>']
     for year in years:
+        total = sum(len(quarters.get(f"Q{n}-{year}", [])) for n in range(1, 5))
+        badge = f'<span class="qtab-badge">{total}</span>'
+        top_tabs.append(
+            f'<button class="ytab" data-year="{year}" '
+            f'onclick="selectYear(this,\'{year}\')">{year}{badge}</button>'
+        )
+
+    # ── per-year sub-rows (hidden by default) ─────────────────────────
+    sub_rows = []
+    for year in years:
+        btns = []
         for qnum in ["Q1", "Q2", "Q3", "Q4"]:
-            key = f"{qnum}-{year}"
+            key   = f"{qnum}-{year}"
             count = len(quarters.get(key, []))
-            disabled = 'disabled title="אין כתבות"' if count == 0 else f'onclick="filterQ(this,\'{key}\')"'
-            cls = "qtab" + (" qtab-empty" if count == 0 else "")
-            label = f"{qnum} {year}"
-            badge = f'<span class="qtab-badge">{count}</span>' if count > 0 else ""
-            tabs.append(f'<button class="{cls}" data-q="{key}" {disabled}>{label}{badge}</button>')
-    return "\n".join(tabs)
+            if count == 0:
+                btns.append(
+                    f'<button class="qtab qtab-empty" disabled title="אין כתבות">{qnum}</button>'
+                )
+            else:
+                badge = f'<span class="qtab-badge">{count}</span>'
+                btns.append(
+                    f'<button class="qtab" data-q="{key}" '
+                    f'onclick="selectQuarter(this,\'{key}\')">{qnum}{badge}</button>'
+                )
+        sub_rows.append(
+            f'<div class="qsub-row" data-year="{year}">\n    '
+            + "\n    ".join(btns)
+            + "\n  </div>"
+        )
+
+    return (
+        '<div class="ytab-row">\n  '
+        + "\n  ".join(top_tabs)
+        + "\n</div>\n"
+        + "\n".join(sub_rows)
+    )
 
 
 def generate(articles: list[dict]) -> Path:
@@ -140,7 +176,7 @@ def generate(articles: list[dict]) -> Path:
     {cards}
   </div>"""
 
-    quarter_tabs_html = _all_quarter_tabs(quarters)
+    nav_html = _nav_html(quarters)
 
     html = f"""<!DOCTYPE html>
 <html lang="he" dir="rtl">
@@ -227,34 +263,66 @@ def generate(articles: list[dict]) -> Path:
     .stat-num {{ font-size: 1.6rem; font-weight: 800; color: #0f3460; line-height: 1; margin-bottom: 3px; }}
     .stat-label {{ font-size: 0.74rem; color: #888; font-weight: 500; }}
 
-    /* ── Quarter tabs ── */
+    /* ── Quarter / Year navigation ── */
     .quarter-tabs {{
-      display: flex; gap: 8px; flex-wrap: wrap;
       margin-bottom: 28px;
       background: white; border-radius: 14px;
       padding: 14px 20px;
       box-shadow: 0 1px 6px rgba(0,0,0,0.06);
       border: 1px solid #eaecf0;
     }}
-    .qtab {{
-      padding: 7px 18px; border-radius: 22px;
-      font-size: 0.82rem; font-weight: 700;
+
+    /* Year row */
+    .ytab-row {{
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }}
+    .ytab {{
+      padding: 8px 22px; border-radius: 22px;
+      font-size: 0.85rem; font-weight: 700;
       border: 2px solid #e2e8f0;
-      background: white; color: #666;
+      background: white; color: #555;
       cursor: pointer; font-family: inherit;
       transition: all 0.18s;
-      display: flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 7px;
     }}
-    .qtab:hover:not(:disabled) {{ border-color: #0f3460; color: #0f3460; }}
-    .qtab.active {{
+    .ytab:hover {{ border-color: #0f3460; color: #0f3460; }}
+    .ytab.active {{
       background: #0f3460; color: white;
       border-color: #0f3460;
-      box-shadow: 0 2px 8px rgba(15,52,96,0.3);
+      box-shadow: 0 2px 10px rgba(15,52,96,0.3);
     }}
-    .qtab-empty {{ opacity: 0.35; cursor: not-allowed; }}
+    .ytab.active .qtab-badge {{ background: rgba(255,255,255,0.25); }}
+
+    /* Quarter sub-row */
+    .qsub-row {{
+      display: none;
+      gap: 7px; flex-wrap: wrap;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #eef0f4;
+    }}
+    .qsub-row.visible {{ display: flex; }}
+
+    /* Quarter pill */
+    .qtab {{
+      padding: 5px 18px; border-radius: 18px;
+      font-size: 0.78rem; font-weight: 700;
+      border: 2px solid #e2e8f0;
+      background: #f8faff; color: #666;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.15s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }}
+    .qtab:hover:not(:disabled) {{ border-color: #4c5fd5; color: #4c5fd5; }}
+    .qtab.active {{
+      background: #4c5fd5; color: white;
+      border-color: #4c5fd5;
+      box-shadow: 0 2px 8px rgba(76,95,213,0.3);
+    }}
+    .qtab-empty {{ opacity: 0.32; cursor: not-allowed; }}
     .qtab-badge {{
       background: #e94560; color: white;
-      font-size: 0.65rem; padding: 1px 6px;
+      font-size: 0.62rem; padding: 1px 6px;
       border-radius: 10px; font-weight: 800;
     }}
     .qtab.active .qtab-badge {{ background: rgba(255,255,255,0.3); }}
@@ -448,7 +516,7 @@ def generate(articles: list[dict]) -> Path:
   </div>
 
   <div class="quarter-tabs">
-    {quarter_tabs_html}
+    {nav_html}
   </div>
 
 {quarters_html}
@@ -474,15 +542,42 @@ function saveApproved(a){{ localStorage.setItem(APPROVE_KEY, JSON.stringify(a));
 function loadDeleted()  {{ try {{ return JSON.parse(localStorage.getItem(DELETE_KEY)  || '[]');  }} catch(e) {{ return []; }} }}
 function saveDeleted(d) {{ localStorage.setItem(DELETE_KEY,  JSON.stringify(d)); }}
 
-// ── Quarter filter ──────────────────────────────────────────────────────────
-function filterQ(btn, q) {{
-  document.querySelectorAll('.qtab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+// ── Year / Quarter navigation ────────────────────────────────────────────────
+
+// Show/hide sections helper
+function _showSections(predicate) {{
   document.querySelectorAll('.quarter-section').forEach(sec => {{
-    sec.style.display = (q === 'all' || sec.dataset.q === q) ? '' : 'none';
+    sec.style.display = predicate(sec.dataset.q) ? '' : 'none';
   }});
-  // Also respect deleted cards within visible sections
   applyDeleted();
+}}
+
+function selectYear(btn, year) {{
+  // Deactivate all year tabs and hide all sub-rows + quarter tabs
+  document.querySelectorAll('.ytab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.qsub-row').forEach(r => r.classList.remove('visible'));
+  document.querySelectorAll('.qtab').forEach(b => b.classList.remove('active'));
+
+  btn.classList.add('active');
+
+  if (year === 'all') {{
+    _showSections(() => true);
+  }} else {{
+    // Show articles for this whole year
+    _showSections(q => q && q.endsWith('-' + year));
+    // Reveal the quarter sub-row for this year
+    const subRow = document.querySelector('.qsub-row[data-year="' + year + '"]');
+    if (subRow) subRow.classList.add('visible');
+  }}
+}}
+
+function selectQuarter(btn, q) {{
+  // Deactivate other quarter tabs within the same sub-row only
+  if (btn.closest('.qsub-row')) {{
+    btn.closest('.qsub-row').querySelectorAll('.qtab').forEach(b => b.classList.remove('active'));
+  }}
+  btn.classList.add('active');
+  _showSections(sq => sq === q);
 }}
 
 // ── Admin mode ──────────────────────────────────────────────────────────────

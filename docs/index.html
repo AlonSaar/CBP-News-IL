@@ -83,34 +83,66 @@
     .stat-num { font-size: 1.6rem; font-weight: 800; color: #0f3460; line-height: 1; margin-bottom: 3px; }
     .stat-label { font-size: 0.74rem; color: #888; font-weight: 500; }
 
-    /* ── Quarter tabs ── */
+    /* ── Quarter / Year navigation ── */
     .quarter-tabs {
-      display: flex; gap: 8px; flex-wrap: wrap;
       margin-bottom: 28px;
       background: white; border-radius: 14px;
       padding: 14px 20px;
       box-shadow: 0 1px 6px rgba(0,0,0,0.06);
       border: 1px solid #eaecf0;
     }
-    .qtab {
-      padding: 7px 18px; border-radius: 22px;
-      font-size: 0.82rem; font-weight: 700;
+
+    /* Year row */
+    .ytab-row {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .ytab {
+      padding: 8px 22px; border-radius: 22px;
+      font-size: 0.85rem; font-weight: 700;
       border: 2px solid #e2e8f0;
-      background: white; color: #666;
+      background: white; color: #555;
       cursor: pointer; font-family: inherit;
       transition: all 0.18s;
-      display: flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 7px;
     }
-    .qtab:hover:not(:disabled) { border-color: #0f3460; color: #0f3460; }
-    .qtab.active {
+    .ytab:hover { border-color: #0f3460; color: #0f3460; }
+    .ytab.active {
       background: #0f3460; color: white;
       border-color: #0f3460;
-      box-shadow: 0 2px 8px rgba(15,52,96,0.3);
+      box-shadow: 0 2px 10px rgba(15,52,96,0.3);
     }
-    .qtab-empty { opacity: 0.35; cursor: not-allowed; }
+    .ytab.active .qtab-badge { background: rgba(255,255,255,0.25); }
+
+    /* Quarter sub-row */
+    .qsub-row {
+      display: none;
+      gap: 7px; flex-wrap: wrap;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #eef0f4;
+    }
+    .qsub-row.visible { display: flex; }
+
+    /* Quarter pill */
+    .qtab {
+      padding: 5px 18px; border-radius: 18px;
+      font-size: 0.78rem; font-weight: 700;
+      border: 2px solid #e2e8f0;
+      background: #f8faff; color: #666;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.15s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .qtab:hover:not(:disabled) { border-color: #4c5fd5; color: #4c5fd5; }
+    .qtab.active {
+      background: #4c5fd5; color: white;
+      border-color: #4c5fd5;
+      box-shadow: 0 2px 8px rgba(76,95,213,0.3);
+    }
+    .qtab-empty { opacity: 0.32; cursor: not-allowed; }
     .qtab-badge {
       background: #e94560; color: white;
-      font-size: 0.65rem; padding: 1px 6px;
+      font-size: 0.62rem; padding: 1px 6px;
       border-radius: 10px; font-weight: 800;
     }
     .qtab.active .qtab-badge { background: rgba(255,255,255,0.3); }
@@ -304,11 +336,16 @@
   </div>
 
   <div class="quarter-tabs">
-    <button class="qtab active" data-q="all" onclick="filterQ(this,'all')">הכל</button>
-<button class="qtab qtab-empty" data-q="Q1-2026" disabled title="אין כתבות">Q1 2026</button>
-<button class="qtab" data-q="Q2-2026" onclick="filterQ(this,'Q2-2026')">Q2 2026<span class="qtab-badge">7</span></button>
-<button class="qtab qtab-empty" data-q="Q3-2026" disabled title="אין כתבות">Q3 2026</button>
-<button class="qtab qtab-empty" data-q="Q4-2026" disabled title="אין כתבות">Q4 2026</button>
+    <div class="ytab-row">
+  <button class="ytab ytab-all active" data-year="all" onclick="selectYear(this,'all')">הכל</button>
+  <button class="ytab" data-year="2026" onclick="selectYear(this,'2026')">2026<span class="qtab-badge">7</span></button>
+</div>
+<div class="qsub-row" data-year="2026">
+    <button class="qtab qtab-empty" disabled title="אין כתבות">Q1</button>
+    <button class="qtab" data-q="Q2-2026" onclick="selectQuarter(this,'Q2-2026')">Q2<span class="qtab-badge">7</span></button>
+    <button class="qtab qtab-empty" disabled title="אין כתבות">Q3</button>
+    <button class="qtab qtab-empty" disabled title="אין כתבות">Q4</button>
+  </div>
   </div>
 
 
@@ -538,7 +575,7 @@
 </div>
 
 <div class="page-footer">
-  נוצר אוטומטית על ידי cbp-translator · 23/04/2026 11:07
+  נוצר אוטומטית על ידי cbp-translator · 23/04/2026 11:12
 </div>
 
 <script>
@@ -557,15 +594,42 @@ function saveApproved(a){ localStorage.setItem(APPROVE_KEY, JSON.stringify(a)); 
 function loadDeleted()  { try { return JSON.parse(localStorage.getItem(DELETE_KEY)  || '[]');  } catch(e) { return []; } }
 function saveDeleted(d) { localStorage.setItem(DELETE_KEY,  JSON.stringify(d)); }
 
-// ── Quarter filter ──────────────────────────────────────────────────────────
-function filterQ(btn, q) {
-  document.querySelectorAll('.qtab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+// ── Year / Quarter navigation ────────────────────────────────────────────────
+
+// Show/hide sections helper
+function _showSections(predicate) {
   document.querySelectorAll('.quarter-section').forEach(sec => {
-    sec.style.display = (q === 'all' || sec.dataset.q === q) ? '' : 'none';
+    sec.style.display = predicate(sec.dataset.q) ? '' : 'none';
   });
-  // Also respect deleted cards within visible sections
   applyDeleted();
+}
+
+function selectYear(btn, year) {
+  // Deactivate all year tabs and hide all sub-rows + quarter tabs
+  document.querySelectorAll('.ytab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.qsub-row').forEach(r => r.classList.remove('visible'));
+  document.querySelectorAll('.qtab').forEach(b => b.classList.remove('active'));
+
+  btn.classList.add('active');
+
+  if (year === 'all') {
+    _showSections(() => true);
+  } else {
+    // Show articles for this whole year
+    _showSections(q => q && q.endsWith('-' + year));
+    // Reveal the quarter sub-row for this year
+    const subRow = document.querySelector('.qsub-row[data-year="' + year + '"]');
+    if (subRow) subRow.classList.add('visible');
+  }
+}
+
+function selectQuarter(btn, q) {
+  // Deactivate other quarter tabs within the same sub-row only
+  if (btn.closest('.qsub-row')) {
+    btn.closest('.qsub-row').querySelectorAll('.qtab').forEach(b => b.classList.remove('active'));
+  }
+  btn.classList.add('active');
+  _showSections(sq => sq === q);
 }
 
 // ── Admin mode ──────────────────────────────────────────────────────────────
