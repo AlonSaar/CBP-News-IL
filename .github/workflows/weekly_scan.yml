@@ -1,0 +1,62 @@
+name: Weekly CBP Scan
+
+on:
+  schedule:
+    # Every Monday at 07:00 UTC (10:00 Israel time)
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+    # Also allows manual trigger from GitHub UI with optional date override
+    inputs:
+      since:
+        description: 'Start date (YYYY-MM-DD). Leave empty for last 7 days.'
+        required: false
+        default: ''
+      until:
+        description: 'End date (YYYY-MM-DD). Leave empty for last 7 days.'
+        required: false
+        default: ''
+
+jobs:
+  scan-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push updated state + docs
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "${{ github.event.inputs.since }}" ]; then
+            python pipeline.py --since "${{ github.event.inputs.since }}" --until "${{ github.event.inputs.until }}" --verbose
+          else
+            python pipeline.py --last-week --verbose
+          fi
+
+      - name: Copy HTML to docs/ for GitHub Pages
+        run: |
+          cp output/cbp_hebrew_reviews.html docs/index.html
+          echo "Copied HTML to docs/index.html"
+
+      - name: Commit and push changes
+        run: |
+          git config user.name  "CBP Bot"
+          git config user.email "cbp-bot@users.noreply.github.com"
+          git add state/ docs/ output/
+          if git diff --staged --quiet; then
+            echo "No changes to commit — no new articles this week."
+          else
+            git commit -m "Weekly scan $(date -u +%Y-%m-%d) — auto update"
+            git push
+          fi

@@ -1,0 +1,52 @@
+{
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing": {
+    "status": "added",
+    "timestamp": "2026-04-23T02:35:58+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture": {
+    "status": "added",
+    "timestamp": "2026-04-23T02:36:26+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international": {
+    "status": "added",
+    "timestamp": "2026-04-23T02:36:41+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge": {
+    "status": "added",
+    "timestamp": "2026-04-23T02:36:55+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted": {
+    "status": "added",
+    "timestamp": "2026-04-23T02:37:11+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port": {
+    "status": "added",
+    "timestamp": "2026-04-23T02:37:34+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-arrests-two-fugitives-48-hours-wanted-sex-related-offenses": {
+    "status": "skipped",
+    "timestamp": "2026-04-23T02:37:36+00:00",
+    "reason": "NO: no seizure of drugs, weapons, animals, or plants; article describes fugitive arrests only"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge": {
+    "status": "added",
+    "timestamp": "2026-04-23T02:37:53+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/trump-administration-delivers-11-straight-months-zero-releases": {
+    "status": "skipped",
+    "timestamp": "2026-04-23T02:37:55+00:00",
+    "reason": "NO: statistics report, no specific seizure"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/us-customs-and-border-protection-april-recruiting-events": {
+    "status": "skipped",
+    "timestamp": "2026-04-23T02:37:57+00:00",
+    "reason": "NO: personnel announcement"
+  }
+}

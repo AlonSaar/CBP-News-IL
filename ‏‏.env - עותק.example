@@ -1,0 +1,17 @@
+# Copy this file to .env and fill in values.
+# .env is gitignored - never commit real secrets.
+
+# Required for Phase 1+
+ANTHROPIC_API_KEY=sk-ant-...
+
+# Optional override for which Claude model to use
+# CBP_MODEL=claude-sonnet-4-6
+
+# Required for Phase 2+ (Google Sheets output)
+# Get this from the URL of your Google Sheet:
+# https://docs.google.com/spreadsheets/d/<THIS_PART>/edit
+GOOGLE_SHEETS_ID=
+
+# Path to the service account JSON key file, or paste the full JSON contents.
+# Easier: store the path here and keep the JSON file outside the repo.
+GOOGLE_SERVICE_ACCOUNT_JSON=
