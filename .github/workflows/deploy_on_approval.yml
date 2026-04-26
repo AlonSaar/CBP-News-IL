@@ -37,6 +37,7 @@ jobs:
       - name: Copy HTML to docs/ for GitHub Pages
         run: |
           cp output/cbp_hebrew_reviews.html docs/index.html
+          echo "cbp-il.click" > docs/CNAME
           echo "Copied HTML to docs/index.html"
 
       - name: Commit and push
@@ -47,6 +48,4 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Redeploy: approval update $(date -u +%Y-%m-%d)"
-            git push
-          fi
+            git commit -m "Redeploy: approval update $(date 

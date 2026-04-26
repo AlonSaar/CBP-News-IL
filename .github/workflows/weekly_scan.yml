@@ -56,6 +56,7 @@ jobs:
       - name: Copy HTML to docs/ for GitHub Pages
         run: |
           cp output/cbp_hebrew_reviews.html docs/index.html
+          echo "cbp-il.click" > docs/CNAME
           echo "Copied HTML to docs/index.html"
 
       - name: Commit and push changes
@@ -66,6 +67,4 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit — no new articles this week."
           else
-            git commit -m "Weekly scan $(date -u +%Y-%m-%d) — auto update"
-            git push
-          fi
+            git commit -m "Weekly scan $(da
