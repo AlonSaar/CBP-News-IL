@@ -746,6 +746,44 @@ function selectQ(btn, q) {{
   applyDeleted();
 }}
 
+// ── Sync approval state live from GitHub ─────────────────────────────────────
+async function syncApprovalStates() {{
+  if (!GITHUB_PAT) return;
+  try {{
+    const f = await ghGet(APPROVED_FILE);
+    const approvedList = JSON.parse(atob(f.content.replace(/\\n/g,'')));
+    const approvedSet = new Set(approvedList);
+    document.querySelectorAll('.article-card').forEach(card => {{
+      const url  = card.dataset.url;
+      const id   = card.dataset.id;
+      const isApproved = approvedSet.has(url);
+      card.dataset.approved = isApproved ? 'true' : 'false';
+      const penBtn = document.getElementById('pendingbtn-' + id);
+      const appBtn = document.getElementById('approvebtn-' + id);
+      const badge  = document.getElementById('badge-' + id);
+      if (penBtn) penBtn.classList.toggle('btn-state-active', !isApproved);
+      if (appBtn) appBtn.classList.toggle('btn-state-active', isApproved);
+      if (badge) {{
+        badge.className = 'status-badge status-' + (isApproved ? 'approved' : 'needs-review');
+        badge.textContent = isApproved ? '✓ מאושר' : '⏸ בהמתנה';
+      }}
+      const existing = card.querySelector('.pending-banner');
+      if (!isApproved && !existing) {{
+        const b = document.createElement('div');
+        b.className = 'pending-banner';
+        b.style.gridColumn = '1 / -1';
+        b.textContent = '⏳ ממתין לאישור מנהל — לא מוצג למשתמשים רגילים';
+        card.insertBefore(b, card.firstChild);
+      }} else if (isApproved && existing) {{
+        existing.remove();
+      }}
+    }});
+    updateCounts();
+  }} catch(e) {{
+    console.warn('syncApprovalStates failed:', e.message);
+  }}
+}}
+
 // ── Admin mode ────────────────────────────────────────────────────────────────
 function checkAdmin() {{
   const params = new URLSearchParams(window.location.search);
@@ -758,7 +796,13 @@ function checkAdmin() {{
     }});
     loadPAT();
     if (!GITHUB_PAT) {{
-      setTimeout(() => promptForPAT('מצב מנהל פעיל!\\nהכנס GitHub PAT לאישור/דחייה של כתבות:'), 700);
+      setTimeout(() => {{
+        if (promptForPAT('מצב מנהל פעיל!\\nהכנס GitHub PAT לאישור/דחייה של כתבות:')) {{
+          syncApprovalStates();
+        }}
+      }}, 700);
+    }} else {{
+      syncApprovalStates();
     }}
   }}
 }}
