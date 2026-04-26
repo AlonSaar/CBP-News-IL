@@ -728,7 +728,7 @@ async function approveArticle(id) {{
   if (appBtn) {{ appBtn.textContent = '⏳'; appBtn.disabled = true; }}
   try {{
     const f = await ghGet(APPROVED_FILE);
-    const list = JSON.parse(atob(f.content.replace(/\n/g,'')));
+    const list = JSON.parse(atob(f.content.replace(/\\n/g,'')));
     if (!list.includes(articleUrl)) list.push(articleUrl);
     await ghPut(APPROVED_FILE, f.sha, JSON.stringify(list, null, 2), 'approve: ' + id);
     card.dataset.approved = 'true';
@@ -757,7 +757,7 @@ async function setPending(id) {{
   if (penBtn) {{ penBtn.textContent = '⏳'; penBtn.disabled = true; }}
   try {{
     const f = await ghGet(APPROVED_FILE);
-    const list = JSON.parse(atob(f.content.replace(/\n/g,'')));
+    const list = JSON.parse(atob(f.content.replace(/\\n/g,'')));
     const idx = list.indexOf(articleUrl);
     if (idx !== -1) list.splice(idx, 1);
     await ghPut(APPROVED_FILE, f.sha, JSON.stringify(list, null, 2), 'pending: ' + id);
@@ -809,13 +809,13 @@ async function addArticle() {{
   try {{
     // Update articles.json
     const af = await ghGet('state/articles.json');
-    const arts = JSON.parse(atob(af.content.replace(/\n/g,'')));
+    const arts = JSON.parse(atob(af.content.replace(/\\n/g,'')));
     arts.unshift(newArt);
     await ghPut('state/articles.json', af.sha, JSON.stringify(arts, null, 2), 'add: ' + title.slice(0,50));
 
     // Update approved_urls.json (triggers rebuild)
     const pf = await ghGet(APPROVED_FILE);
-    const purls = JSON.parse(atob(pf.content.replace(/\n/g,'')));
+    const purls = JSON.parse(atob(pf.content.replace(/\\n/g,'')));
     purls.push(sourceUrl);
     await ghPut(APPROVED_FILE, pf.sha, JSON.stringify(purls, null, 2), 'approve: ' + sourceUrl.slice(-50));
 
