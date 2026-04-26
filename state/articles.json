@@ -107,15 +107,462 @@
     "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge",
     "title": "תפיסת 45.37 פאונד קוקאין בשווי 605,000 דולר ברכב נוסעים בגשר פאר הבינלאומי",
     "location": "נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס",
-    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
-    "body": "ב-6 באפריל 2026 תפסו קציני CBP בגשר פאר הבינלאומי (Pharr International Bridge) 45.37 פאונד קוקאין שהוסתרו בתוך רכב נוסעים מסוג Chrysler 200. הרכב הופנה לבדיקה משנית על ידי קצין CBP, ובעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו ברכב 19 חבילות ובהן הסם החשוד. שווי הרחוב המוערך של הסמים עומד על 605,792 דולר. הסמים הוחרמו על ידי CBP, והתיק הועבר לחקירה של סוכני Homeland Security Investigations.",
+    "crossing_type": "מעבר גבול יבשתי בין מקסיקו לארצות הברית",
+    "body": "ב-6 באפריל 2026 תפסו קציני CBP בגשר פאר הבינלאומי (Pharr International Bridge) 45.37 פאונד קוקאין שהוסתרו בתוך רכב נוסעים מסוג Chrysler 200. הרכב הופנה לבדיקה משנית על ידי קצין CBP, ובעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו ברכב 19 חבילות ובהן הסם החשוד. שווי הרחוב המוערך של הסמים עומד על 605,792 דולר. הסמים הוחרמו על ידי CBP, והתיק הועבר לחקירה של סוכני Homeland Security Investigations. מנהל הנמל קרלוס רודריגז ציין כי התפיסה משקפת את מחויבות הקצינים למשימת אבטחת הגבול ואת השימוש האפקטיבי בטכנולוגיה ובכישורי הבדיקה.",
     "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq",
     "image_urls": [
       "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq"
     ],
     "quarter": "Q2-2026",
     "status": "needs-review",
-    "admin_approved": true,
-    "editor_notes": ""
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-04-20",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international",
+    "title": "תפיסת 83 פאונד קוקאין בשווי מעל 1.1 מיליון דולר בגשר Pharr International Bridge",
+    "location": "נמל הכניסה פאר - Pharr International Bridge, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "ב-15 באפריל 2026 תפסו קציני CBP במתקן המטען של Pharr International Bridge 32 חבילות קוקאין חשוד, במשקל כולל של 83.24 פאונד (37.76 קילוגרם), שהוסתרו בתוך רצפת נגרר מטען ריק. הנגרר הגיע מריינוסה שבמקסיקו, כשהוא מורכב על גבי טרקטור מסחרי. הרכב הופנה לבדיקה משנית, שם עבר סריקה באמצעות ציוד בדיקה לא-פולשני, כמו גם בדיקה על ידי צוות כלב גילוי. בדיקה פיזית שנערכה בעקבות ממצאי הסריקה הובילה לאיתור החבילות המוסתרות ברצפת הנגרר. שווי הקוקאין המוערך הוא 1,111,503 דולר. קציני CBP החרימו את הסמים, הטרקטור והנגרר. סוכנים מיוחדים של Homeland Security Investigations פתחו בחקירה פלילית בנוגע לתפיסה.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-04-17",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-6-million-methamphetamine-world-trade",
+    "title": "תפיסת כ-663 פאונד מתאמפטמין בשווי כ-5.9 מיליון דולר במשאית מסחרית ב-World Trade Bridge",
+    "location": "נמל הכניסה לארדו - Laredo Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "קציני CBP ממשרד מבצעי השטח של נמל הכניסה לארדו תפסו ב-13 בפברואר 2026 כמות של 662.95 פאונד מתאמפטמין, שהוסתרו בתוך משאית מסחרית שהובילה משלוח של אבקת ציפוי, במהלך בדיקה ב-World Trade Bridge. קצין CBP הפנה את המשאית לבדיקה משנית, ולאחר סריקה באמצעות כלב גילוי ובמערכת בדיקה לא-פולשנית אותרו 30 חבילות שהכילו את הסמים. שווי המוערך של הסמים עומד על 5,926,392 דולר. הסמים הוחרמו על ידי CBP. מנהל הנמל, Alberto Flores, ציין כי השימוש בכלים טכנולוגיים מתקדמים איפשר לאתר את המשלוח המשמעותי. החקירה הועברה לטיפולם של סוכנים מיוחדים של Homeland Security Investigations.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resizenearly663lbsmethwtb21326.jpg.webp?itok=HXiMTyPm",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resizenearly663lbsmethwtb21326.jpg.webp?itok=HXiMTyPm"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-04-17",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted",
+    "title": "תפיסת למעלה מ-60 פאונד קוקאין בשווי 1.15 מיליון דולר מנוסע מהימן בנמל הכניסה סן איסידרו",
+    "location": "נמל הכניסה סן איסידרו - San Ysidro Port of Entry, קליפורניה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "קציני CBP בנמל הכניסה סן איסידרו תפסו 60.14 פאונד קוקאין שהוסתרו בדלתות רכב, לאחר שהפנו לבדיקה משנית גבר אמריקאי בן 25 שנהג ב-Honda Civic משנת 2020. הנהג היה משתתף מאושר בתוכנית Secure Electronic Network for Travelers Rapid Inspection (SENTRI), המיועדת לנוסעים מהימנים. במהלך הבדיקה המשנית, טכנולוגיית הדמיה בלתי-פולשנית חשפה חריגות בדלתות הרכב, וצוות כלב גילוי של CBP התריע על נוכחות סמים. בבדיקה פיזית שנערכה בעקבות זאת אותרו 20 חבילות קוקאין שהוסתרו בתוך דלתות הרכב, במשקל כולל של 60.14 פאונד ובשווי מוערך של למעלה מ-1.15 מיליון דולר. קציני CBP הוחרמו את הסמים, את הרכב ואת שני טלפוני הסלולר שנמצאו ברשות הנהג. הנהג נעצר ועומד בפני העמדה לדין פדרלי בגין ייבוא סמים והברחה.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/26_0416_image_full-gross-weight.jpg.webp?itok=K63KAngi",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/26_0416_image_full-gross-weight.jpg.webp?itok=K63KAngi"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-04-17",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge",
+    "title": "תפיסת 78 פאונד קוקאין בשווי מיליון דולר מוסתרים בכיסאות אוטובוס נוסעים בגשר הידלגו הבינלאומי",
+    "location": "נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "ב-11 באפריל 2026, קציני CBP בנמל הכניסה הידלגו תפסו 78 פאונד קוקאין שהוסתרו בתוך כיסאות אוטובוס נוסעים מסחרי בגשר Hidalgo International Bridge. קצין CBP הפנה את האוטובוס לבדיקה משנית, ובמהלכה בוצעה בדיקת כלב גילוי וכן סריקה באמצעות מערכת בדיקה לא-פולשנית. בעקבות הבדיקות אותרו 36 חבילות קוקאין שהוסתרו בתוך מושבי האוטובוס, במשקל כולל של 78 פאונד. שווי הסמים ברחוב הוערך בכ-1,042,034 דולר. קציני CBP החרימו את הסמים ואת האוטובוס. התיק הועבר לחקירה של סוכני Homeland Security Investigations.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/78lbscocbushgo41126.jpg.webp?itok=9AhWoC4i",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/78lbscocbushgo41126.jpg.webp?itok=9AhWoC4i"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-04-16",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port",
+    "title": "תפיסת למעלה מ-430 פאונד קוקאין ומתאמפטמין בשווי 2.8 מיליון דולר בנמל אוטאי מסה בשתי פעולות אכיפה נפרדות",
+    "location": "נמל הכניסה אוטאי מסה - Otay Mesa Port of Entry, קליפורניה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "קציני CBP בנמל הכניסה אוטאי מסה תפסו למעלה מ-430 פאונד קוקאין ומתאמפטמין בשתי פעולות אכיפה נפרדות שהתרחשו ביומות עוקבות. הפעולה הראשונה אירעה ב-7 באפריל 2026, כאשר קצין הופנה לבדיקה משנית גבר מקסיקני בן 51 שנסע ב-Toyota Prius. במהלך הבדיקה התריע צוות כלב הגילוי של CBP על הרכב, ובחיפוש פיזי אותרו 44 חבילות קוקאין שהוסתרו בתוך דלתות הרכב, המושב האחורי ולוחות הרבע האחוריים. משקל הקוקאין עמד על כ-124 פאונד ושוויו המוערך הוא כ-2.4 מיליון דולר. ביום שלמחרת, ב-8 באפריל 2026, הופנה לבדיקה משנית גבר אמריקאי בן 21 שנסע ב-Nissan Frontier, אשר היה משתתף בתוכנית SENTRI (Secure Electronic Network for Travelers Rapid Inspection). סריקה באמצעות מערכת הדמיה וצוות כלב הגילוי של CBP העידו על תא שאינו מקורי בארגז המשאית, ובו אותרו 25 חבילות ובהן כ-307 פאונד מתאמפטמין בשווי מוערך של כ-491,200 דולר. שני הנהגים נעצרו, שני כלי הרכב הוחרמו, וכל החשודים צפויים לעמוד לדין פדרלי. מנהלת נמל אוטאי מסה Rosa E. Hernandez ציינה כי שתי התפיסות הרצופות עצרו פושעים מסוכנים ומנעו הגעת סמים קטלניים לקהילות.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/campos_1.jpg.webp?itok=tfc0kytT",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/campos_1.jpg.webp?itok=tfc0kytT"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-04-13",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge",
+    "title": "תפיסת 45.37 פאונד קוקאין בשווי 605,792 דולר ברכב נוסעים בגשר Pharr International Bridge",
+    "location": "נמל הכניסה הידאלגו - Hidalgo Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "ב-6 באפריל 2026, קציני CBP בגשר Pharr International Bridge הפנו רכב נוסעים מסוג Chrysler 200 לבדיקה משנית. בעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו ברכב 19 חבילות שהכילו קוקאין, במשקל כולל של 45.37 פאונד. שווי הסמים ברחוב הוערך בכ-605,792 דולר. הסמים הוחרמו על ידי CBP. התיק הועבר לחקירה של סוכני חקירות מיוחדות של Homeland Security Investigations.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-04-06",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry",
+    "title": "תפיסת סמים קשים בשווי מעל 1.3 מיליון דולר בשתי פעולות אכיפה נפרדות בנמל הכניסה לארדו",
+    "location": "נמל הכניסה לארדו - Laredo Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "במסגרת שתי פעולות אכיפה נפרדות שבוצעו בנמל הכניסה לארדו שבטקסס, תפסו קציני CBP סמים קשים בשווי מוערך של למעלה מ-1.3 מיליון דולר. הפעולה הראשונה התרחשה ב-31 במרץ במעבר World Trade Bridge, כאשר קצין CBP הפנה לבדיקה משנית אזרח מקסיקני בן 64 שנהג במשאית גרורה שהובילה משלוח תיקי עור. לאחר בדיקה כלבנית וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו בתוך הנגרר 49 חבילות המכילות בסך הכול 112.47 פאונד של מתאמפטמין חשוד; שווי הסמים ברחוב הוערך בכ-1,034,227 דולר. הפעולה השנייה התרחשה ב-1 באפריל במעבר Juarez-Lincoln Bridge, כאשר קצין CBP הפנה לבדיקה משנית רכב מסוג Chrysler 200 משנת 2015 שנהג בו אזרח אמריקאי בן 25, לצדו נוסעת אזרחית אמריקאית בת 24. לאחר בדיקה כלבנית וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו בתוך הרכב 10 חבילות המכילות בסך הכול 25.37 פאונד של קוקאין חשוד בשווי מוערך של כ-338,808 דולר. CBP החרים את הסמים, את הרכב המסחרי יחד עם הגרורה, ואת הרכב הפרטי. סוכני Homeland Security Investigations עצרו את נהג המשאית, את נהג ה-Chrysler ואת הנוסעת, ופתחו בחקירות פליליות בשני התיקים.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resize112lbsmethwtb33126.jpg.webp?itok=VRkeE3bG",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resize112lbsmethwtb33126.jpg.webp?itok=VRkeE3bG",
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/25lbscocjlb40126.png.webp?itok=Lx5HlE0_"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-04-02",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry",
+    "title": "תפיסת סמים בשווי כולל של למעלה מ-2.8 מיליון דולר בשני אירועים נפרדים בנמל הכניסה איגל פאס",
+    "location": "נמל הכניסה איגל פאס - Eagle Pass Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "קציני CBP בנמל הכניסה Eagle Pass תפסו סמים בשני אירועי אכיפה נפרדים שהתרחשו בסוף שבוע אחד, עם שווי רחוב כולל של למעלה מ-2.8 מיליון דולר. האירוע הראשון התרחש ב-27 במרץ בגשר Camino Real International Bridge, כאשר קצין CBP הפנה לבדיקה משנית אזרחית אמריקאית בת 28 שנהגה ב-2005 Chevrolet Suburban. בעקבות בדיקת כלב גילוי ובדיקת מערכת סריקה לא-חודרנית, אותרו ברצפת הרכב 25 חבילות המכילות סך של 57.09 פאונד של קוקאין חשוד, בשווי רחוב מוערך של 762,392 דולר. האירוע השני התרחש ב-29 במרץ בגשר Eagle Pass International Bridge, כאשר קצין CBP הפנה לבדיקה משנית אזרח מקסיקני בן 45 שנהג ב-2015 Chevrolet Traverse וגרר נגרר. בעקבות בדיקת כלב גילוי ובדיקת מערכת סריקה לא-חודרנית, אותרו ברצפת הנגרר 107 חבילות המכילות סך של 237.21 פאונד של מתאמפטמין חשוד, בשווי רחוב מוערך של 2,120,581 דולר. סוכני CBP החרימו את הסמים ואת שני הרכבים. סוכני Homeland Security Investigations עצרו את שני הנהגים ופתחו בחקירות פליליות בנוגע לשני האירועים. מנהל הנמל Pete Beattie ציין כי שתי התפיסות משקפות את הערנות המתמדת של קציני CBP בביצוע משימת אבטחת הגבול.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/237lbsmethep32926.jpg.webp?itok=4BaetAHm",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/237lbsmethep32926.jpg.webp?itok=4BaetAHm",
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/57lbscocep32726.jpeg.webp?itok=bc2P-Qwa"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-04-02",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-26-million-methamphetamine-pharr",
+    "title": "תפיסת כ-298 פאונד מתאמפטמין מוסתרים במשלוח גזרים במעבר Pharr International Bridge",
+    "location": "נמל הכניסה פאר - Pharr International Bridge, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "ב-30 במרץ תפסו קציני CBP במתקן המטען של Pharr International Bridge משאית טרקטור מסחרית שנסעה מריינוסה שבמקסיקו לעבר ארצות הברית. הרכב הופנה לבדיקה משנית, שם נעשה שימוש בציוד סריקה בלתי פולשני וכן בצוות כלבי גילוי. הבדיקה הפיזית שנערכה בעקבות כך הובילה לאיתור 1,055 חבילות של מתאמפטמין חשוד שהוסתרו בתוך משלוח גזרים, שהוצהר על תעודת המשלוח כמטען גזרים בלבד. המשקל הכולל של החומר שנתפס עמד על 297.62 פאונד (135 קילוגרם), ושוויו המוערך ברחוב הינו 2,660,580 דולר. קציני CBP החרימו את הסמים ואת הרכב. סוכני חקירה מיוחדים של Homeland Security Investigations פתחו בחקירה פלילית. מנהל הנמל קרלוס רודריגז של Hidalgo/Pharr/Anzalduas Port of Entry ציין כי גורמים עברייניים מחפשים ללא הרף דרכים לעקוף את מעברי הגבול, אולם קציני CBP עושים שימוש בכל הכלים והטכנולוגיות העומדים לרשותם על מנת לסכל ניסיונות הברחה אלו.",
+    "image_url": "https://www.cbp.gov/sites/default/files/nearly298lbsmethpharr33026.jpg",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/nearly298lbsmethpharr33026.jpg"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-31",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry",
+    "title": "תפיסת למעלה מ-20 פאונד פנטניל ו-3 פאונד הרואין המוסתרים בדלתות רכב בנמל סן יסידרו",
+    "location": "נמל הכניסה סן יסידרו - San Ysidro Port of Entry, קליפורניה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "ב-10 במרץ 2026 תפסו קציני CBP בנמל הכניסה San Ysidro כ-20.6 פאונד אבקת פנטניל ו-3.1 פאונד הרואין, שהוסתרו בתוך דלתות רכבו של נהג בן 26, אזרח מקסיקני, שנסע ברכב מסוג נסן סנטרה משנת 2017. הנהג הופנה לבדיקה משנית לאחר שביקש כניסה לארצות הברית. במהלך הבדיקה זוהו אנומליות בדלתות הרכב באמצעות מערכת הדמיה לא-חודרנית, ובמקביל התריע צוות כלב גילוי של CBP על נוכחות סמים. בחיפוש שנערך לאחר מכן אותרו 10 חבילות המוסתרות בתוך הדלתות. כמות הפנטניל שנתפסה מייצגת מינון קטלני לכמעט 7 מיליון בני אדם. שווי הסמים הוערך בכ-310,000 דולר. בנוסף לסמים, הוחרמו הרכב, מכשיר מעקב GPS וטלפון נייד. הנהג עומד בפני העמדה לדין פלילי פדרלי בגין ייבוא סמים והברחה. האירוע נוהל תחת אחריות מנהל מחלקת השדה של San Diego, Sidney K. Aki.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/fentanyl_seizure.png.webp?itok=ZzZXNoHr",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/fentanyl_seizure.png.webp?itok=ZzZXNoHr"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-27",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-17-million-methamphetamine-pharr",
+    "title": "תפיסת כ-1,984 פאונד מתאמפטמין בשווי מעל 17 מיליון דולר, מוסתרים במשלוח פטל שחור, במעבר Pharr International Bridge",
+    "location": "נמל הכניסה פאר - Pharr International Bridge, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "קציני CBP במתקן המטען של Pharr International Bridge תפסו 862 חבילות מתאמפטמין במשקל כולל של 1,984.16 פאונד (כ-900 קילוגרם), שהוסתרו בתוך משלוח פטל שחור שהוצהר כסחורה חקלאית. בערב ה-23 במרץ, קציני CBP זיהו משאית מסחרית מסוג טרקטור-נגרר שנסעה מריינוסה שבמקסיקו, והופנתה לבדיקה משנית בעמדת העגינה לצורך בדיקה באמצעות ציוד סריקה לא-פולשני. במהלך הבדיקה חילצו הקציניים את כלל החבילות שהיו מוסתרות בתוך המשלוח. שווי מוערך של הסמים עומד על 17,737,200 דולר. קציני CBP החרימו את הסמים ואת הרכב. סוכנים מיוחדים של Homeland Security Investigations פתחו בחקירה פלילית בעקבות התפיסה. מנהל הנמל קרלוס רודריגז, Hidalgo/Pharr/Anzalduas Port of Entry, ציין כי הארוע ממחיש את מחויבות CBP לשימוש בכל הכלים והטכנולוגיות העומדים לרשותה לסיכול ניסיונות הברחה במעברי הגבול הבינלאומיים.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326a.jpg.webp?itok=6sJoCrPL",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326a.jpg.webp?itok=6sJoCrPL",
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326b.png.webp?itok=lwLamS0c"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-24",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port",
+    "title": "תפיסת למעלה מ-120 פאונד מתאמפטמין בשתי פעולות אכיפה בנמל נוגאלס",
+    "location": "נמל הכניסה נוגאלס - Nogales Port of Entry, אריזונה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "קציני CBP בנמל הכניסה נוגאלס תפסו למעלה מ-120 פאונד מתאמפטמין במהלך שתי פעולות אכיפה נפרדות. ב-10 במרץ, קציני CBP הפועלים ב-Mariposa Crossing תפסו כ-44 פאונד מתאמפטמין שהוסתרו ברכב מסוג Acura RL משנת 2007. סריקה באמצעות מערכת בדיקה לא-חודרנית ובדיקה פיזית מעמיקה חשפו 32 חבילות המכילות את הסמים, שאותרו בגב המושב האחורי של הרכב. קציני CBP החרימו את הסמים ואת הרכב. סוכני Homeland Security Investigations עצרו את הנהג ופתחו בחקירה פלילית. ב-11 במרץ, קציני CBP הפועלים ב-Deconcini Crossing תפסו למעלה מ-76 פאונד מתאמפטמין שהוסתרו ברכב מסוג Volkswagen Polo משנת 2019. סריקה באמצעות מערכת בדיקה לא-חודרנית ובדיקה פיזית מעמיקה חשפו 70 חבילות המכילות את הסמים, שאותרו בתא רצפה כוזב שהוסתר בתוך הרכב. קציני CBP החרימו את הסמים ואת הרכב. סוכני Homeland Security Investigations עצרו את הנהג ופתחו בחקירה פלילית. הודעה על שתי הפעולות פורסמה על ידי Jose Acuna, מנהל נמל בפועל ב-Nogales Port of Entry.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_weight_lbs_1.jpg.webp?itok=-d35IvoQ",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_weight_lbs_1.jpg.webp?itok=-d35IvoQ",
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_76.10_lbs_.jpg.webp?itok=rz0GXtG8"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-23",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank",
+    "title": "מעצר נהג שניסה להבריח אדם מוסתר בתוך מיכל הדלק של רכב בנמל סן יסידרו",
+    "location": "נמל הכניסה סן יסידרו - San Ysidro Port of Entry, קליפורניה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "ב-27 בפברואר 2026, בשעה 19:30, תפסו קציני CBP בנמל הכניסה סן יסידרו נהג בן 20 שניסה להבריח אזרח מקסיקני שהוסתר בתוך תא סמוי שאינו מקורי, שנבנה בתוך מיכל הדלק של רכב SUV מדגם GMC משנת 2005. במהלך הבדיקה הראשונית, צוות כלבי גילוי של CBP הגיב לאזור התחתי של הרכב, ובעקבות כך הופנה הרכב לבדיקה משנית, שבמהלכה אותר האדם המוסתר בתוך התא. כוחות החירום פינו את הנפגע לבית החולים Scripps Mercy Hospital בצ'ולה ויסטה שבקליפורניה לצורך טיפול בכוויות שנגרמו לו במהלך ניסיון ההברחה. הנהג נעצר ונרשם לכלא Metropolitan Correctional Center בסן דייגו. מנהלת נמל סן יסידרו, Mariza Marin, ציינה כי המקרה ממחיש את השיטות המסוכנות והלא אנושיות שמשמשות את המבריחים, המעדיפים רווח על פני חיי אדם, וכי CBP נשאר מחויב לסיכול מבצעי הברחה המסכנים חיי אדם.",
+    "image_url": "https://www.cbp.gov/sites/default/files/gmc_-_gas_tank_non-factory_compartment_mw_discovered.jpg",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/gmc_-_gas_tank_non-factory_compartment_mw_discovered.jpg"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-23",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port",
+    "title": "תפיסת קוקאין, הרואין ופנטניל בשווי 2.2 מיליון דולר ברכב נוסעים במעבר דל ריו",
+    "location": "נמל הכניסה דל ריו - Del Rio Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "קציני CBP מאגף מבצעי השדה תפסו תערובת סמים קשים הכוללת קוקאין, הרואין ופנטניל בשווי מוערך של 2,279,351 דולר, שהוסתרו בתוך רכב נוסעים. האירוע אירע ב-10 במרץ 2026 ב-Del Rio International Bridge, כאשר קצין CBP הפנה GMC Yukon משנת 2016 לבדיקה משנית. הרכב נהוג בידי אזרחית אמריקאית בת 32. בעקבות בדיקת כלב גילוי ובדיקה באמצעות מערכת סריקה לא-פולשנית, אותרו בתוך הרכב חבילות המכילות 117.33 פאונד קוקאין חשוד, 23.14 פאונד הרואין חשוד ו-11.5 פאונד פנטניל חשוד. הסמים והרכב הוחרמו על ידי CBP. סוכנים מיוחדים של Homeland Security Investigations עצרו את הנהגת ומטפלים בחקירת התיק. מנהלת הנמל Lilliana Flores ציינה כי מדובר בתפיסה משולשת של שלושה סמים קשים המשקפת את נחישות הקציינים ומסירותם למשימת אבטחת הגבול.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipofdrmixednarco31026.png.webp?itok=JkaUu_1G",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipofdrmixednarco31026.png.webp?itok=JkaUu_1G"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-20",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge",
+    "title": "תפיסת סמים קשים בשווי מעל 365,000 דולר במעבר World Trade Bridge בלארדו",
+    "location": "נמל הכניסה לארדו - World Trade Bridge, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "ביום רביעי, 11 במרץ 2026, תפסו קציני CBP מתחת לסמכות Office of Field Operations במעבר World Trade Bridge כמות של 23.98 פאונד קוקאין ו-2.33 פאונד הרואין, אשר הוסתרו בתוך משאית תיבה מסוג Kenworth משנת 2020 שנהגה על ידי גבר מקסיקני בן 50. הנהג הופנה לבדיקה משנית על ידי קצין CBP, ובמהלך בדיקה כלבנית ובדיקה באמצעות מערכת סריקה בלתי-חודרנית אותרו בתוך המשאית סך הכול 11 חבילות: 10 חבילות שהכילו קוקאין ו-חבילה אחת שהכילה הרואין. שווי הסמים המשולב ברחוב הוערך בכ-365,079 דולר. הנהג נעצר והסמים הוחרמו בקשר לתיק זה. סוכני חקירות ביטחון פנים של Homeland Security Investigations עוסקים בחקירת המקרה. מנהל הנמל Alberto Flores ציין כי תפיסה זו מדגישה את המסירות והערנות של הצוות במעבר World Trade Bridge במאמץ המתמשך למנוע כניסת סמים מסוכנים לארצות הברית.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resizecocherwtb31126.jpg.webp?itok=lCXv4BiQ",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resizecocherwtb31126.jpg.webp?itok=lCXv4BiQ"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-20",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercepted-three-live-parrots-brownsville-port-entry",
+    "title": "איתור שלושה תוכים חיים מוסתרים ברכב במעבר גבול בראונסוויל",
+    "location": "נמל הכניסה בראונסוויל - Brownsville Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "קציני CBP שהוצבו בנמל הכניסה בראונסוויל אותרו שלושה תוכים חיים שהוסתרו בתוך קופסה בתוך רכב, בניסיון מחשד להברחת בעלי חיים בלתי חוקית. האירוע התרחש ב-13 במרץ 2026 במעבר Gateway International Bridge, כאשר קציני CBP הפנו רכב מדגם GMC Yukon משנת 2007 לבדיקה משנית. במהלך הבדיקה אותרו שלושת התוכים כשהם מוסתרים בתוך קופסה בתוך הרכב. סוכני חקירות מיוחדות של Homeland Security Investigations פתחו בחקירה פלילית בעקבות התפיסה. CBP שיתף פעולה עם סוכנויות שותפות, בהן U.S. Department of Agriculture ו-U.S. Fish and Wildlife Service, להבטחת שלומם של הציפורים בגן חיות מקומי. התוכים מוגנים במסגרת אמנת הסחר הבינלאומי במינים בסכנת הכחדה (CITES), המוסדרת על ידי U.S. Fish and Wildlife Service. מנהל הנמל, Tater Ortiz, הדגיש כי תוכים הם מינים מוגנים וכי ציפורים אקזוטיות עלולות לשאת מחלות שאינן ידועות בארצות הברית, שעלולות לסכן את חיית הבר המקומית ואת החקלאות האמריקאית ולגרום לנזק כלכלי.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/3parrotsbro31326.png.webp?itok=UPFFCUg3",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/3parrotsbro31326.png.webp?itok=UPFFCUg3"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-19",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor",
+    "title": "תפיסת 944 פאונד מתאמפטמין נוזלי שהוסתר במיכל הדלק של משאית גרירה במתקן המטען Otay Mesa",
+    "location": "נמל הכניסה Otay Mesa Cargo Facility - Otay Mesa Cargo Facility, קליפורניה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "קציני CBP במתקן המטען Otay Mesa תפסו 944 פאונד מתאמפטמין נוזלי שהוסתרו בתוך מיכל הדלק של משאית גרירה. האירוע התרחש ב-2 במרץ 2026, כאשר נהג בן 26, אזרח מקסיקו, הגיע לנקודת הכניסה תוך כדי נהיגה בטרקטור המושך נגרר, במטרה להיכנס לארצות הברית ממקסיקו. לאחר הבדיקה הראשונית, הופנה הנהג והרכב לבדיקה משנית. באזור הבדיקה המשנית, השתמשו קציני CBP בטכנולוגיית סריקה בלתי חודרנית לבדיקת הרכב, ולאחר מכן הפנו אותו לבדיקה מעמיקה יותר. במהלך הבדיקה פתחו קציני CBP את מיכל הדלק של המשאית והכניסו לתוכו גשוש, שחשף חומר ג'לטיני בלתי מוכר המעורבב עם הסולר. קציני CBP שאבו מתוך מיכל הדלק סך הכל 29 דליים בנפח חמישה גלון כל אחד של החומר הנוזלי. קצין CBP ביצע בדיקת שדה על הנוזל, אשר יצאה חיובית למתאמפטמין, במשקל כולל של 944 פאונד. החשוד הועבר לחזקת Homeland Security Investigations להמשך חקירה. קציני CBP החרימו את הסמים ואת משאית הגרירה.",
+    "image_url": "https://www.cbp.gov/sites/default/files/buckets.jpg",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/buckets.jpg"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-17",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercept-live-pythons-world-trade-bridge",
+    "title": "איתור 39 נחשי פיתון חיים מוסתרים בתוך קשת טרקטור ב-World Trade Bridge, לרדו",
+    "location": "נמל הכניסה לרדו - World Trade Bridge, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "קציני CBP מאגף מבצעי היציאה תפסו 39 נחשי פיתון חיים שהוסתרו בתוך קשת טרקטור ב-World Trade Bridge בלרדו, טקסס, ב-5 במרץ 2026. במהלך מבצעי הפקה יוצאת, קציני CBP עצרו טרקטור מדגם Peterbilt משנת 2021 שנסע לכיוון מקסיקו, והפנו את הנהג ואת הרכב לבדיקה. הנחשים אותרו בתוך הטרקטור לאחר שהנהג הצהיר בפני הסוכנים שאין ברשותו טובין אסורים. סוכני U.S. Fish and Wildlife Service זומנו למקום ולקחו לידיהם את בעלי החיים; בשל מצבם, הועברו הנחשים לסביבה מבוקרת. הוחרמו הטרקטור והנגרר. הוטלו קנסות בגין הפרות יצוא בסך כולל של 34,824 דולר בקשר לאירוע. התיק נמצא בחקירה משותפת של U.S. Fish and Wildlife Service ו-Homeland Security Investigations. מנהל הנמל Alberto Flores של Laredo Port of Entry הדגיש כי CBP מחויב למניעת ייצוא ויבוא בלתי חוקי של חיות בר ולאכיפת כלל התקנות הפדרליות הרלוונטיות.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526b.png.webp?itok=shHUVhJu",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526b.png.webp?itok=shHUVhJu",
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526a.png.webp?itok=P8FXeufU"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-16",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas",
+    "title": "תפיסת 7 נשקים ו-11,000 כדורי תחמושת בנמל הכניסה דאגלס",
+    "location": "נמל הכניסה דאגלס - Raul H. Castro Port of Entry, אריזונה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "במסגרת מבצע אכיפת יציאה מארצות הברית, תפסו קציני CBP שבעה רובי AK-47 ו-11,000 כדורי תחמושת מאזרח אמריקאי בן 24 שניסה לחצות את הגבול לכיוון מקסיקו. האירוע התרחש ב-15 בפברואר 2026, כאשר הנהג, שנסע ברכב מסוג Dodge Ram 1500, הופנה לבדיקה משנית. במהלך החיפוש בתוך הרכב אותרו מספר חבילות שהכילו את שבעת הרובים ואת התחמושת. הנשק והרכב הוחרמו. הנהג נעצר והועבר לטיפול של Homeland Security Investigations.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/raul_hector_port_of_entry_weapons_seizure.jpg.webp?itok=VvW9kPOA",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/raul_hector_port_of_entry_weapons_seizure.jpg.webp?itok=VvW9kPOA"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-10",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel",
+    "title": "תפיסת כ-214 פאונד קוקאין מוסתרים מתחת לגוף אוניית מטען בנמל סן חואן",
+    "location": "נמל הכניסה סן חואן - San Juan Port of Entry, פוארטו ריקו",
+    "crossing_type": "סוג מעבר: מעבר ימי. משמש להגעת אוניות מטען, כלי שיט מסחריים וסירות.",
+    "body": "קציני CBP תפסו כ-214 פאונד (כ-97 קילוגרם) קוקאין שהוסתרו בתוך מתקן \"טפילי\" שחובר אל גוף האונייה M/V MEDSTAR, אשר הגיעה מריו איינה שברפובליקה הדומיניקנית לנמל סן חואן בפוארטו ריקו. הסמים אותרו ב-26 בפברואר במהלך עלייה שגרתית לאונייה, כאשר הקצינים פרסו טכנולוגיית רחפן תת-ימי לצורך בדיקת גוף הכלי. שווי הסמים הוערך בכ-1.7 מיליון דולר. יחידת הצלילה המשטרתית של עיריית סן חואן סייעה בשליפת המתקן מגוף האונייה. Homeland Security Investigations הגיעו לזירה לתמיכה במבצע. הקוקאין הוחרם והועבר לבדיקה נוספת ואוחסן בהתאם לנהלים הקבועים. החקירה נמשכת.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/puerto_rico_seizure.jpg.webp?itok=y4oMSGk8",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/puerto_rico_seizure.jpg.webp?itok=y4oMSGk8"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-10",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-1m-methamphetamine-roma-port-entry",
+    "title": "תפיסת 121 פאונד מתאמפטמין בשווי מעל מיליון דולר בנמל הכניסה רומא",
+    "location": "נמל הכניסה רומא - Roma Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "קציני CBP מיחידת Office of Field Operations תפסו 121.34 פאונד מתאמפטמין בפעולת אכיפה בודדת שהתרחשה ביום ראשון, ה-8 במרץ 2026, על גשר Roma International Bridge. קצין CBP הפנה לבדיקה משנית גבר בן 22, אזרח אמריקאי, שנהג ב-Ford Explorer משנת 2013. לאחר ביצוע סריקה באמצעות מערכת בדיקה לא-חודרנית ובדיקה פיזית מעמיקה, אותרו ברכב 53 חבילות שהכילו בסך הכול 121.34 פאונד של מתאמפטמין חשוד. שווי מוערך של הסמים עומד על 1,084,728 דולר. סוכני CBP החרימו את הסמים ואת הרכב. סוכנים מיוחדים של Homeland Security Investigations עצרו את הנהג ופתחו בחקירה פלילית של האירוע.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipof121lbsmethrma30826.png.webp?itok=TwIWwHHA",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipof121lbsmethrma30826.png.webp?itok=TwIWwHHA"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-06",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity",
+    "title": "תפיסת כ-129 פאונד קוקאין בשווי 1.7 מיליון דולר במשאית מסחרית בגשר Colombia-Solidarity",
+    "location": "נמל הכניסה לארדו - Laredo Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "ב-26 בפברואר 2026, קציני CBP מה-Office of Field Operations בנמל הכניסה לארדו תפסו 129.63 פאונד קוקאין שהוסתרו בתוך משאית מסחרית שסחבה נגרר ריק בגשר Colombia-Solidarity. הנהג ורכבו הופנו לבדיקה משנית לאחר שקצין CBP זיהה חשד במהלך בדיקה ראשונית. בעקבות בדיקת כלב נרקוטיקים וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו בתוך המשאית 54 חבילות שהכילו את הקוקאין. שווי הסמים ברחוב הוערך בכ-1,730,836 דולר. הסמים הוחרמו על ידי CBP. מנהל נמל הכניסה לארדו, Alberto Flores, ציין כי התפיסה משקפת את מסירותם של קציני הקו הקדמי ואת השימוש היעיל בטכנולוגיה. האירוע הועבר לחקירה של סוכני Homeland Security Investigations.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/test_0.jpg.webp?itok=-IHfyKsv",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/test_0.jpg.webp?itok=-IHfyKsv"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-03-02",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully",
+    "title": "מעצר חמישה שוהים בלתי חוקיים באזור עמק ריו גרנדה בתוך 24 שעות",
+    "location": "נמל הכניסה הידאלגו - Hidalgo Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "קציני CBP ממשרד מבצעי השדה, המוצבים בנמל הכניסה הידאלגו, ובהם מפעילי Special Response Team, ביצעו ארבעה מבצעי אכיפה נפרדים בתוך 24 שעות ועצרו חמישה אזרחים זרים השוהים שלא כחוק בארצות הברית. האירועים התרחשו ב-19 בפברואר 2026 באזור עמק ריו גרנדה, ונערכו הן במעצרים בשטח פתוח מחוץ למגורים והן בעצירות כלי רכב. מבין החמישה שנעצרו, שלושה הם אזרחי מקסיקו ושניים אזרחי הונדורס; אחד מהם מהונדורס נושא בקורות שלוש גירושים קודמים מהארצות הברית. כל החשודים נעצרו ללא אירועים ועובדו בהתאם לעבירות שונות הנטענות על פי חוקי ההגירה של ארצות הברית. מנהל הנמל קרלוס רודריגז ציין כי מבצעים אלה, שבוצעו הרחק מנמל הכניסה, מדגישים את הגמישות המבצעית של קציני CBP ומפעילי Special Response Team ואת יכולתם הטקטית לאתר ולעצור שוהים בלתי חוקיים.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/hn1app21926.jpeg.webp?itok=7Xk9gtK_",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/hn1app21926.jpeg.webp?itok=7Xk9gtK_"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-02-18",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry",
+    "title": "תפיסת 65 פאונד מתאמפטמין בשווי מעל 602,000 דולר בגשר קולומביה-סולידריות בלארדו",
+    "location": "נמל הכניסה לארדו - Laredo Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "ביום ראשון, 8 בפברואר 2026, תפסו קציני CBP מתחת לסמכות Office of Field Operations בנמל הכניסה לארדו, 65 פאונד מתאמפטמין לאחר שקצין CBP הפנה לבדיקה משנית גבר בן 45, אזרח מקסיקני, שנהג ברכב מדגם Nissan Sentra משנת 2017 בגשר Colombia-Solidarity Bridge. במהלך הבדיקה המשנית בוצעה סריקה באמצעות כלב גילוי ומערכת בדיקה לא-חודרנית, ובעקבותיהן אותרו בתוך הרכב 58 חבילות שהכילו את החומר הסמוך. שווי המוערך של התפיסה עולה על 602,000 דולר, ולפי הערכות הסמים מייצגים מעל 100,000 מנות קטלניות. הוחרמו הסמים והרכב. הנהג נעצר. התיק הועבר לחקירה של סוכני Homeland Security Investigations.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resize65lbsmethcolsol20826.jpg.webp?itok=l6-hF0r2",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resize65lbsmethcolsol20826.jpg.webp?itok=l6-hF0r2"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-02-10",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-world-trade-bridge-seize-over-68-million-cocaine",
+    "title": "תפיסת 516 פאונד קוקאין בשווי מוערך של 6.8 מיליון דולר בתוך משלוח פרחים ב-World Trade Bridge, לארדו",
+    "location": "נמל הכניסה לארדו - Laredo Port of Entry, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "ב-10 בפברואר 2026 תפסו קציני CBP ב-World Trade Bridge בלארדו, טקסס, 516.76 פאונד קוקאין שהוסתרו בתוך משלוח פרחים טריים. הקצין תפס טרקטור ונגרר מדגם T3 International משנת 2018 שהצהיר על שינוע של \"ורדים ופרחים טריים\", והפנה את הרכב לבדיקה משנית. בעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו בתוך הסחורה 211 חבילות שהכילו את הסם. שווי מוערך של הקוקאין ברחוב עמד על 6,899,798 דולר. הסמים הוחרמו על ידי CBP, והתיק הועבר לחקירה של סוכני Homeland Security Investigations.",
+    "image_url": "https://www.cbp.gov/sites/default/files/resizenearly517lbscocwtb21026.jpg",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/resizenearly517lbscocwtb21026.jpg"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
+  },
+  {
+    "run_date": "2026-04-23 22:15 UTC",
+    "article_date": "2026-01-31",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/us-border-patrol-agents-disrupt-alien-smuggling-operation",
+    "title": "מעצר 19 מהגרים בלתי חוקיים וארבעה מבריחים בפעולת סיכול הברחת אנשים ב-Seeley",
+    "location": "סיילי - Seeley, קליפורניה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "ב-31 בינואר 2026 תפסו סוכני U.S. Border Patrol השייכים ל-El Centro Sector פעולת הברחת אנשים פעילה בסיילי, קליפורניה, ונעצרו בסך הכול 23 אנשים. האירוע החל כאשר סוכנים זיהו רכב שחשדו כי קשור לפעילות הברחה; במסגרת מאמצי חקירה עקבו הסוכנים אחר הפעילות עד לבניין דירות ברחוב 1920 S. Haskell Road בסיילי, שם הבחינו בפרטים המנסים להעביר אנשים בין מספר כלי רכב. הסוכנים נחלצו לזירה ונעצרו 19 מהגרים בלתי חוקיים וארבעה חשודים כמבריחים. במהלך הפעולה ניסו שבעה אנשים לברוח; הסוכנים רדפו אחריהם ועצרו שלושה מהגרים בלתי חוקיים ושני חשודים כמבריחים נוספים בתוך מתחם הדירות. בסך הכול הוחרמו שישה כלי רכב בקשר לחקירה. סגן הממונה על הסקטור, Acting Chief Patrol Agent Joseph A. Remenar, ציין כי El Centro Sector היה הסקטור המאובטח ביותר לאורך כל קו הגבול הדרום-מערבי בן 2,000 המייל בשנת הכספים 2025. המעורבים צפויים לעמוד לדין פדרלי.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/02122026_el_centro_human_smuggling_pr.jpg.webp?itok=ourt3YXJ",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/02122026_el_centro_human_smuggling_pr.jpg.webp?itok=ourt3YXJ"
+    ],
+    "quarter": "Q1-2026",
+    "status": "needs-review",
+    "editor_notes": "",
+    "admin_approved": true
   }
 ]
