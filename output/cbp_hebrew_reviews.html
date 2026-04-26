@@ -305,7 +305,7 @@
     .admin-only { display: none !important; }
     body.admin-mode .admin-only { display: inline-flex !important; }
     .admin-stat { display: none !important; }
-    body.admin-mode .admin-stat { display: block !important; }
+    body.admin-mode .admin-stat { display: flex !important; }
 
     /* ── Unapproved articles ── */
     body:not(.admin-mode) .article-card[data-approved="false"] { display: none !important; }
@@ -396,7 +396,6 @@
   <div class="header-controls">
     <span class="badge" id="header-count">33 כתבות</span>
     <button class="pat-btn admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 PAT</button>
-    <button class="edit-btn" id="editToggle" onclick="toggleEdit()">✏️ עריכה</button>
   </div>
 </header>
 
@@ -436,7 +435,7 @@
 
   <div class="quarter-section" data-q="Q2-2026">
     
-      <div class="article-card" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing">
+      <div class="article-card" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing">
         <div class="img-wrapper" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/compartment_2.jpg.webp?itok=v7frzGzA" alt="" loading="lazy" onerror="this.style.display='none'">
 <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/weapons_in_compartment_2.jpg.webp?itok=GCAGms-X" alt="" loading="lazy" onerror="this.style.display='none'">
@@ -467,7 +466,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-weapons-and-parts-deconcini-crossing">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-weapons-and-parts-deconcini-crossing">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-weapons-and-parts-deconcini-crossing" onclick="setPending('cbp-officers-seize-weapons-and-parts-deconcini-crossing')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-weapons-and-parts-deconcini-crossing" onclick="approveArticle('cbp-officers-seize-weapons-and-parts-deconcini-crossing')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-weapons-and-parts-deconcini-crossing')" title="מחק כתבה">🗑</button>
@@ -476,7 +475,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">
+      <div class="article-card" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">
         <div class="img-wrapper no-img-wrapper" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">
           <div class="no-img"><span>📷</span><small>אין תמונה</small></div>
           <div class="img-overlay admin-only" onclick="changeImage('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture')">📷 הוסף תמונה</div>
@@ -506,7 +505,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" onclick="setPending('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" onclick="approveArticle('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture')" title="מחק כתבה">🗑</button>
@@ -515,7 +514,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international">
+      <div class="article-card" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international">
         <div class="img-wrapper" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-11-million-cocaine-pharr-international')">📷 שנה תמונה</div>
@@ -540,7 +539,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-more-11-million-cocaine-pharr-international">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-more-11-million-cocaine-pharr-international">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-more-11-million-cocaine-pharr-international" onclick="setPending('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-more-11-million-cocaine-pharr-international" onclick="approveArticle('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="מחק כתבה">🗑</button>
@@ -549,7 +548,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
+      <div class="article-card" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
         <div class="img-wrapper" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/78lbscocbushgo41126.jpg.webp?itok=9AhWoC4i" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')">📷 שנה תמונה</div>
@@ -575,7 +574,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" onclick="setPending('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" onclick="approveArticle('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')" title="מחק כתבה">🗑</button>
@@ -584,7 +583,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
+      <div class="article-card" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
         <div class="img-wrapper" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/26_0416_image_full-gross-weight.jpg.webp?itok=K63KAngi" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')">📷 שנה תמונה</div>
@@ -610,7 +609,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" onclick="setPending('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" onclick="approveArticle('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')" title="מחק כתבה">🗑</button>
@@ -619,7 +618,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
+      <div class="article-card" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/campos_1.jpg.webp?itok=tfc0kytT" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')">📷 שנה תמונה</div>
@@ -648,7 +647,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" onclick="setPending('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" onclick="approveArticle('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')" title="מחק כתבה">🗑</button>
@@ -657,7 +656,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge">
+      <div class="article-card" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge">
         <div class="img-wrapper" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-605k-cocaine-pharr-international-bridge')">📷 שנה תמונה</div>
@@ -682,7 +681,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-605k-cocaine-pharr-international-bridge">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-605k-cocaine-pharr-international-bridge">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-605k-cocaine-pharr-international-bridge" onclick="setPending('cbp-officers-seize-605k-cocaine-pharr-international-bridge')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-605k-cocaine-pharr-international-bridge" onclick="approveArticle('cbp-officers-seize-605k-cocaine-pharr-international-bridge')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-605k-cocaine-pharr-international-bridge')" title="מחק כתבה">🗑</button>
@@ -691,7 +690,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international">
+      <div class="article-card" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international">
         <div class="img-wrapper" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-11-million-cocaine-pharr-international')">📷 שנה תמונה</div>
@@ -718,7 +717,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-more-11-million-cocaine-pharr-international">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-more-11-million-cocaine-pharr-international">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-more-11-million-cocaine-pharr-international" onclick="setPending('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-more-11-million-cocaine-pharr-international" onclick="approveArticle('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="מחק כתבה">🗑</button>
@@ -727,7 +726,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-6-million-methamphetamine-world-trade">
+      <div class="article-card" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-6-million-methamphetamine-world-trade">
         <div class="img-wrapper" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resizenearly663lbsmethwtb21326.jpg.webp?itok=HXiMTyPm" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-nearly-6-million-methamphetamine-world-trade')">📷 שנה תמונה</div>
@@ -753,7 +752,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-nearly-6-million-methamphetamine-world-trade">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-nearly-6-million-methamphetamine-world-trade">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" onclick="setPending('cbp-officers-seize-nearly-6-million-methamphetamine-world-trade')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" onclick="approveArticle('cbp-officers-seize-nearly-6-million-methamphetamine-world-trade')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-nearly-6-million-methamphetamine-world-trade')" title="מחק כתבה">🗑</button>
@@ -762,7 +761,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
+      <div class="article-card" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
         <div class="img-wrapper" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/26_0416_image_full-gross-weight.jpg.webp?itok=K63KAngi" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')">📷 שנה תמונה</div>
@@ -788,7 +787,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" onclick="setPending('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" onclick="approveArticle('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')" title="מחק כתבה">🗑</button>
@@ -797,7 +796,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
+      <div class="article-card" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
         <div class="img-wrapper" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/78lbscocbushgo41126.jpg.webp?itok=9AhWoC4i" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')">📷 שנה תמונה</div>
@@ -823,7 +822,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" onclick="setPending('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" onclick="approveArticle('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')" title="מחק כתבה">🗑</button>
@@ -832,7 +831,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
+      <div class="article-card" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/campos_1.jpg.webp?itok=tfc0kytT" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')">📷 שנה תמונה</div>
@@ -861,7 +860,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" onclick="setPending('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" onclick="approveArticle('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')" title="מחק כתבה">🗑</button>
@@ -870,7 +869,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge">
+      <div class="article-card" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge">
         <div class="img-wrapper" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-605k-cocaine-pharr-international-bridge')">📷 שנה תמונה</div>
@@ -895,7 +894,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-605k-cocaine-pharr-international-bridge">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-605k-cocaine-pharr-international-bridge">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-605k-cocaine-pharr-international-bridge" onclick="setPending('cbp-officers-seize-605k-cocaine-pharr-international-bridge')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-605k-cocaine-pharr-international-bridge" onclick="approveArticle('cbp-officers-seize-605k-cocaine-pharr-international-bridge')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-605k-cocaine-pharr-international-bridge')" title="מחק כתבה">🗑</button>
@@ -904,7 +903,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resize112lbsmethwtb33126.jpg.webp?itok=VRkeE3bG" alt="" loading="lazy" onerror="this.style.display='none'">
 <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/25lbscocjlb40126.png.webp?itok=Lx5HlE0_" alt="" loading="lazy" onerror="this.style.display='none'">
@@ -932,7 +931,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry" onclick="setPending('cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry" onclick="approveArticle('cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry')" title="מחק כתבה">🗑</button>
@@ -941,7 +940,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/237lbsmethep32926.jpg.webp?itok=4BaetAHm" alt="" loading="lazy" onerror="this.style.display='none'">
 <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/57lbscocep32726.jpeg.webp?itok=bc2P-Qwa" alt="" loading="lazy" onerror="this.style.display='none'">
@@ -970,7 +969,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry" onclick="setPending('cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry" onclick="approveArticle('cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry')" title="מחק כתבה">🗑</button>
@@ -979,7 +978,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-26-million-methamphetamine-pharr">
+      <div class="article-card" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-26-million-methamphetamine-pharr">
         <div class="img-wrapper" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/nearly298lbsmethpharr33026.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-26-million-methamphetamine-pharr')">📷 שנה תמונה</div>
@@ -1006,7 +1005,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-more-26-million-methamphetamine-pharr">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-more-26-million-methamphetamine-pharr">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-more-26-million-methamphetamine-pharr" onclick="setPending('cbp-officers-seize-more-26-million-methamphetamine-pharr')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-more-26-million-methamphetamine-pharr" onclick="approveArticle('cbp-officers-seize-more-26-million-methamphetamine-pharr')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-more-26-million-methamphetamine-pharr')" title="מחק כתבה">🗑</button>
@@ -1018,7 +1017,7 @@
   </div>
   <div class="quarter-section" data-q="Q1-2026">
     
-      <div class="article-card" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry">
         <div class="img-wrapper" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/fentanyl_seizure.png.webp?itok=ZzZXNoHr" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry')">📷 שנה תמונה</div>
@@ -1048,7 +1047,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" onclick="setPending('cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" onclick="approveArticle('cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry')" title="מחק כתבה">🗑</button>
@@ -1057,7 +1056,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-17-million-methamphetamine-pharr">
+      <div class="article-card" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-17-million-methamphetamine-pharr">
         <div class="img-wrapper" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326a.jpg.webp?itok=6sJoCrPL" alt="" loading="lazy" onerror="this.style.display='none'">
 <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326b.png.webp?itok=lwLamS0c" alt="" loading="lazy" onerror="this.style.display='none'">
@@ -1085,7 +1084,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-more-17-million-methamphetamine-pharr">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-more-17-million-methamphetamine-pharr">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-more-17-million-methamphetamine-pharr" onclick="setPending('cbp-officers-seize-more-17-million-methamphetamine-pharr')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-more-17-million-methamphetamine-pharr" onclick="approveArticle('cbp-officers-seize-more-17-million-methamphetamine-pharr')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-more-17-million-methamphetamine-pharr')" title="מחק כתבה">🗑</button>
@@ -1094,7 +1093,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port">
+      <div class="article-card" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_weight_lbs_1.jpg.webp?itok=-d35IvoQ" alt="" loading="lazy" onerror="this.style.display='none'">
 <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_76.10_lbs_.jpg.webp?itok=rz0GXtG8" alt="" loading="lazy" onerror="this.style.display='none'">
@@ -1125,7 +1124,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port" onclick="setPending('cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port" onclick="approveArticle('cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port')" title="מחק כתבה">🗑</button>
@@ -1134,7 +1133,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank">
+      <div class="article-card" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank">
         <div class="img-wrapper" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/gmc_-_gas_tank_non-factory_compartment_mw_discovered.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank')">📷 שנה תמונה</div>
@@ -1159,7 +1158,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" onclick="setPending('san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" onclick="approveArticle('san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank')" title="מחק כתבה">🗑</button>
@@ -1168,7 +1167,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port">
+      <div class="article-card" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port">
         <div class="img-wrapper" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipofdrmixednarco31026.png.webp?itok=JkaUu_1G" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port')">📷 שנה תמונה</div>
@@ -1195,7 +1194,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port" onclick="setPending('cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port" onclick="approveArticle('cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port')" title="מחק כתבה">🗑</button>
@@ -1204,7 +1203,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge">
+      <div class="article-card" data-id="cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resizecocherwtb31126.jpg.webp?itok=lCXv4BiQ" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge')">📷 שנה תמונה</div>
@@ -1230,7 +1229,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge" onclick="setPending('cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge" onclick="approveArticle('cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge')" title="מחק כתבה">🗑</button>
@@ -1239,7 +1238,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercepted-three-live-parrots-brownsville-port-entry">
+      <div class="article-card" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercepted-three-live-parrots-brownsville-port-entry">
         <div class="img-wrapper" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/3parrotsbro31326.png.webp?itok=UPFFCUg3" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-intercepted-three-live-parrots-brownsville-port-entry')">📷 שנה תמונה</div>
@@ -1269,7 +1268,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-intercepted-three-live-parrots-brownsville-port-entry">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-intercepted-three-live-parrots-brownsville-port-entry">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-intercepted-three-live-parrots-brownsville-port-entry" onclick="setPending('cbp-officers-intercepted-three-live-parrots-brownsville-port-entry')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-intercepted-three-live-parrots-brownsville-port-entry" onclick="approveArticle('cbp-officers-intercepted-three-live-parrots-brownsville-port-entry')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-intercepted-three-live-parrots-brownsville-port-entry')" title="מחק כתבה">🗑</button>
@@ -1278,7 +1277,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor">
+      <div class="article-card" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/buckets.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor')">📷 שנה תמונה</div>
@@ -1307,7 +1306,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" onclick="setPending('cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" onclick="approveArticle('cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor')" title="מחק כתבה">🗑</button>
@@ -1316,7 +1315,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercept-live-pythons-world-trade-bridge">
+      <div class="article-card" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercept-live-pythons-world-trade-bridge">
         <div class="img-wrapper" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526b.png.webp?itok=shHUVhJu" alt="" loading="lazy" onerror="this.style.display='none'">
 <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526a.png.webp?itok=P8FXeufU" alt="" loading="lazy" onerror="this.style.display='none'">
@@ -1347,7 +1346,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-intercept-live-pythons-world-trade-bridge">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-intercept-live-pythons-world-trade-bridge">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-intercept-live-pythons-world-trade-bridge" onclick="setPending('cbp-officers-intercept-live-pythons-world-trade-bridge')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-intercept-live-pythons-world-trade-bridge" onclick="approveArticle('cbp-officers-intercept-live-pythons-world-trade-bridge')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-intercept-live-pythons-world-trade-bridge')" title="מחק כתבה">🗑</button>
@@ -1356,7 +1355,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas">
+      <div class="article-card" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas">
         <div class="img-wrapper" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/raul_hector_port_of_entry_weapons_seizure.jpg.webp?itok=VvW9kPOA" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas')">📷 שנה תמונה</div>
@@ -1381,7 +1380,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas" onclick="setPending('cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas" onclick="approveArticle('cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas')" title="מחק כתבה">🗑</button>
@@ -1390,7 +1389,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel">
+      <div class="article-card" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel">
         <div class="img-wrapper" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/puerto_rico_seizure.jpg.webp?itok=y4oMSGk8" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel')">📷 שנה תמונה</div>
@@ -1417,7 +1416,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel" onclick="setPending('cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel" onclick="approveArticle('cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel')" title="מחק כתבה">🗑</button>
@@ -1426,7 +1425,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-1m-methamphetamine-roma-port-entry" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-1m-methamphetamine-roma-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-over-1m-methamphetamine-roma-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-1m-methamphetamine-roma-port-entry">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-1m-methamphetamine-roma-port-entry">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipof121lbsmethrma30826.png.webp?itok=TwIWwHHA" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-1m-methamphetamine-roma-port-entry')">📷 שנה תמונה</div>
@@ -1452,7 +1451,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-1m-methamphetamine-roma-port-entry">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-over-1m-methamphetamine-roma-port-entry">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-over-1m-methamphetamine-roma-port-entry" onclick="setPending('cbp-officers-seize-over-1m-methamphetamine-roma-port-entry')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-over-1m-methamphetamine-roma-port-entry" onclick="approveArticle('cbp-officers-seize-over-1m-methamphetamine-roma-port-entry')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-1m-methamphetamine-roma-port-entry')" title="מחק כתבה">🗑</button>
@@ -1461,7 +1460,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity">
+      <div class="article-card" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity">
         <div class="img-wrapper" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/test_0.jpg.webp?itok=-IHfyKsv" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity')">📷 שנה תמונה</div>
@@ -1488,7 +1487,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" onclick="setPending('cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" onclick="approveArticle('cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity')" title="מחק כתבה">🗑</button>
@@ -1497,7 +1496,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully">
+      <div class="article-card" data-id="hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully">
         <div class="img-wrapper" data-id="hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/hn1app21926.jpeg.webp?itok=7Xk9gtK_" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully')">📷 שנה תמונה</div>
@@ -1522,7 +1521,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully" onclick="setPending('hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully" onclick="approveArticle('hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully')" title="מחק כתבה">🗑</button>
@@ -1531,7 +1530,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resize65lbsmethcolsol20826.jpg.webp?itok=l6-hF0r2" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry')">📷 שנה תמונה</div>
@@ -1557,7 +1556,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry" onclick="setPending('cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry" onclick="approveArticle('cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry')" title="מחק כתבה">🗑</button>
@@ -1566,7 +1565,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-world-trade-bridge-seize-over-68-million-cocaine">
+      <div class="article-card" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-world-trade-bridge-seize-over-68-million-cocaine">
         <div class="img-wrapper" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/resizenearly517lbscocwtb21026.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-world-trade-bridge-seize-over-68-million-cocaine')">📷 שנה תמונה</div>
@@ -1591,7 +1590,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-world-trade-bridge-seize-over-68-million-cocaine">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-cbp-officers-world-trade-bridge-seize-over-68-million-cocaine">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" onclick="setPending('cbp-officers-world-trade-bridge-seize-over-68-million-cocaine')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" onclick="approveArticle('cbp-officers-world-trade-bridge-seize-over-68-million-cocaine')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-world-trade-bridge-seize-over-68-million-cocaine')" title="מחק כתבה">🗑</button>
@@ -1600,7 +1599,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="us-border-patrol-agents-disrupt-alien-smuggling-operation" data-status="needs-review" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/us-border-patrol-agents-disrupt-alien-smuggling-operation">
+      <div class="article-card" data-id="us-border-patrol-agents-disrupt-alien-smuggling-operation" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/us-border-patrol-agents-disrupt-alien-smuggling-operation">
         <div class="img-wrapper" data-id="us-border-patrol-agents-disrupt-alien-smuggling-operation">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/02122026_el_centro_human_smuggling_pr.jpg.webp?itok=ourt3YXJ" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('us-border-patrol-agents-disrupt-alien-smuggling-operation')">📷 שנה תמונה</div>
@@ -1630,7 +1629,7 @@
           </div>
           <div class="article-footer">
             <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-us-border-patrol-agents-disrupt-alien-smuggling-operation">⚠ לבדיקה</span>
+              <span class="status-badge status-approved" id="badge-us-border-patrol-agents-disrupt-alien-smuggling-operation">✓ מאושר</span>
               <button class="state-btn pending-btn admin-only" id="pendingbtn-us-border-patrol-agents-disrupt-alien-smuggling-operation" onclick="setPending('us-border-patrol-agents-disrupt-alien-smuggling-operation')" title="העבר לבדיקה">⏸ בבדיקה</button>
               <button class="state-btn approve-btn admin-only btn-state-active" id="approvebtn-us-border-patrol-agents-disrupt-alien-smuggling-operation" onclick="approveArticle('us-border-patrol-agents-disrupt-alien-smuggling-operation')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('us-border-patrol-agents-disrupt-alien-smuggling-operation')" title="מחק כתבה">🗑</button>
@@ -1643,7 +1642,7 @@
 </div>
 
 <div class="page-footer">
-  נוצר אוטומטית על ידי cbp-translator · 26/04/2026 17:49
+  נוצר אוטומטית על ידי cbp-translator · 26/04/2026 18:08
 </div>
 
 <!-- Add Article Modal (admin only) -->
@@ -1739,6 +1738,11 @@ function checkAdmin() {
   const params = new URLSearchParams(window.location.search);
   if (params.get('admin') === ADMIN_PASS) {
     document.body.classList.add('admin-mode');
+    document.body.classList.add('edit-mode');
+    document.querySelectorAll('.editable').forEach(el => {
+      el.contentEditable = 'true';
+      el.addEventListener('input', onEdit);
+    });
     loadPAT();
     if (!GITHUB_PAT) {
       setTimeout(() => promptForPAT('מצב מנהל פעיל!\nהכנס GitHub PAT לאישור/דחייה של כתבות:'), 700);

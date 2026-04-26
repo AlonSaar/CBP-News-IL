@@ -146,7 +146,9 @@ def generate(articles: list[dict]) -> Path:
             art_id     = url.split("/")[-1]
             image_url  = art.get("image_url", "")
             image_urls = art.get("image_urls") or ([image_url] if image_url else [])
-            status_class, status_label = _status_display(art.get("status", "needs-review"))
+            admin_approved_val = art.get("admin_approved", True)
+            status_class = "approved" if admin_approved_val else "needs-review"
+            status_label = "✓ מאושר" if admin_approved_val else "⏸ בהמתנה"
             body_html  = _format_body(art.get("body", ""))
             ct_icon, ct_label = _crossing_category(art.get("crossing_type", ""))
             ct_detail  = _crossing_detail(art.get("crossing_type", ""))
@@ -518,7 +520,7 @@ def generate(articles: list[dict]) -> Path:
     .admin-only {{ display: none !important; }}
     body.admin-mode .admin-only {{ display: inline-flex !important; }}
     .admin-stat {{ display: none !important; }}
-    body.admin-mode .admin-stat {{ display: block !important; }}
+    body.admin-mode .admin-stat {{ display: flex !important; }}
 
     /* ── Unapproved articles ── */
     body:not(.admin-mode) .article-card[data-approved="false"] {{ display: none !important; }}
@@ -609,7 +611,6 @@ def generate(articles: list[dict]) -> Path:
   <div class="header-controls">
     <span class="badge" id="header-count">{len(articles)} כתבות</span>
     <button class="pat-btn admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 PAT</button>
-    <button class="edit-btn" id="editToggle" onclick="toggleEdit()">✏️ עריכה</button>
   </div>
 </header>
 
@@ -745,6 +746,11 @@ function checkAdmin() {{
   const params = new URLSearchParams(window.location.search);
   if (params.get('admin') === ADMIN_PASS) {{
     document.body.classList.add('admin-mode');
+    document.body.classList.add('edit-mode');
+    document.querySelectorAll('.editable').forEach(el => {{
+      el.contentEditable = 'true';
+      el.addEventListener('input', onEdit);
+    }});
     loadPAT();
     if (!GITHUB_PAT) {{
       setTimeout(() => promptForPAT('מצב מנהל פעיל!\\nהכנס GitHub PAT לאישור/דחייה של כתבות:'), 700);
