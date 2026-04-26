@@ -79,28 +79,51 @@ def _status_display(status: str) -> tuple[str, str]:
 
 
 def _nav_html(quarters: dict) -> str:
-    """Flat quarter navigation — always visible, no year-level hierarchy."""
-    sorted_qs = sorted(quarters.keys(), reverse=True)
+    """Year → quarter two-level navigation."""
     total_all = sum(len(v) for v in quarters.values())
 
-    tabs = [
-        f'<button class="qtab qtab-all qtab-active" data-q="all" '
-        f'onclick="selectQ(this,\'all\')">הכל<span class="qtab-badge" id="badge-all">{total_all}</span></button>'
+    # Group quarters by year: {"2026": ["Q1-2026","Q2-2026"], ...}
+    years: dict[str, list[str]] = {}
+    for q in sorted(quarters.keys(), reverse=True):
+        parts = q.split("-", 1)
+        year = parts[1] if len(parts) == 2 else "????"
+        years.setdefault(year, []).append(q)
+
+    q_labels = {"Q1": "רבעון 1", "Q2": "רבעון 2", "Q3": "רבעון 3", "Q4": "רבעון 4"}
+
+    # Year row
+    year_btns = [
+        f'<button class="year-btn year-btn-all year-btn-active" data-year="all" '
+        f'onclick="selectYear(this,\'all\')">הכל<span class="year-badge">{total_all}</span></button>'
     ]
-    for q in sorted_qs:
-        count = len(quarters[q])
-        if "-" in q:
-            qnum, year = q.split("-", 1)
-            label = f"{qnum} '{year[2:]}"
-        else:
-            label = q
-        badge = f'<span class="qtab-badge" id="badge-{q}">{count}</span>'
-        tabs.append(
-            f'<button class="qtab" data-q="{q}" onclick="selectQ(this,\'{q}\')">'
-            f'{label}{badge}</button>'
+    for yr in sorted(years.keys(), reverse=True):
+        yr_total = sum(len(quarters[q]) for q in years[yr])
+        year_btns.append(
+            f'<button class="year-btn" data-year="{yr}" onclick="selectYear(this,\'{yr}\')">'
+            f'{yr}<span class="year-badge">{yr_total}</span></button>'
         )
 
-    return '<div class="qtab-row-flat">\n  ' + "\n  ".join(tabs) + "\n</div>"
+    # Quarter sub-rows (one per year, hidden initially)
+    sub_rows = []
+    for yr in sorted(years.keys(), reverse=True):
+        q_btns = []
+        for q in sorted(years[yr]):          # Q1 before Q2 within year
+            count = len(quarters[q])
+            qnum = q.split("-")[0]           # "Q1"
+            label = q_labels.get(qnum, qnum)
+            q_btns.append(
+                f'<button class="qtab" data-q="{q}" onclick="selectQ(this,\'{q}\')">'
+                f'{label}<span class="qtab-badge" id="qbadge-{q}">{count}</span></button>'
+            )
+        sub_rows.append(
+            f'<div class="quarter-sub-row" data-year="{yr}" style="display:none">'
+            + "".join(q_btns) + '</div>'
+        )
+
+    return (
+        '<div class="year-nav-row">' + "".join(year_btns) + '</div>'
+        + "\n" + "\n".join(sub_rows)
+    )
 
 
 def generate(articles: list[dict]) -> Path:
@@ -228,6 +251,14 @@ def generate(articles: list[dict]) -> Path:
       color: white; padding: 5px 14px; border-radius: 20px;
       font-size: 0.8rem; font-weight: 600;
     }}
+    .pat-btn {{
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+      color: white; padding: 6px 14px; border-radius: 18px;
+      font-size: 0.78rem; cursor: pointer; font-family: inherit; font-weight: 600;
+      transition: all 0.2s; display: none;
+    }}
+    body.admin-mode .pat-btn {{ display: inline-block; }}
+    .pat-btn:hover {{ background: rgba(255,255,255,0.25); }}
     .edit-btn {{
       background: #e94560; border: none; color: white;
       padding: 8px 20px; border-radius: 22px;
@@ -281,11 +312,36 @@ def generate(articles: list[dict]) -> Path:
       box-shadow: 0 1px 6px rgba(0,0,0,0.06);
       border: 1px solid #eaecf0;
     }}
-    .qtab-row-flat {{
+    .year-nav-row {{
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }}
+    .year-btn {{
+      padding: 8px 26px; border-radius: 22px;
+      font-size: 0.88rem; font-weight: 800;
+      border: 2px solid #e2e8f0;
+      background: #f8faff; color: #555;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.15s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }}
+    .year-btn:hover {{ border-color: #0f3460; color: #0f3460; }}
+    .year-btn-active {{
+      background: #0f3460; color: white; border-color: #0f3460;
+      box-shadow: 0 2px 10px rgba(15,52,96,0.3);
+    }}
+    .year-btn-active .year-badge {{ background: rgba(255,255,255,0.25); }}
+    .year-badge {{
+      background: #e94560; color: white;
+      font-size: 0.62rem; padding: 1px 7px;
+      border-radius: 10px; font-weight: 800;
+    }}
+    .quarter-sub-row {{
       display: flex; gap: 8px; flex-wrap: wrap;
+      margin-top: 12px; padding-top: 12px;
+      border-top: 2px dashed #eaecf0;
     }}
     .qtab {{
-      padding: 7px 20px; border-radius: 20px;
+      padding: 7px 22px; border-radius: 20px;
       font-size: 0.82rem; font-weight: 700;
       border: 2px solid #e2e8f0;
       background: #f8faff; color: #555;
@@ -552,6 +608,7 @@ def generate(articles: list[dict]) -> Path:
   </div>
   <div class="header-controls">
     <span class="badge" id="header-count">{len(articles)} כתבות</span>
+    <button class="pat-btn admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 PAT</button>
     <button class="edit-btn" id="editToggle" onclick="toggleEdit()">✏️ עריכה</button>
   </div>
 </header>
@@ -616,40 +673,82 @@ def generate(articles: list[dict]) -> Path:
 </div>
 
 <script>
-const STORAGE_KEY = 'cbp_edits';
-const IMG_KEY     = 'cbp_images';
-const APPROVE_KEY = 'cbp_approved';
-const DELETE_KEY  = 'cbp_deleted';
-const ADMIN_PASS  = '{ADMIN_PASSWORD}';
-const GITHUB_PAT  = '{config.GITHUB_PAT}';
-const GITHUB_REPO = '{config.GITHUB_REPO}';
+const STORAGE_KEY   = 'cbp_edits';
+const IMG_KEY       = 'cbp_images';
+const DELETE_KEY    = 'cbp_deleted';
+const PAT_KEY       = 'cbp_admin_pat';
+const ADMIN_PASS    = '{ADMIN_PASSWORD}';
+const GITHUB_REPO   = '{config.GITHUB_REPO}';
 const APPROVED_FILE = 'state/approved_urls.json';
+let   GITHUB_PAT    = '';
 
-function loadEdits()    {{ try {{ return JSON.parse(localStorage.getItem(STORAGE_KEY)  || '{{}}'); }} catch(e) {{ return {{}}; }} }}
-function saveEdits(e)   {{ localStorage.setItem(STORAGE_KEY,  JSON.stringify(e)); }}
-function loadImgs()     {{ try {{ return JSON.parse(localStorage.getItem(IMG_KEY)      || '{{}}'); }} catch(e) {{ return {{}}; }} }}
-function saveImgs(e)    {{ localStorage.setItem(IMG_KEY,      JSON.stringify(e)); }}
-function loadApproved() {{ try {{ return JSON.parse(localStorage.getItem(APPROVE_KEY) || '[]');  }} catch(e) {{ return []; }} }}
-function saveApproved(a){{ localStorage.setItem(APPROVE_KEY, JSON.stringify(a)); }}
+function loadEdits()    {{ try {{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{{}}'); }} catch(e) {{ return {{}}; }} }}
+function saveEdits(e)   {{ localStorage.setItem(STORAGE_KEY, JSON.stringify(e)); }}
+function loadImgs()     {{ try {{ return JSON.parse(localStorage.getItem(IMG_KEY)     || '{{}}'); }} catch(e) {{ return {{}}; }} }}
+function saveImgs(e)    {{ localStorage.setItem(IMG_KEY,     JSON.stringify(e)); }}
 function loadDeleted()  {{ try {{ return JSON.parse(localStorage.getItem(DELETE_KEY)  || '[]');  }} catch(e) {{ return []; }} }}
 function saveDeleted(d) {{ localStorage.setItem(DELETE_KEY,  JSON.stringify(d)); }}
 
-// ── Quarter navigation ────────────────────────────────────────────────────────
+// ── PAT management ────────────────────────────────────────────────────────────
+function loadPAT() {{
+  GITHUB_PAT = localStorage.getItem(PAT_KEY) || '';
+  return GITHUB_PAT;
+}}
+function savePAT(pat) {{
+  GITHUB_PAT = pat;
+  if (pat) localStorage.setItem(PAT_KEY, pat);
+  else localStorage.removeItem(PAT_KEY);
+}}
+function promptForPAT(msg) {{
+  const current = localStorage.getItem(PAT_KEY) || '';
+  const pat = prompt(msg || 'הכנס GitHub PAT לאישור/דחייה של כתבות:', current);
+  if (pat === null) return false;
+  savePAT(pat.trim());
+  if (GITHUB_PAT) {{ showToast('✓ GitHub PAT נשמר', 'success'); return true; }}
+  return false;
+}}
+function managePAT() {{
+  const cur = localStorage.getItem(PAT_KEY);
+  const info = cur ? 'PAT שמור (מסתיים ב-' + cur.slice(-4) + ')' : 'PAT לא מוגדר';
+  promptForPAT(info + '\\nהכנס PAT חדש (השאר ריק למחיקה):');
+}}
+
+// ── Year / Quarter navigation ─────────────────────────────────────────────────
+function selectYear(btn, year) {{
+  document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('year-btn-active'));
+  btn.classList.add('year-btn-active');
+  document.querySelectorAll('.quarter-sub-row').forEach(r => r.style.display = 'none');
+  document.querySelectorAll('.qtab').forEach(b => b.classList.remove('qtab-active'));
+  if (year === 'all') {{
+    document.querySelectorAll('.quarter-section').forEach(sec => sec.style.display = '');
+  }} else {{
+    const sub = document.querySelector('.quarter-sub-row[data-year="' + year + '"]');
+    if (sub) sub.style.display = 'flex';
+    document.querySelectorAll('.quarter-section').forEach(sec => {{
+      const secYear = (sec.dataset.q || '').split('-')[1];
+      sec.style.display = (secYear === year) ? '' : 'none';
+    }});
+  }}
+  applyDeleted();
+}}
 function selectQ(btn, q) {{
   document.querySelectorAll('.qtab').forEach(b => b.classList.remove('qtab-active'));
   btn.classList.add('qtab-active');
-  const isAdmin = document.body.classList.contains('admin-mode');
   document.querySelectorAll('.quarter-section').forEach(sec => {{
-    sec.style.display = (q === 'all' || sec.dataset.q === q) ? '' : 'none';
+    sec.style.display = (sec.dataset.q === q) ? '' : 'none';
   }});
   applyDeleted();
 }}
 
-// ── Admin mode ──────────────────────────────────────────────────────────────
+// ── Admin mode ────────────────────────────────────────────────────────────────
 function checkAdmin() {{
   const params = new URLSearchParams(window.location.search);
   if (params.get('admin') === ADMIN_PASS) {{
     document.body.classList.add('admin-mode');
+    loadPAT();
+    if (!GITHUB_PAT) {{
+      setTimeout(() => promptForPAT('מצב מנהל פעיל!\\nהכנס GitHub PAT לאישור/דחייה של כתבות:'), 700);
+    }}
   }}
 }}
 
@@ -719,7 +818,7 @@ async function ghPut(path, sha, content, message) {{
 
 // ── Approve ───────────────────────────────────────────────────────────────────
 async function approveArticle(id) {{
-  if (!GITHUB_PAT) {{ showToast('GitHub PAT לא מוגדר', 'error'); return; }}
+  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT לאישור הכתבה:')) return;
   const card = document.querySelector('.article-card[data-id="' + id + '"]');
   if (!card) return;
   const articleUrl = card.dataset.url;
@@ -748,7 +847,7 @@ async function approveArticle(id) {{
 
 // ── Set Pending (unapprove) ───────────────────────────────────────────────────
 async function setPending(id) {{
-  if (!GITHUB_PAT) {{ showToast('GitHub PAT לא מוגדר', 'error'); return; }}
+  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT לדחיית הכתבה:')) return;
   const card = document.querySelector('.article-card[data-id="' + id + '"]');
   if (!card) return;
   const articleUrl = card.dataset.url;
@@ -782,6 +881,7 @@ async function setPending(id) {{
 
 // ── Add Article ───────────────────────────────────────────────────────────────
 async function addArticle() {{
+  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT להוספת כתבה:')) return;
   const title   = document.getElementById('add-title').value.trim();
   const body    = document.getElementById('add-body').value.trim();
   const date    = document.getElementById('add-date').value;
@@ -885,13 +985,24 @@ function updateCounts() {{
   // Update quarter tab badges
   document.querySelectorAll('.qtab[data-q]').forEach(btn => {{
     const q = btn.dataset.q;
-    if (q === 'all') {{
-      const badge = btn.querySelector('.qtab-badge');
-      if (badge) badge.textContent = total;
+    const count = qCounts[q] || 0;
+    const badge = document.getElementById('qbadge-' + q);
+    if (badge) badge.textContent = count;
+  }});
+
+  // Update year-level badges
+  document.querySelectorAll('.year-btn[data-year]').forEach(btn => {{
+    const yr = btn.dataset.year;
+    const badge = btn.querySelector('.year-badge');
+    if (!badge) return;
+    if (yr === 'all') {{
+      badge.textContent = total;
     }} else {{
-      const count = qCounts[q] || 0;
-      const badge = btn.querySelector('.qtab-badge');
-      if (badge) badge.textContent = count;
+      let yrTotal = 0;
+      Object.entries(qCounts).forEach(([q, c]) => {{
+        if ((q.split('-')[1] || '') === yr) yrTotal += c;
+      }});
+      badge.textContent = yrTotal;
     }}
   }});
 
