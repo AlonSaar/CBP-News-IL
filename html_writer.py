@@ -596,7 +596,7 @@ def generate(articles: list[dict]) -> Path:
       <div class="stat-num" id="approved-count">0</div>
       <div class="stat-label">ממתינות לאישור</div>
     </div>
-    <div class="stat-item">
+    <div class="stat-item admin-stat">
       <div class="stat-num">{now_str.split()[0]}</div>
       <div class="stat-label">עודכן</div>
     </div>
@@ -904,6 +904,10 @@ function applyAll() {{
 // ── Init ─────────────────────────────────────────────────────────────────────
 checkAdmin();
 applyAll();
+
+// Auto-expand the most recent year so Q1/Q2/Q3/Q4 are visible immediately
+const firstYearBtn = document.querySelector('.ytab[data-year]:not([data-year="all"])');
+if (firstYearBtn) selectYear(firstYearBtn, firstYearBtn.dataset.year);
 </script>
 </body>
 </html>"""
