@@ -156,19 +156,19 @@ def generate(articles: list[dict]) -> Path:
             maps_url   = _maps_url(location) if location else ""
 
             if image_urls:
-                imgs_html = "\n".join(
+                items_html = "\n".join(
+                    f'<div class="img-item">'
                     f'<img class="article-image" src="{u}" alt="" loading="lazy" '
                     f'onerror="this.style.display=\'none\'">'
-                    for u in image_urls
+                    f'<div class="img-overlay admin-only" onclick="changeImage(\'{art_id}\',{i})">📷 שנה תמונה</div>'
+                    f'</div>'
+                    for i, u in enumerate(image_urls)
                 )
-                img_html = f'''<div class="img-wrapper" data-id="{art_id}">
-          {imgs_html}
-          <div class="img-overlay admin-only" onclick="changeImage('{art_id}')">📷 שנה תמונה</div>
-        </div>'''
+                img_html = f'<div class="img-wrapper" data-id="{art_id}">{items_html}</div>'
             else:
                 img_html = f'''<div class="img-wrapper no-img-wrapper" data-id="{art_id}">
           <div class="no-img"><span>📷</span><small>אין תמונה</small></div>
-          <div class="img-overlay admin-only" onclick="changeImage('{art_id}')">📷 הוסף תמונה</div>
+          <div class="img-overlay admin-only" onclick="changeImage('{art_id}',0)">📷 הוסף תמונה</div>
         </div>'''
 
             maps_link = f'<a class="maps-link" href="{maps_url}" target="_blank" title="פתח במפות Google">🗺️ מפה</a>' if maps_url else ""
@@ -253,14 +253,6 @@ def generate(articles: list[dict]) -> Path:
       color: white; padding: 5px 14px; border-radius: 20px;
       font-size: 0.8rem; font-weight: 600;
     }}
-    .pat-btn {{
-      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
-      color: white; padding: 6px 14px; border-radius: 18px;
-      font-size: 0.78rem; cursor: pointer; font-family: inherit; font-weight: 600;
-      transition: all 0.2s; display: none;
-    }}
-    body.admin-mode .pat-btn {{ display: inline-block; }}
-    .pat-btn:hover {{ background: rgba(255,255,255,0.25); }}
     .edit-btn {{
       background: #e94560; border: none; color: white;
       padding: 8px 20px; border-radius: 22px;
@@ -406,16 +398,18 @@ def generate(articles: list[dict]) -> Path:
 
     /* ── Image ── */
     .img-wrapper {{
-      position: relative; width: 300px;
+      width: 300px;
       align-self: stretch; background: #0d1b3e;
       display: flex; flex-direction: column;
+      overflow: hidden;
     }}
+    .img-item {{
+      position: relative; flex-shrink: 0;
+    }}
+    .img-item + .img-item {{ border-top: 2px solid rgba(255,255,255,0.08); }}
     .article-image {{
       width: 100%; height: auto; display: block;
-      object-fit: contain; flex-shrink: 0;
-    }}
-    .img-wrapper img:not(:only-child) {{
-      flex: 1; height: 0; min-height: 120px; object-fit: contain;
+      object-fit: contain;
     }}
     .no-img {{
       flex: 1; min-height: 200px;
@@ -434,7 +428,8 @@ def generate(articles: list[dict]) -> Path:
       opacity: 0; transition: opacity 0.2s; cursor: pointer;
       backdrop-filter: blur(3px);
     }}
-    body.edit-mode .img-wrapper:hover .img-overlay {{ opacity: 1; }}
+    body.edit-mode .img-item:hover .img-overlay,
+    body.edit-mode .no-img-wrapper:hover .img-overlay {{ opacity: 1; }}
 
     /* ── Content ── */
     .article-content {{
@@ -530,6 +525,7 @@ def generate(articles: list[dict]) -> Path:
       font-size: 0.78rem; font-weight: 700;
       border-bottom: 2px solid #fde68a;
       letter-spacing: 0.3px;
+      grid-column: 1 / -1;
     }}
     body.admin-mode .article-card[data-approved="false"] {{
       border: 2px solid #fbbf24;
@@ -589,6 +585,13 @@ def generate(articles: list[dict]) -> Path:
       text-align: center; padding: 36px; color: #bbb;
       font-size: 0.78rem; border-top: 1px solid #eaecf0; margin-top: 20px;
     }}
+    .pat-btn-footer {{
+      background: #f1f5f9; border: 1px solid #e2e8f0;
+      color: #94a3b8; padding: 5px 14px; border-radius: 14px;
+      font-size: 0.72rem; cursor: pointer; font-family: inherit; font-weight: 600;
+      transition: all 0.2s;
+    }}
+    .pat-btn-footer:hover {{ background: #e2e8f0; color: #64748b; }}
 
     @media (max-width: 740px) {{
       .article-card {{ grid-template-columns: 1fr; }}
@@ -610,7 +613,6 @@ def generate(articles: list[dict]) -> Path:
   </div>
   <div class="header-controls">
     <span class="badge" id="header-count">{len(articles)} כתבות</span>
-    <button class="pat-btn admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 PAT</button>
   </div>
 </header>
 
@@ -650,7 +652,10 @@ def generate(articles: list[dict]) -> Path:
 </div>
 
 <div class="page-footer">
-  נוצר אוטומטית על ידי cbp-translator · {now_str}
+  נוצר על ידי אלון סער · {now_str}
+  <span class="admin-only" style="margin-right:16px;">
+    <button class="pat-btn-footer admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 GitHub PAT</button>
+  </span>
 </div>
 
 <!-- Add Article Modal (admin only) -->
@@ -782,13 +787,14 @@ function onEdit(e) {{
 }}
 
 // ── Image change ─────────────────────────────────────────────────────────────
-function changeImage(id) {{
+function changeImage(id, idx) {{
   if (!document.body.classList.contains('edit-mode')) return;
-  const newUrl = prompt('הכנס URL של תמונה:', loadImgs()[id] || '');
+  const key = id + '__' + (idx || 0);
+  const newUrl = prompt('הכנס URL של תמונה:', loadImgs()[key] || '');
   if (newUrl === null) return;
   const imgs = loadImgs();
-  if (newUrl.trim() === '') delete imgs[id];
-  else imgs[id] = newUrl.trim();
+  if (newUrl.trim() === '') delete imgs[key];
+  else imgs[key] = newUrl.trim();
   saveImgs(imgs);
   applyAll();
 }}
@@ -870,6 +876,7 @@ async function setPending(id) {{
     if (!card.querySelector('.pending-banner')) {{
       const banner = document.createElement('div');
       banner.className = 'pending-banner';
+      banner.style.gridColumn = '1 / -1';
       banner.textContent = '⏳ ממתין לאישור מנהל — לא מוצג למשתמשים רגילים';
       card.insertBefore(banner, card.firstChild);
     }}
@@ -1029,18 +1036,25 @@ function applyEditsAndImages() {{
     if (edits[key] !== undefined) el.innerHTML = edits[key];
   }});
   const imgs = loadImgs();
-  Object.entries(imgs).forEach(([id, url]) => {{
+  Object.entries(imgs).forEach(([key, url]) => {{
+    const parts = key.split('__');
+    const id = parts[0], idx = parseInt(parts[1] || '0', 10);
     const wrapper = document.querySelector(`.img-wrapper[data-id="${{id}}"]`);
     if (!wrapper) return;
-    let img = wrapper.querySelector('img.article-image');
-    if (img) {{ img.src = url; img.style.display = ''; }}
-    else {{
+    const imgItems = wrapper.querySelectorAll('.img-item');
+    if (imgItems[idx]) {{
+      const img = imgItems[idx].querySelector('img.article-image');
+      if (img) {{ img.src = url; img.style.display = ''; }}
+    }} else if (wrapper.classList.contains('no-img-wrapper')) {{
+      wrapper.classList.remove('no-img-wrapper');
       const noImg = wrapper.querySelector('.no-img');
       if (noImg) noImg.remove();
-      wrapper.classList.remove('no-img-wrapper');
+      const item = document.createElement('div');
+      item.className = 'img-item';
       const newImg = document.createElement('img');
       newImg.className = 'article-image'; newImg.src = url; newImg.alt = ''; newImg.loading = 'lazy';
-      wrapper.insertBefore(newImg, wrapper.querySelector('.img-overlay'));
+      item.appendChild(newImg);
+      wrapper.insertBefore(item, wrapper.firstChild);
     }}
   }});
 }}

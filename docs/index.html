@@ -38,14 +38,6 @@
       color: white; padding: 5px 14px; border-radius: 20px;
       font-size: 0.8rem; font-weight: 600;
     }
-    .pat-btn {
-      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
-      color: white; padding: 6px 14px; border-radius: 18px;
-      font-size: 0.78rem; cursor: pointer; font-family: inherit; font-weight: 600;
-      transition: all 0.2s; display: none;
-    }
-    body.admin-mode .pat-btn { display: inline-block; }
-    .pat-btn:hover { background: rgba(255,255,255,0.25); }
     .edit-btn {
       background: #e94560; border: none; color: white;
       padding: 8px 20px; border-radius: 22px;
@@ -191,16 +183,18 @@
 
     /* ── Image ── */
     .img-wrapper {
-      position: relative; width: 300px;
+      width: 300px;
       align-self: stretch; background: #0d1b3e;
       display: flex; flex-direction: column;
+      overflow: hidden;
     }
+    .img-item {
+      position: relative; flex-shrink: 0;
+    }
+    .img-item + .img-item { border-top: 2px solid rgba(255,255,255,0.08); }
     .article-image {
       width: 100%; height: auto; display: block;
-      object-fit: contain; flex-shrink: 0;
-    }
-    .img-wrapper img:not(:only-child) {
-      flex: 1; height: 0; min-height: 120px; object-fit: contain;
+      object-fit: contain;
     }
     .no-img {
       flex: 1; min-height: 200px;
@@ -219,7 +213,8 @@
       opacity: 0; transition: opacity 0.2s; cursor: pointer;
       backdrop-filter: blur(3px);
     }
-    body.edit-mode .img-wrapper:hover .img-overlay { opacity: 1; }
+    body.edit-mode .img-item:hover .img-overlay,
+    body.edit-mode .no-img-wrapper:hover .img-overlay { opacity: 1; }
 
     /* ── Content ── */
     .article-content {
@@ -315,6 +310,7 @@
       font-size: 0.78rem; font-weight: 700;
       border-bottom: 2px solid #fde68a;
       letter-spacing: 0.3px;
+      grid-column: 1 / -1;
     }
     body.admin-mode .article-card[data-approved="false"] {
       border: 2px solid #fbbf24;
@@ -374,6 +370,13 @@
       text-align: center; padding: 36px; color: #bbb;
       font-size: 0.78rem; border-top: 1px solid #eaecf0; margin-top: 20px;
     }
+    .pat-btn-footer {
+      background: #f1f5f9; border: 1px solid #e2e8f0;
+      color: #94a3b8; padding: 5px 14px; border-radius: 14px;
+      font-size: 0.72rem; cursor: pointer; font-family: inherit; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .pat-btn-footer:hover { background: #e2e8f0; color: #64748b; }
 
     @media (max-width: 740px) {
       .article-card { grid-template-columns: 1fr; }
@@ -395,7 +398,6 @@
   </div>
   <div class="header-controls">
     <span class="badge" id="header-count">33 כתבות</span>
-    <button class="pat-btn admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 PAT</button>
   </div>
 </header>
 
@@ -436,12 +438,9 @@
   <div class="quarter-section" data-q="Q2-2026">
     
       <div class="article-card" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing">
-        <div class="img-wrapper" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/compartment_2.jpg.webp?itok=v7frzGzA" alt="" loading="lazy" onerror="this.style.display='none'">
-<img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/weapons_in_compartment_2.jpg.webp?itok=GCAGms-X" alt="" loading="lazy" onerror="this.style.display='none'">
-<img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/weapons_total.jpg.webp?itok=cOw5Q50t" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-weapons-and-parts-deconcini-crossing')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/compartment_2.jpg.webp?itok=v7frzGzA" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-weapons-and-parts-deconcini-crossing',0)">📷 שנה תמונה</div></div>
+<div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/weapons_in_compartment_2.jpg.webp?itok=GCAGms-X" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-weapons-and-parts-deconcini-crossing',1)">📷 שנה תמונה</div></div>
+<div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/weapons_total.jpg.webp?itok=cOw5Q50t" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-weapons-and-parts-deconcini-crossing',2)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -478,7 +477,7 @@
       <div class="article-card" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">
         <div class="img-wrapper no-img-wrapper" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">
           <div class="no-img"><span>📷</span><small>אין תמונה</small></div>
-          <div class="img-overlay admin-only" onclick="changeImage('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture')">📷 הוסף תמונה</div>
+          <div class="img-overlay admin-only" onclick="changeImage('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture',0)">📷 הוסף תמונה</div>
         </div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -515,10 +514,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international">
-        <div class="img-wrapper" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-11-million-cocaine-pharr-international')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-11-million-cocaine-pharr-international',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -549,10 +545,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
-        <div class="img-wrapper" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/78lbscocbushgo41126.jpg.webp?itok=9AhWoC4i" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/78lbscocbushgo41126.jpg.webp?itok=9AhWoC4i" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -584,10 +577,7 @@
         </div>
       </div>
       <div class="article-card" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
-        <div class="img-wrapper" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/26_0416_image_full-gross-weight.jpg.webp?itok=K63KAngi" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/26_0416_image_full-gross-weight.jpg.webp?itok=K63KAngi" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -619,10 +609,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
-        <div class="img-wrapper" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/campos_1.jpg.webp?itok=tfc0kytT" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/campos_1.jpg.webp?itok=tfc0kytT" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -657,10 +644,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge">
-        <div class="img-wrapper" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-605k-cocaine-pharr-international-bridge')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-605k-cocaine-pharr-international-bridge',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -691,10 +675,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international">
-        <div class="img-wrapper" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-11-million-cocaine-pharr-international')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-11-million-cocaine-pharr-international',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -727,10 +708,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-6-million-methamphetamine-world-trade">
-        <div class="img-wrapper" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resizenearly663lbsmethwtb21326.jpg.webp?itok=HXiMTyPm" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-nearly-6-million-methamphetamine-world-trade')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resizenearly663lbsmethwtb21326.jpg.webp?itok=HXiMTyPm" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-nearly-6-million-methamphetamine-world-trade',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -762,10 +740,7 @@
         </div>
       </div>
       <div class="article-card" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
-        <div class="img-wrapper" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/26_0416_image_full-gross-weight.jpg.webp?itok=K63KAngi" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/26_0416_image_full-gross-weight.jpg.webp?itok=K63KAngi" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -797,10 +772,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
-        <div class="img-wrapper" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/78lbscocbushgo41126.jpg.webp?itok=9AhWoC4i" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/78lbscocbushgo41126.jpg.webp?itok=9AhWoC4i" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -832,10 +804,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
-        <div class="img-wrapper" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/campos_1.jpg.webp?itok=tfc0kytT" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/campos_1.jpg.webp?itok=tfc0kytT" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -870,10 +839,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge">
-        <div class="img-wrapper" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-605k-cocaine-pharr-international-bridge')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-605k-cocaine-pharr-international-bridge',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -904,11 +870,8 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry">
-        <div class="img-wrapper" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resize112lbsmethwtb33126.jpg.webp?itok=VRkeE3bG" alt="" loading="lazy" onerror="this.style.display='none'">
-<img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/25lbscocjlb40126.png.webp?itok=Lx5HlE0_" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resize112lbsmethwtb33126.jpg.webp?itok=VRkeE3bG" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry',0)">📷 שנה תמונה</div></div>
+<div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/25lbscocjlb40126.png.webp?itok=Lx5HlE0_" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -941,11 +904,8 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry">
-        <div class="img-wrapper" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/237lbsmethep32926.jpg.webp?itok=4BaetAHm" alt="" loading="lazy" onerror="this.style.display='none'">
-<img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/57lbscocep32726.jpeg.webp?itok=bc2P-Qwa" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/237lbsmethep32926.jpg.webp?itok=4BaetAHm" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry',0)">📷 שנה תמונה</div></div>
+<div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/57lbscocep32726.jpeg.webp?itok=bc2P-Qwa" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -979,10 +939,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-26-million-methamphetamine-pharr">
-        <div class="img-wrapper" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/nearly298lbsmethpharr33026.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-26-million-methamphetamine-pharr')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/nearly298lbsmethpharr33026.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-26-million-methamphetamine-pharr',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1018,10 +975,7 @@
   <div class="quarter-section" data-q="Q1-2026">
     
       <div class="article-card" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry">
-        <div class="img-wrapper" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/fentanyl_seizure.png.webp?itok=ZzZXNoHr" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/fentanyl_seizure.png.webp?itok=ZzZXNoHr" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1057,11 +1011,8 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-17-million-methamphetamine-pharr">
-        <div class="img-wrapper" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326a.jpg.webp?itok=6sJoCrPL" alt="" loading="lazy" onerror="this.style.display='none'">
-<img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326b.png.webp?itok=lwLamS0c" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-17-million-methamphetamine-pharr')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326a.jpg.webp?itok=6sJoCrPL" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-17-million-methamphetamine-pharr',0)">📷 שנה תמונה</div></div>
+<div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326b.png.webp?itok=lwLamS0c" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-17-million-methamphetamine-pharr',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1094,11 +1045,8 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port">
-        <div class="img-wrapper" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_weight_lbs_1.jpg.webp?itok=-d35IvoQ" alt="" loading="lazy" onerror="this.style.display='none'">
-<img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_76.10_lbs_.jpg.webp?itok=rz0GXtG8" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_weight_lbs_1.jpg.webp?itok=-d35IvoQ" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port',0)">📷 שנה תמונה</div></div>
+<div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_76.10_lbs_.jpg.webp?itok=rz0GXtG8" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1134,10 +1082,7 @@
         </div>
       </div>
       <div class="article-card" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank">
-        <div class="img-wrapper" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/gmc_-_gas_tank_non-factory_compartment_mw_discovered.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/gmc_-_gas_tank_non-factory_compartment_mw_discovered.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1168,10 +1113,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port">
-        <div class="img-wrapper" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipofdrmixednarco31026.png.webp?itok=JkaUu_1G" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipofdrmixednarco31026.png.webp?itok=JkaUu_1G" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1204,10 +1146,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge">
-        <div class="img-wrapper" data-id="cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resizecocherwtb31126.jpg.webp?itok=lCXv4BiQ" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resizecocherwtb31126.jpg.webp?itok=lCXv4BiQ" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1239,10 +1178,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercepted-three-live-parrots-brownsville-port-entry">
-        <div class="img-wrapper" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/3parrotsbro31326.png.webp?itok=UPFFCUg3" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-intercepted-three-live-parrots-brownsville-port-entry')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/3parrotsbro31326.png.webp?itok=UPFFCUg3" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-intercepted-three-live-parrots-brownsville-port-entry',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1278,10 +1214,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor">
-        <div class="img-wrapper" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/buckets.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/buckets.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1316,11 +1249,8 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercept-live-pythons-world-trade-bridge">
-        <div class="img-wrapper" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526b.png.webp?itok=shHUVhJu" alt="" loading="lazy" onerror="this.style.display='none'">
-<img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526a.png.webp?itok=P8FXeufU" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-intercept-live-pythons-world-trade-bridge')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526b.png.webp?itok=shHUVhJu" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-intercept-live-pythons-world-trade-bridge',0)">📷 שנה תמונה</div></div>
+<div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526a.png.webp?itok=P8FXeufU" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-intercept-live-pythons-world-trade-bridge',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1356,10 +1286,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas">
-        <div class="img-wrapper" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/raul_hector_port_of_entry_weapons_seizure.jpg.webp?itok=VvW9kPOA" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/raul_hector_port_of_entry_weapons_seizure.jpg.webp?itok=VvW9kPOA" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1390,10 +1317,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel">
-        <div class="img-wrapper" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/puerto_rico_seizure.jpg.webp?itok=y4oMSGk8" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/puerto_rico_seizure.jpg.webp?itok=y4oMSGk8" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1426,10 +1350,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-over-1m-methamphetamine-roma-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-1m-methamphetamine-roma-port-entry">
-        <div class="img-wrapper" data-id="cbp-officers-seize-over-1m-methamphetamine-roma-port-entry">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipof121lbsmethrma30826.png.webp?itok=TwIWwHHA" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-1m-methamphetamine-roma-port-entry')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-over-1m-methamphetamine-roma-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipof121lbsmethrma30826.png.webp?itok=TwIWwHHA" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-1m-methamphetamine-roma-port-entry',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1461,10 +1382,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity">
-        <div class="img-wrapper" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/test_0.jpg.webp?itok=-IHfyKsv" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/test_0.jpg.webp?itok=-IHfyKsv" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1497,10 +1415,7 @@
         </div>
       </div>
       <div class="article-card" data-id="hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully">
-        <div class="img-wrapper" data-id="hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/hn1app21926.jpeg.webp?itok=7Xk9gtK_" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/hn1app21926.jpeg.webp?itok=7Xk9gtK_" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('hidalgo-cbp-officers-apprehend-five-illegal-aliens-unlawfully',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1531,10 +1446,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry">
-        <div class="img-wrapper" data-id="cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resize65lbsmethcolsol20826.jpg.webp?itok=l6-hF0r2" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resize65lbsmethcolsol20826.jpg.webp?itok=l6-hF0r2" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1566,10 +1478,7 @@
         </div>
       </div>
       <div class="article-card" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-world-trade-bridge-seize-over-68-million-cocaine">
-        <div class="img-wrapper" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/resizenearly517lbscocwtb21026.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-world-trade-bridge-seize-over-68-million-cocaine')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/resizenearly517lbscocwtb21026.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-world-trade-bridge-seize-over-68-million-cocaine',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1600,10 +1509,7 @@
         </div>
       </div>
       <div class="article-card" data-id="us-border-patrol-agents-disrupt-alien-smuggling-operation" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/us-border-patrol-agents-disrupt-alien-smuggling-operation">
-        <div class="img-wrapper" data-id="us-border-patrol-agents-disrupt-alien-smuggling-operation">
-          <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/02122026_el_centro_human_smuggling_pr.jpg.webp?itok=ourt3YXJ" alt="" loading="lazy" onerror="this.style.display='none'">
-          <div class="img-overlay admin-only" onclick="changeImage('us-border-patrol-agents-disrupt-alien-smuggling-operation')">📷 שנה תמונה</div>
-        </div>
+        <div class="img-wrapper" data-id="us-border-patrol-agents-disrupt-alien-smuggling-operation"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/02122026_el_centro_human_smuggling_pr.jpg.webp?itok=ourt3YXJ" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('us-border-patrol-agents-disrupt-alien-smuggling-operation',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
@@ -1642,7 +1548,10 @@
 </div>
 
 <div class="page-footer">
-  נוצר אוטומטית על ידי cbp-translator · 26/04/2026 18:08
+  נוצר על ידי אלון סער · 26/04/2026 18:25
+  <span class="admin-only" style="margin-right:16px;">
+    <button class="pat-btn-footer admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 GitHub PAT</button>
+  </span>
 </div>
 
 <!-- Add Article Modal (admin only) -->
@@ -1774,13 +1683,14 @@ function onEdit(e) {
 }
 
 // ── Image change ─────────────────────────────────────────────────────────────
-function changeImage(id) {
+function changeImage(id, idx) {
   if (!document.body.classList.contains('edit-mode')) return;
-  const newUrl = prompt('הכנס URL של תמונה:', loadImgs()[id] || '');
+  const key = id + '__' + (idx || 0);
+  const newUrl = prompt('הכנס URL של תמונה:', loadImgs()[key] || '');
   if (newUrl === null) return;
   const imgs = loadImgs();
-  if (newUrl.trim() === '') delete imgs[id];
-  else imgs[id] = newUrl.trim();
+  if (newUrl.trim() === '') delete imgs[key];
+  else imgs[key] = newUrl.trim();
   saveImgs(imgs);
   applyAll();
 }
@@ -1862,6 +1772,7 @@ async function setPending(id) {
     if (!card.querySelector('.pending-banner')) {
       const banner = document.createElement('div');
       banner.className = 'pending-banner';
+      banner.style.gridColumn = '1 / -1';
       banner.textContent = '⏳ ממתין לאישור מנהל — לא מוצג למשתמשים רגילים';
       card.insertBefore(banner, card.firstChild);
     }
@@ -2021,18 +1932,25 @@ function applyEditsAndImages() {
     if (edits[key] !== undefined) el.innerHTML = edits[key];
   });
   const imgs = loadImgs();
-  Object.entries(imgs).forEach(([id, url]) => {
+  Object.entries(imgs).forEach(([key, url]) => {
+    const parts = key.split('__');
+    const id = parts[0], idx = parseInt(parts[1] || '0', 10);
     const wrapper = document.querySelector(`.img-wrapper[data-id="${id}"]`);
     if (!wrapper) return;
-    let img = wrapper.querySelector('img.article-image');
-    if (img) { img.src = url; img.style.display = ''; }
-    else {
+    const imgItems = wrapper.querySelectorAll('.img-item');
+    if (imgItems[idx]) {
+      const img = imgItems[idx].querySelector('img.article-image');
+      if (img) { img.src = url; img.style.display = ''; }
+    } else if (wrapper.classList.contains('no-img-wrapper')) {
+      wrapper.classList.remove('no-img-wrapper');
       const noImg = wrapper.querySelector('.no-img');
       if (noImg) noImg.remove();
-      wrapper.classList.remove('no-img-wrapper');
+      const item = document.createElement('div');
+      item.className = 'img-item';
       const newImg = document.createElement('img');
       newImg.className = 'article-image'; newImg.src = url; newImg.alt = ''; newImg.loading = 'lazy';
-      wrapper.insertBefore(newImg, wrapper.querySelector('.img-overlay'));
+      item.appendChild(newImg);
+      wrapper.insertBefore(item, wrapper.firstChild);
     }
   });
 }
