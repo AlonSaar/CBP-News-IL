@@ -1010,6 +1010,9 @@ function updateCounts() {{
   const activeQs = Object.values(qCounts).filter(c => c > 0).length;
   const qCountEl = document.getElementById('quarters-count');
   if (qCountEl) qCountEl.textContent = activeQs;
+
+  // Sync admin approved/pending counts
+  updateApprovedCount();
 }}
 
 // ── Apply saved edits & images ───────────────────────────────────────────────
