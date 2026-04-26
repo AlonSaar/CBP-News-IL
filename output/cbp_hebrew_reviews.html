@@ -226,6 +226,25 @@
       unicode-bidi: plaintext;
     }
     .article-location::before { content: "📍"; font-size: 0.75rem; margin-left: 4px; }
+    .article-location-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 6px;
+    }
+    .article-location-row .article-location { margin-bottom: 0; }
+    .maps-link {
+      font-size: 0.75rem; white-space: nowrap;
+      color: #4c5fd5; text-decoration: none;
+      background: #eef2ff; padding: 2px 8px;
+      border-radius: 8px; border: 1px solid #d8deff;
+      font-weight: 600; transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .maps-link:hover { background: #4c5fd5; color: white; }
+    .article-crossing-detail {
+      font-size: 0.75rem; color: #888; font-weight: 400;
+      margin-bottom: 10px; text-align: right; direction: rtl;
+      line-height: 1.5;
+    }
     .article-body {
       font-size: 0.88rem; color: #4a4a5a;
       direction: rtl; text-align: right;
@@ -310,7 +329,7 @@
     <h1>סקירות CBP | נציגות ניו יורק</h1>
   </div>
   <div class="header-controls">
-    <span class="badge">7 כתבות</span>
+    <span class="badge" id="header-count">7 כתבות</span>
     <button class="edit-btn" id="editToggle" onclick="toggleEdit()">✏️ עריכה</button>
   </div>
 </header>
@@ -318,11 +337,11 @@
 <div class="container">
   <div class="stats-bar">
     <div class="stat-item">
-      <div class="stat-num">7</div>
+      <div class="stat-num" id="total-count">7</div>
       <div class="stat-label">כתבות מתורגמות</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">1</div>
+      <div class="stat-num" id="quarters-count">1</div>
       <div class="stat-label">רבעונים</div>
     </div>
     <div class="stat-item">
@@ -362,10 +381,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין ארצות הברית למקסיקו</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין ארצות הברית למקסיקו">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl">תפיסת משגר רקטות, רובים ואביזרי נשק בניסיון הברחה למקסיקו במעבר DeConcini</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl">נמל הכניסה נוגאלס - DeConcini Crossing, אריזונה</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl">נמל הכניסה נוגאלס - DeConcini Crossing, אריזונה</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=DeConcini+Crossing%2C+%D7%90%D7%A8%D7%99%D7%96%D7%95%D7%A0%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין ארצות הברית למקסיקו</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl"><p dir="rtl">ב-19 באפריל 2026 תפסו קציני CBP העוסקים במבצעי אכיפה יוצאת בנמל הכניסה נוגאלס, מעבר DeConcini שבאריזונה, כמות גדולה של נשק ואביזרים שהוסתרו בתא סמוי ברכב, שנהגה בו אזרחית אמריקאית בת 41 בעת ניסיונה לצאת מארצות הברית ולהיכנס למקסיקו.</p>
 <p dir="rtl">האישה נהגה ב-Lexus IS 200t משנת 2016 ואליה נלוו שלושה קטינים.</p>
 <p dir="rtl">הקצין הראשי בבדיקה ההתחלתית הפנה את הרכב לבדיקה משנית.</p>
@@ -395,10 +418,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר אווירי בינלאומי</span>
+              <span class="article-crossing" dir="rtl" title="מעבר אווירי בינלאומי">✈️ מעבר אווירי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl">איתור קוף ו-125 פאונד בשר אסור על ידי מומחי החקלאות של CBP בשדה התעופה אוהר בשיקגו</div>
-            <div class="article-location editable" data-field="location" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl">נמל הכניסה שיקגו - O'Hare International Airport, אילינוי</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl">נמל הכניסה שיקגו - O'Hare International Airport, אילינוי</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=O%27Hare+International+Airport%2C+%D7%90%D7%99%D7%9C%D7%99%D7%A0%D7%95%D7%99" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר אווירי בינלאומי</div>
             <div class="article-body editable" data-field="body" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl"><p dir="rtl">ב-11 באפריל 2026 תפסו מומחי החקלאות של CBP בשדה התעופה הבינלאומי O'Hare בשיקגו שני ממצאים חריגים באירועים נפרדים.</p>
 <p dir="rtl">באירוע הראשון, קצין CBP הפנה נוסע שהגיע מקמרון לבדיקה חקלאית משנית.</p>
 <p dir="rtl">במהלך סריקת המזוודה אותרה אנומליה, ובעקבותיה בוצע חיפוש יסודי שבו גילה מומחה חקלאות של CBP גופת קוף בתוך כבודת הנוסע.</p>
@@ -429,10 +456,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl">תפיסת 83 פאונד קוקאין בשווי 1.1 מיליון דולר מוסתרים בריצפת נגרר בגשר Pharr International Bridge</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl">נמל הכניסה פאר - Pharr International Bridge, טקסס</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl">נמל הכניסה פאר - Pharr International Bridge, טקסס</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Pharr+International+Bridge%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl"><p dir="rtl">ב-15 באפריל 2026 תפסו קציני CBP במתקן המטען של Pharr International Bridge 32 חבילות קוקאין שהוסתרו בתוך ריצפת נגרר ריק, במשקל כולל של 83.24 פאונד (37.76 קילוגרם) ובשווי מוערך של 1,111,503 דולר.</p>
 <p dir="rtl">הנגרר הגיע ממטמורי מקסיקו, והכלי הרכב המסחרי הופנה לבדיקה משנית לאחר שסוכני CBP זיהו אותו כחשוד.</p>
 <p dir="rtl">הבדיקה כללה שימוש בציוד סריקה לא-חודרני וכן בדיקה של צוות כלב גילוי, ולאחריהן בוצעה בדיקה פיזית שהובילה לאיתור הסמים בתוך ריצפת הנגרר.</p>
@@ -458,10 +489,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" dir="rtl">תפיסת 78 פאונד קוקאין בשווי מיליון דולר מוסתרים במושבי אוטובוס בהידלגו</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" dir="rtl">נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" dir="rtl">נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Hidalgo+Port+of+Entry%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" dir="rtl"><p dir="rtl">ב-11 באפריל 2026, קציני CBP בגשר הבינלאומי Hidalgo International Bridge הפנו אוטובוס נוסעים מסחרי לבדיקה משנית.</p>
 <p dir="rtl">בעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו בתוך מושבי האוטובוס 36 חבילות שהכילו קוקאין, במשקל כולל של 78 פאונד.</p>
 <p dir="rtl">שווי הסמים ברחוב הוערך בכ-1,042,034 דולר.</p>
@@ -488,10 +523,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" dir="rtl">תפיסת למעלה מ-60 פאונד קוקאין בשווי 1.15 מיליון דולר מנוסע מהימן בנמל סן יסידרו</div>
-            <div class="article-location editable" data-field="location" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" dir="rtl">נמל הכניסה סן יסידרו - San Ysidro Port of Entry, קליפורניה</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" dir="rtl">נמל הכניסה סן יסידרו - San Ysidro Port of Entry, קליפורניה</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=San+Ysidro+Port+of+Entry%2C+%D7%A7%D7%9C%D7%99%D7%A4%D7%95%D7%A8%D7%A0%D7%99%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</div>
             <div class="article-body editable" data-field="body" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" dir="rtl"><p dir="rtl">קציני CBP בנמל הכניסה סן יסידרו תפסו 60.14 פאונד קוקאין שהוסתרו בתוך דלתות רכבו של נוסע הרשום בתוכנית Secure Electronic Network for Travelers Rapid Inspection.</p>
 <p dir="rtl">קצינים הפנו לבדיקה משנית גבר בן 25, אזרח אמריקאי, שנהג ב-Honda Civic משנת 2020.</p>
 <p dir="rtl">במהלך הבדיקה המשנית, טכנולוגיית סריקה בלתי פולשנית חשפה חריגות בדלתות הרכב, וצוות כלבי הגילוי של CBP התריע על נוכחות סמים.</p>
@@ -518,10 +557,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" dir="rtl">תפיסת למעלה מ-430 פאונד קוקאין ומתאמפטמין בשווי 2.8 מיליון דולר בנמל אוטאי מסה בשתי פעולות אכיפה נפרדות</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" dir="rtl">נמל הכניסה אוטאי מסה - Otay Mesa Port of Entry, קליפורניה</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" dir="rtl">נמל הכניסה אוטאי מסה - Otay Mesa Port of Entry, קליפורניה</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Otay+Mesa+Port+of+Entry%2C+%D7%A7%D7%9C%D7%99%D7%A4%D7%95%D7%A8%D7%A0%D7%99%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" dir="rtl"><p dir="rtl">קציני CBP בנמל הכניסה Otay Mesa תפסו למעלה מ-430 פאונד של קוקאין ומתאמפטמין בשתי פעולות אכיפה נפרדות שהתרחשו ב-7 וב-8 באפריל 2026.</p>
 <p dir="rtl">בפעולה הראשונה, ב-7 באפריל, הופנה לבדיקה משנית גבר מקסיקני בן 51 שנהג ברכב Toyota Prius.</p>
 <p dir="rtl">צוות כלבי הגילוי של CBP התריע על הרכב, ובחיפוש פיזי אותרו 44 חבילות קוקאין שהוסתרו בתוך דלתות הרכב, המושב האחורי ולוחות הדופן האחוריים.</p>
@@ -551,10 +594,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" dir="rtl">תפיסת 45.37 פאונד קוקאין בשווי 605,000 דולר ברכב נוסעים בגשר פאר הבינלאומי</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" dir="rtl">נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" dir="rtl">נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Hidalgo+Port+of+Entry%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" dir="rtl"><p dir="rtl">ב-6 באפריל 2026 תפסו קציני CBP בגשר פאר הבינלאומי (Pharr International Bridge) 45.37 פאונד קוקאין שהוסתרו בתוך רכב נוסעים מסוג Chrysler 200.</p>
 <p dir="rtl">הרכב הופנה לבדיקה משנית על ידי קצין CBP, ובעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו ברכב 19 חבילות ובהן הסם החשוד.</p>
 <p dir="rtl">שווי הרחוב המוערך של הסמים עומד על 605,792 דולר.</p>
@@ -575,7 +622,7 @@
 </div>
 
 <div class="page-footer">
-  נוצר אוטומטית על ידי cbp-translator · 23/04/2026 11:12
+  נוצר אוטומטית על ידי cbp-translator · 23/04/2026 19:14
 </div>
 
 <script>
@@ -724,6 +771,54 @@ function applyDeleted() {
   document.querySelectorAll('.article-card').forEach(card => {
     card.classList.toggle('hidden', deleted.includes(card.dataset.id));
   });
+  updateCounts();
+}
+
+function updateCounts() {
+  const deleted = loadDeleted();
+  let total = 0;
+  const qCounts = {};
+
+  document.querySelectorAll('.article-card').forEach(card => {
+    if (!deleted.includes(card.dataset.id)) {
+      total++;
+      const q = card.dataset.q;
+      qCounts[q] = (qCounts[q] || 0) + 1;
+    }
+  });
+
+  // Update stats bar
+  const totalEl = document.getElementById('total-count');
+  if (totalEl) totalEl.textContent = total;
+  const headerEl = document.getElementById('header-count');
+  if (headerEl) headerEl.textContent = total + ' כתבות';
+
+  // Update quarter badges
+  document.querySelectorAll('.qtab[data-q]').forEach(btn => {
+    const q = btn.dataset.q;
+    const count = qCounts[q] || 0;
+    const badge = btn.querySelector('.qtab-badge');
+    if (badge) badge.textContent = count;
+    if (count === 0) { btn.classList.add('qtab-empty'); btn.disabled = true; }
+    else { btn.classList.remove('qtab-empty'); btn.disabled = false; }
+  });
+
+  // Update year badges
+  document.querySelectorAll('.ytab[data-year]').forEach(btn => {
+    const year = btn.dataset.year;
+    if (year === 'all') return;
+    let yearTotal = 0;
+    for (const [q, c] of Object.entries(qCounts)) {
+      if (q.endsWith('-' + year)) yearTotal += c;
+    }
+    const badge = btn.querySelector('.qtab-badge');
+    if (badge) badge.textContent = yearTotal;
+  });
+
+  // Update quarters count (only quarters with remaining articles)
+  const activeQs = Object.values(qCounts).filter(c => c > 0).length;
+  const qCountEl = document.getElementById('quarters-count');
+  if (qCountEl) qCountEl.textContent = activeQs;
 }
 
 // ── Apply saved edits & images ───────────────────────────────────────────────

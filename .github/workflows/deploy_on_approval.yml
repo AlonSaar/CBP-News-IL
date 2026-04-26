@@ -1,0 +1,52 @@
+name: Deploy on Approval
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'state/approved_urls.json'
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Regenerate HTML with updated approvals
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+        run: python pipeline.py --regenerate-only --verbose
+
+      - name: Copy HTML to docs/ for GitHub Pages
+        run: |
+          cp output/cbp_hebrew_reviews.html docs/index.html
+          echo "Copied HTML to docs/index.html"
+
+      - name: Commit and push
+        run: |
+          git config user.name  "CBP Bot"
+          git config user.email "cbp-bot@users.noreply.github.com"
+          git add docs/ output/ state/articles.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Redeploy: approval update $(date -u +%Y-%m-%d)"
+            git push
+          fi

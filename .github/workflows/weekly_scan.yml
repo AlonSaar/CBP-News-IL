@@ -15,6 +15,10 @@ on:
         description: 'End date (YYYY-MM-DD). Leave empty for last 7 days.'
         required: false
         default: ''
+      reprocess:
+        description: 'Set to "true" to re-translate already-seen articles (ignores dedupe store).'
+        required: false
+        default: 'false'
 
 jobs:
   scan-and-deploy:
@@ -37,11 +41,16 @@ jobs:
       - name: Run pipeline
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
         run: |
+          REPROCESS=""
+          if [ "${{ github.event.inputs.reprocess }}" = "true" ]; then
+            REPROCESS="--reprocess"
+          fi
           if [ -n "${{ github.event.inputs.since }}" ]; then
-            python pipeline.py --since "${{ github.event.inputs.since }}" --until "${{ github.event.inputs.until }}" --verbose
+            python pipeline.py --since "${{ github.event.inputs.since }}" --until "${{ github.event.inputs.until }}" $REPROCESS --verbose
           else
-            python pipeline.py --last-week --verbose
+            python pipeline.py --last-week --limit 5 $REPROCESS --verbose
           fi
 
       - name: Copy HTML to docs/ for GitHub Pages

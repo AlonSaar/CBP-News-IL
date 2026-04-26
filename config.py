@@ -22,6 +22,13 @@ HEBREW_RULES_PATH: Path = PROMPTS_DIR / "hebrew_rules.md"
 CLASSIFIER_PROMPT_PATH: Path = PROMPTS_DIR / "classifier.md"
 PROCESSED_URLS_PATH: Path = STATE_DIR / "processed_urls.json"
 LAST_RUN_PATH: Path = STATE_DIR / "last_run.json"
+APPROVED_URLS_PATH: Path = STATE_DIR / "approved_urls.json"
+
+# ---------------------------------------------------------------------------
+# GitHub integration (for browser-side approval API calls)
+# ---------------------------------------------------------------------------
+GITHUB_PAT: str = os.environ.get("GITHUB_PAT", "")
+GITHUB_REPO: str = "AlonSaar/CBP-News-IL"
 
 
 # ---------------------------------------------------------------------------

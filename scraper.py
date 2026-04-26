@@ -529,20 +529,70 @@ def fetch_article(url: str, session: Optional[requests.Session] = None) -> Artic
     title_el = soup.find("h1")
     title = title_el.get_text(strip=True) if title_el else ""
 
-    # Publication date
+    # Publication date — try multiple strategies in priority order
     article_date: Optional[date] = None
-    for cls in ("field--name-created", "field-name-post-date", "date-display-single"):
+
+    # 1. Known Drupal CSS classes
+    for cls in ("field--name-created", "field-name-post-date", "date-display-single",
+                "field--name-field-date", "views-field-field-date", "article-date",
+                "post-date", "news-date", "field--name-field-news-date"):
         el = soup.find(class_=cls)
         if el:
             article_date = _parse_date(el.get_text(strip=True))
             if article_date:
                 break
+
+    # 2. <time> element with datetime attribute
     if not article_date:
-        time_el = soup.find("time")
-        if time_el:
+        for time_el in soup.find_all("time"):
             dt_attr = time_el.get("datetime", "")
             article_date = _parse_date(dt_attr[:10]) or _parse_date(time_el.get_text(strip=True))
+            if article_date:
+                break
+
+    # 3. Meta tags (very reliable on Drupal/CMS sites)
     if not article_date:
+        for meta_name in (
+            {"property": "article:published_time"},
+            {"name": "date"},
+            {"name": "dcterms.date"},
+            {"name": "DC.date"},
+            {"property": "og:updated_time"},
+            {"name": "publication_date"},
+        ):
+            meta_el = soup.find("meta", attrs=meta_name)
+            if meta_el and meta_el.get("content"):
+                article_date = _parse_date(meta_el["content"][:10])
+                if article_date:
+                    break
+
+    # 4. Any element with "date" in its class name containing a parseable date
+    if not article_date:
+        import re
+        for el in soup.find_all(class_=re.compile(r"date", re.I)):
+            txt = el.get_text(strip=True)
+            if txt:
+                article_date = _parse_date(txt)
+                if article_date and article_date.year >= 2000:
+                    break
+                else:
+                    article_date = None
+
+    # 5. Regex scan of full page text for date patterns as last resort
+    if not article_date:
+        import re
+        page_text = soup.get_text(" ", strip=True)
+        # Look for patterns like "April 15, 2026" or "Jan. 15, 2026"
+        match = re.search(
+            r'\b(January|February|March|April|May|June|July|August|September|October|November|December'
+            r'|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\.?\s+\d{1,2},?\s+20\d{2}\b',
+            page_text
+        )
+        if match:
+            article_date = _parse_date(match.group(0).replace(".", ""))
+
+    if not article_date:
+        logger.warning("Could not determine date for %s — using today as fallback", url)
         article_date = date.today()
 
     # Body text - try multiple selectors for CBP's Drupal structure

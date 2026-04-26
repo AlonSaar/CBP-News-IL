@@ -23,7 +23,7 @@ import json
 import logging
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from anthropic import Anthropic, RateLimitError, APIStatusError
@@ -40,11 +40,35 @@ from translator import translate
 logger = logging.getLogger(__name__)
 
 ARTICLES_PATH = config.STATE_DIR / "articles.json"
+APPROVED_URLS_PATH = config.APPROVED_URLS_PATH
 
 
 # ---------------------------------------------------------------------------
 # Articles store (persistent JSON)
 # ---------------------------------------------------------------------------
+
+def _load_approved_urls() -> set:
+    """Load the set of admin-approved article URLs."""
+    if not APPROVED_URLS_PATH.exists():
+        return set()
+    try:
+        return set(json.loads(APPROVED_URLS_PATH.read_text(encoding="utf-8")))
+    except Exception:
+        return set()
+
+
+def _update_article_approvals(articles: list[dict], approved_urls: set) -> list[dict]:
+    """
+    Set admin_approved on each article based on approved_urls.
+    Articles missing the field default to True (backward compat for old data).
+    """
+    for art in articles:
+        if "admin_approved" not in art:
+            art["admin_approved"] = True  # existing articles stay visible
+        else:
+            art["admin_approved"] = art["url"] in approved_urls
+    return articles
+
 
 def _load_articles() -> list[dict]:
     if not ARTICLES_PATH.exists():
@@ -85,6 +109,7 @@ def _article_to_dict(
         "image_urls": article.image_urls or ([article.image_url] if article.image_url else []),
         "quarter": quarter,
         "status": status,
+        "admin_approved": False,  # new articles require admin approval before going live
         "editor_notes": "",
     }
 
@@ -303,11 +328,18 @@ def run(
         stats.translated += 1
 
     # Step 7: Persist + regenerate outputs
+    approved_urls = _load_approved_urls()
+
     if not dry_run and new_articles:
         all_articles = new_articles + all_articles  # newest first
+        all_articles = _update_article_approvals(all_articles, approved_urls)
         _save_articles(all_articles)
         logger.info("Saved %d new articles. Total: %d", len(new_articles), len(all_articles))
+    elif not dry_run:
+        all_articles = _update_article_approvals(all_articles, approved_urls)
+        logger.info("No new articles this run.")
 
+    if not dry_run:
         logger.info("Generating HTML digest...")
         html_path = html_writer.generate(all_articles)
         print(f"\n✓ Website:       {html_path}")
@@ -318,9 +350,6 @@ def run(
             print(f"✓ PowerPoint:    {pptx_path}")
         except Exception as exc:
             logger.warning("Skipping PowerPoint: %s", exc)
-
-    elif not dry_run and not new_articles:
-        logger.info("No new articles this run.")
 
     logger.info(stats.summary())
     _save_last_run(stats)
@@ -342,6 +371,22 @@ def _setup_logging(verbose: bool) -> None:
     logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
+def regenerate_html_only() -> int:
+    """Load existing articles, sync approvals, regenerate HTML. No scraping or translation."""
+    all_articles = _load_articles()
+    approved_urls = _load_approved_urls()
+    all_articles = _update_article_approvals(all_articles, approved_urls)
+    _save_articles(all_articles)
+    html_path = html_writer.generate(all_articles)
+    print(f"\n✓ HTML regenerated: {html_path} ({len(all_articles)} articles)")
+    try:
+        pptx_path = pptx_writer.generate(all_articles)
+        print(f"✓ PowerPoint:       {pptx_path}")
+    except Exception as exc:
+        logger.warning("Skipping PowerPoint: %s", exc)
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="CBP → Hebrew translator pipeline.")
     parser.add_argument("--verbose", "-v", action="store_true", help="Enable DEBUG logging.")
@@ -359,6 +404,8 @@ def main() -> int:
                         help="Ignore the dedupe store and re-translate already-seen URLs.")
     parser.add_argument("--use-sitemap", action="store_true",
                         help="Use CBP XML sitemap instead of index pagination (auto-enabled with --since).")
+    parser.add_argument("--regenerate-only", action="store_true",
+                        help="Skip scraping/translation. Reload articles, sync approvals, regenerate HTML only.")
     args = parser.parse_args()
 
     _setup_logging(args.verbose)
@@ -368,6 +415,9 @@ def main() -> int:
         load_dotenv()
     except ImportError:
         pass
+
+    if args.regenerate_only:
+        return regenerate_html_only()
 
     from datetime import date
     since_date = date.fromisoformat(args.since) if args.since else None

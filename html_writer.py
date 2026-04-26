@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import logging
+import urllib.parse
 from datetime import datetime
 from pathlib import Path
 
@@ -19,7 +20,7 @@ HTML_PATH  = OUTPUT_DIR / "cbp_hebrew_reviews.html"
 
 # ── Admin password — change this to whatever you want ──────────────────────
 # Access admin mode by adding ?admin=THIS_PASSWORD to the URL
-ADMIN_PASSWORD = "cbpIL2026"
+ADMIN_PASSWORD = "ADMIN2026"
 # ───────────────────────────────────────────────────────────────────────────
 
 SITE_TITLE = "סקירות CBP | נציגות ניו יורק"
@@ -37,10 +38,35 @@ def _format_body(body: str) -> str:
     return "\n".join(paragraphs)
 
 
-def _crossing_short(crossing_type: str) -> str:
+def _crossing_category(crossing_type: str) -> tuple[str, str]:
+    """Returns (icon, short_label) for the crossing type badge."""
+    ct = crossing_type.replace("סוג מעבר:", "").strip().lower()
+    if "ימי" in ct:
+        return "🚢", "מעבר ימי"
+    if "אווירי" in ct and ("מטען" in ct or "cargo" in ct):
+        return "📦", "מעבר אווירי – מטען"
+    if "אווירי" in ct:
+        return "✈️", "מעבר אווירי"
+    if "יבשתי" in ct:
+        return "🚛", "מעבר יבשתי"
+    if "דואר" in ct or "מתקן" in ct:
+        return "📬", "מתקן דואר/מטען"
+    ct_orig = crossing_type.replace("סוג מעבר:", "").strip()
+    return "🔁", ct_orig[:40]
+
+def _crossing_detail(crossing_type: str) -> str:
+    """Returns the descriptive sentence(s) from the crossing type field."""
     ct = crossing_type.replace("סוג מעבר:", "").strip()
-    first = ct.split(".")[0].strip()
-    return first[:60] + ("…" if len(first) > 60 else "")
+    return ct
+
+def _maps_url(location: str) -> str:
+    """Build a Google Maps search URL for the location string."""
+    # Use the English part after the dash if available
+    if " - " in location:
+        query = location.split(" - ", 1)[1].strip()
+    else:
+        query = location.strip()
+    return f"https://www.google.com/maps/search/?api=1&query={urllib.parse.quote_plus(query)}"
 
 
 def _status_display(status: str) -> tuple[str, str]:
@@ -129,7 +155,10 @@ def generate(articles: list[dict]) -> Path:
             image_urls = art.get("image_urls") or ([image_url] if image_url else [])
             status_class, status_label = _status_display(art.get("status", "needs-review"))
             body_html  = _format_body(art.get("body", ""))
-            ct_short   = _crossing_short(art.get("crossing_type", ""))
+            ct_icon, ct_label = _crossing_category(art.get("crossing_type", ""))
+            ct_detail  = _crossing_detail(art.get("crossing_type", ""))
+            location   = art.get("location", "")
+            maps_url   = _maps_url(location) if location else ""
 
             if image_urls:
                 imgs_html = "\n".join(
@@ -147,23 +176,31 @@ def generate(articles: list[dict]) -> Path:
           <div class="img-overlay admin-only" onclick="changeImage('{art_id}')">📷 הוסף תמונה</div>
         </div>'''
 
+            maps_link = f'<a class="maps-link" href="{maps_url}" target="_blank" title="פתח במפות Google">🗺️ מפה</a>' if maps_url else ""
+            admin_approved = art.get("admin_approved", True)
+            approved_str = "true" if admin_approved else "false"
+            pending_banner = "" if admin_approved else '<div class="pending-banner">⏳ ממתין לאישור מנהל — לא מוצג למשתמשים רגילים</div>'
             cards += f"""
-      <div class="article-card" data-id="{art_id}" data-status="{status_class}" data-q="{q}">
-        {img_html}
+      <div class="article-card" data-id="{art_id}" data-status="{status_class}" data-q="{q}" data-approved="{approved_str}" data-url="{url}">
+        {pending_banner}{img_html}
         <div class="article-content" dir="rtl">
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">{art.get("article_date", "")}</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">{ct_short}</span>
+              <span class="article-crossing" dir="rtl" title="{ct_detail}">{ct_icon} {ct_label}</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="{art_id}" dir="rtl">{art.get("title", "")}</div>
-            <div class="article-location editable" data-field="location" data-id="{art_id}" dir="rtl">{art.get("location", "")}</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="{art_id}" dir="rtl">{location}</div>
+              {maps_link}
+            </div>
+            <div class="article-crossing-detail" dir="rtl">{ct_detail}</div>
             <div class="article-body editable" data-field="body" data-id="{art_id}" dir="rtl">{body_html}</div>
           </div>
           <div class="article-footer">
             <div class="footer-right">
               <span class="status-badge status-{status_class}" id="badge-{art_id}">{status_label}</span>
-              <button class="approve-btn admin-only" id="approvebtn-{art_id}" onclick="toggleApprove('{art_id}')" title="אשר כתבה">✓ אשר</button>
+              <button class="approve-btn admin-only" id="approvebtn-{art_id}" onclick="approveArticle('{art_id}')" title="אשר כתבה">✓ אשר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('{art_id}')" title="מחק כתבה">🗑</button>
             </div>
             <a class="source-link" href="{url}" target="_blank" dir="ltr">מקור: CBP ←</a>
@@ -406,6 +443,25 @@ def generate(articles: list[dict]) -> Path:
       unicode-bidi: plaintext;
     }}
     .article-location::before {{ content: "📍"; font-size: 0.75rem; margin-left: 4px; }}
+    .article-location-row {{
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 6px;
+    }}
+    .article-location-row .article-location {{ margin-bottom: 0; }}
+    .maps-link {{
+      font-size: 0.75rem; white-space: nowrap;
+      color: #4c5fd5; text-decoration: none;
+      background: #eef2ff; padding: 2px 8px;
+      border-radius: 8px; border: 1px solid #d8deff;
+      font-weight: 600; transition: all 0.15s;
+      flex-shrink: 0;
+    }}
+    .maps-link:hover {{ background: #4c5fd5; color: white; }}
+    .article-crossing-detail {{
+      font-size: 0.75rem; color: #888; font-weight: 400;
+      margin-bottom: 10px; text-align: right; direction: rtl;
+      line-height: 1.5;
+    }}
     .article-body {{
       font-size: 0.88rem; color: #4a4a5a;
       direction: rtl; text-align: right;
@@ -438,6 +494,34 @@ def generate(articles: list[dict]) -> Path:
     /* ── Admin-only elements ── */
     .admin-only {{ display: none !important; }}
     body.admin-mode .admin-only {{ display: inline-flex !important; }}
+
+    /* ── Unapproved articles ── */
+    body:not(.admin-mode) .article-card[data-approved="false"] {{ display: none !important; }}
+    .pending-banner {{
+      background: #fef9c3; color: #92400e;
+      padding: 7px 16px; text-align: center;
+      font-size: 0.78rem; font-weight: 700;
+      border-bottom: 2px solid #fde68a;
+      letter-spacing: 0.3px;
+    }}
+    body.admin-mode .article-card[data-approved="false"] {{
+      border: 2px solid #fbbf24;
+      box-shadow: 0 0 0 3px rgba(251,191,36,0.12);
+    }}
+
+    /* ── Toast notification ── */
+    #cbp-toast {{
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      padding: 12px 28px; border-radius: 14px;
+      font-weight: 700; font-size: 0.9rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+      z-index: 9999; transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events: none; white-space: nowrap;
+    }}
+    #cbp-toast.show {{ transform: translateX(-50%) translateY(0); }}
+    #cbp-toast.success {{ background: #16a34a; color: white; }}
+    #cbp-toast.error   {{ background: #dc2626; color: white; }}
 
     .approve-btn {{
       font-size: 0.68rem; padding: 3px 10px; border-radius: 8px;
@@ -482,6 +566,7 @@ def generate(articles: list[dict]) -> Path:
 </head>
 <body>
 
+<div id="cbp-toast"></div>
 <div class="edit-notice">✏️ מצב עריכה פעיל — לחץ על כל טקסט לעריכה · לחץ על תמונה לשינויה · השינויים נשמרים אוטומטית</div>
 <div class="admin-notice">🔐 מצב מנהל פעיל</div>
 
@@ -490,7 +575,7 @@ def generate(articles: list[dict]) -> Path:
     <h1>{SITE_TITLE}</h1>
   </div>
   <div class="header-controls">
-    <span class="badge">{len(articles)} כתבות</span>
+    <span class="badge" id="header-count">{len(articles)} כתבות</span>
     <button class="edit-btn" id="editToggle" onclick="toggleEdit()">✏️ עריכה</button>
   </div>
 </header>
@@ -498,11 +583,11 @@ def generate(articles: list[dict]) -> Path:
 <div class="container">
   <div class="stats-bar">
     <div class="stat-item">
-      <div class="stat-num">{len(articles)}</div>
+      <div class="stat-num" id="total-count">{len(articles)}</div>
       <div class="stat-label">כתבות מתורגמות</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">{len(quarters)}</div>
+      <div class="stat-num" id="quarters-count">{len(quarters)}</div>
       <div class="stat-label">רבעונים</div>
     </div>
     <div class="stat-item">
@@ -532,6 +617,9 @@ const IMG_KEY     = 'cbp_images';
 const APPROVE_KEY = 'cbp_approved';
 const DELETE_KEY  = 'cbp_deleted';
 const ADMIN_PASS  = '{ADMIN_PASSWORD}';
+const GITHUB_PAT  = '{config.GITHUB_PAT}';
+const GITHUB_REPO = '{config.GITHUB_REPO}';
+const APPROVED_FILE = 'state/approved_urls.json';
 
 function loadEdits()    {{ try {{ return JSON.parse(localStorage.getItem(STORAGE_KEY)  || '{{}}'); }} catch(e) {{ return {{}}; }} }}
 function saveEdits(e)   {{ localStorage.setItem(STORAGE_KEY,  JSON.stringify(e)); }}
@@ -623,39 +711,95 @@ function changeImage(id) {{
   applyAll();
 }}
 
-// ── Approve ──────────────────────────────────────────────────────────────────
-function toggleApprove(id) {{
-  const approved = loadApproved();
-  const idx = approved.indexOf(id);
-  if (idx === -1) approved.push(id); else approved.splice(idx, 1);
-  saveApproved(approved);
-  applyApprovals();
-  updateApprovedCount();
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let _toastTimer = null;
+function showToast(msg, type) {{
+  const t = document.getElementById('cbp-toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.className = 'show ' + (type || 'success');
+  if (_toastTimer) clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => {{ t.className = ''; }}, 4000);
+}}
+
+// ── Approve (GitHub API) ──────────────────────────────────────────────────────
+async function approveArticle(id) {{
+  const card = document.querySelector('.article-card[data-id="' + id + '"]');
+  if (!card) return;
+  const articleUrl = card.dataset.url;
+  const badge = document.getElementById('badge-' + id);
+  const btn   = document.getElementById('approvebtn-' + id);
+
+  if (!GITHUB_PAT) {{
+    showToast('GitHub PAT לא מוגדר — פנה למנהל המערכת', 'error');
+    return;
+  }}
+
+  // Immediate UI feedback
+  if (btn)   {{ btn.textContent = '⏳'; btn.disabled = true; }}
+  if (badge) {{ badge.className = 'status-badge status-approved'; badge.textContent = '⏳ שומר...'; }}
+
+  try {{
+    const apiBase = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + APPROVED_FILE;
+
+    // GET current file
+    const getResp = await fetch(apiBase, {{
+      headers: {{ 'Authorization': 'Bearer ' + GITHUB_PAT, 'Accept': 'application/vnd.github+json' }}
+    }});
+    if (!getResp.ok) throw new Error('GET failed: ' + getResp.status);
+    const fileData = await getResp.json();
+
+    // Decode, add URL, re-encode
+    const currentList = JSON.parse(atob(fileData.content.replace(/\n/g, '')));
+    if (!currentList.includes(articleUrl)) currentList.push(articleUrl);
+
+    // PUT updated file
+    const newContent = JSON.stringify(currentList, null, 2);
+    const putResp = await fetch(apiBase, {{
+      method: 'PUT',
+      headers: {{
+        'Authorization': 'Bearer ' + GITHUB_PAT,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      }},
+      body: JSON.stringify({{
+        message: 'approve: ' + id,
+        content: btoa(unescape(encodeURIComponent(newContent))),
+        sha: fileData.sha
+      }})
+    }});
+    if (!putResp.ok) throw new Error('PUT failed: ' + putResp.status);
+
+    // Success
+    card.dataset.approved = 'true';
+    const pending = card.querySelector('.pending-banner');
+    if (pending) pending.remove();
+    if (badge) {{ badge.className = 'status-badge status-approved'; badge.textContent = '✓ מאושר'; }}
+    if (btn)   {{ btn.textContent = '✓ מאושר'; btn.classList.add('approved'); btn.disabled = false; }}
+    showToast('✓ הכתבה אושרה! האתר יתעדכן תוך כ-2 דקות.', 'success');
+    updateCounts();
+
+  }} catch(err) {{
+    console.error('Approve failed:', err);
+    if (badge) {{ badge.className = 'status-badge status-needs-review'; badge.textContent = '⚠ לבדיקה'; }}
+    if (btn)   {{ btn.textContent = '✓ אשר'; btn.disabled = false; }}
+    showToast('שגיאה: ' + err.message, 'error');
+  }}
 }}
 
 function applyApprovals() {{
-  const approved = loadApproved();
-  document.querySelectorAll('.article-card').forEach(card => {{
-    const id    = card.dataset.id;
-    const badge = document.getElementById('badge-' + id);
-    const btn   = document.getElementById('approvebtn-' + id);
-    if (!badge) return;
-    if (approved.includes(id)) {{
-      badge.className = 'status-badge status-approved';
-      badge.textContent = '✓ מאושר';
-      if (btn) {{ btn.textContent = '✓ מאושר'; btn.classList.add('approved'); }}
-    }} else {{
-      const orig = card.dataset.status || 'needs-review';
-      badge.className = 'status-badge status-' + orig;
-      badge.textContent = orig === 'approved' ? '✓ מאושר' : '⚠ לבדיקה';
-      if (btn) {{ btn.textContent = '✓ אשר'; btn.classList.remove('approved'); }}
-    }}
-  }});
+  // Approvals now come from the server (data-approved attribute on each card).
+  // This function is kept for backward compat but does nothing on initial load.
 }}
 
 function updateApprovedCount() {{
+  const isAdmin = document.body.classList.contains('admin-mode');
+  let count = 0;
+  document.querySelectorAll('.article-card').forEach(card => {{
+    if (card.dataset.approved === 'true') count++;
+  }});
   const el = document.getElementById('approved-count');
-  if (el) el.textContent = loadApproved().length;
+  if (el) el.textContent = count;
 }}
 
 // ── Delete ───────────────────────────────────────────────────────────────────
@@ -672,6 +816,57 @@ function applyDeleted() {{
   document.querySelectorAll('.article-card').forEach(card => {{
     card.classList.toggle('hidden', deleted.includes(card.dataset.id));
   }});
+  updateCounts();
+}}
+
+function updateCounts() {{
+  const deleted  = loadDeleted();
+  const isAdmin  = document.body.classList.contains('admin-mode');
+  let total = 0;
+  const qCounts = {{}};
+
+  document.querySelectorAll('.article-card').forEach(card => {{
+    const id = card.dataset.id;
+    const approved = card.dataset.approved === 'true';
+    if (!deleted.includes(id) && (isAdmin || approved)) {{
+      total++;
+      const q = card.dataset.q;
+      qCounts[q] = (qCounts[q] || 0) + 1;
+    }}
+  }});
+
+  // Update stats bar
+  const totalEl = document.getElementById('total-count');
+  if (totalEl) totalEl.textContent = total;
+  const headerEl = document.getElementById('header-count');
+  if (headerEl) headerEl.textContent = total + ' כתבות';
+
+  // Update quarter badges
+  document.querySelectorAll('.qtab[data-q]').forEach(btn => {{
+    const q = btn.dataset.q;
+    const count = qCounts[q] || 0;
+    const badge = btn.querySelector('.qtab-badge');
+    if (badge) badge.textContent = count;
+    if (count === 0) {{ btn.classList.add('qtab-empty'); btn.disabled = true; }}
+    else {{ btn.classList.remove('qtab-empty'); btn.disabled = false; }}
+  }});
+
+  // Update year badges
+  document.querySelectorAll('.ytab[data-year]').forEach(btn => {{
+    const year = btn.dataset.year;
+    if (year === 'all') return;
+    let yearTotal = 0;
+    for (const [q, c] of Object.entries(qCounts)) {{
+      if (q.endsWith('-' + year)) yearTotal += c;
+    }}
+    const badge = btn.querySelector('.qtab-badge');
+    if (badge) badge.textContent = yearTotal;
+  }});
+
+  // Update quarters count (only quarters with remaining articles)
+  const activeQs = Object.values(qCounts).filter(c => c > 0).length;
+  const qCountEl = document.getElementById('quarters-count');
+  if (qCountEl) qCountEl.textContent = activeQs;
 }}
 
 // ── Apply saved edits & images ───────────────────────────────────────────────
