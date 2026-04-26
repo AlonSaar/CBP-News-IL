@@ -494,6 +494,8 @@ def generate(articles: list[dict]) -> Path:
     /* ── Admin-only elements ── */
     .admin-only {{ display: none !important; }}
     body.admin-mode .admin-only {{ display: inline-flex !important; }}
+    .admin-stat {{ display: none !important; }}
+    body.admin-mode .admin-stat {{ display: block !important; }}
 
     /* ── Unapproved articles ── */
     body:not(.admin-mode) .article-card[data-approved="false"] {{ display: none !important; }}
@@ -590,9 +592,9 @@ def generate(articles: list[dict]) -> Path:
       <div class="stat-num" id="quarters-count">{len(quarters)}</div>
       <div class="stat-label">רבעונים</div>
     </div>
-    <div class="stat-item">
+    <div class="stat-item admin-stat">
       <div class="stat-num" id="approved-count">0</div>
-      <div class="stat-label">מאושרות</div>
+      <div class="stat-label">ממתינות לאישור</div>
     </div>
     <div class="stat-item">
       <div class="stat-num">{now_str.split()[0]}</div>
@@ -793,13 +795,12 @@ function applyApprovals() {{
 }}
 
 function updateApprovedCount() {{
-  const isAdmin = document.body.classList.contains('admin-mode');
-  let count = 0;
+  let pending = 0;
   document.querySelectorAll('.article-card').forEach(card => {{
-    if (card.dataset.approved === 'true') count++;
+    if (card.dataset.approved !== 'true') pending++;
   }});
   const el = document.getElementById('approved-count');
-  if (el) el.textContent = count;
+  if (el) el.textContent = pending;
 }}
 
 // ── Delete ───────────────────────────────────────────────────────────────────

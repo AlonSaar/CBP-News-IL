@@ -15,7 +15,8 @@
     ],
     "quarter": "Q2-2026",
     "status": "needs-review",
-    "editor_notes": ""
+    "editor_notes": "",
+    "admin_approved": true
   },
   {
     "run_date": "2026-04-23 02:35 UTC",
@@ -29,7 +30,8 @@
     "image_urls": [],
     "quarter": "Q2-2026",
     "status": "needs-review",
-    "editor_notes": ""
+    "editor_notes": "",
+    "admin_approved": true
   },
   {
     "run_date": "2026-04-23 02:35 UTC",
@@ -45,7 +47,8 @@
     ],
     "quarter": "Q2-2026",
     "status": "needs-review",
-    "editor_notes": ""
+    "editor_notes": "",
+    "admin_approved": true
   },
   {
     "run_date": "2026-04-23 02:35 UTC",
@@ -61,7 +64,8 @@
     ],
     "quarter": "Q2-2026",
     "status": "needs-review",
-    "editor_notes": ""
+    "editor_notes": "",
+    "admin_approved": true
   },
   {
     "run_date": "2026-04-23 02:35 UTC",
@@ -77,7 +81,8 @@
     ],
     "quarter": "Q2-2026",
     "status": "needs-review",
-    "editor_notes": ""
+    "editor_notes": "",
+    "admin_approved": true
   },
   {
     "run_date": "2026-04-23 02:35 UTC",
@@ -93,7 +98,8 @@
     ],
     "quarter": "Q2-2026",
     "status": "needs-review",
-    "editor_notes": ""
+    "editor_notes": "",
+    "admin_approved": true
   },
   {
     "run_date": "2026-04-23 02:35 UTC",
@@ -101,14 +107,15 @@
     "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge",
     "title": "תפיסת 45.37 פאונד קוקאין בשווי 605,000 דולר ברכב נוסעים בגשר פאר הבינלאומי",
     "location": "נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס",
-    "crossing_type": "מעבר גבול יבשתי בין מקסיקו לארצות הברית",
-    "body": "ב-6 באפריל 2026 תפסו קציני CBP בגשר פאר הבינלאומי (Pharr International Bridge) 45.37 פאונד קוקאין שהוסתרו בתוך רכב נוסעים מסוג Chrysler 200. הרכב הופנה לבדיקה משנית על ידי קצין CBP, ובעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו ברכב 19 חבילות ובהן הסם החשוד. שווי הרחוב המוערך של הסמים עומד על 605,792 דולר. הסמים הוחרמו על ידי CBP, והתיק הועבר לחקירה של סוכני Homeland Security Investigations. מנהל הנמל קרלוס רודריגז ציין כי התפיסה משקפת את מחויבות הקצינים למשימת אבטחת הגבול ואת השימוש האפקטיבי בטכנולוגיה ובכישורי הבדיקה.",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "ב-6 באפריל 2026 תפסו קציני CBP בגשר פאר הבינלאומי (Pharr International Bridge) 45.37 פאונד קוקאין שהוסתרו בתוך רכב נוסעים מסוג Chrysler 200. הרכב הופנה לבדיקה משנית על ידי קצין CBP, ובעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו ברכב 19 חבילות ובהן הסם החשוד. שווי הרחוב המוערך של הסמים עומד על 605,792 דולר. הסמים הוחרמו על ידי CBP, והתיק הועבר לחקירה של סוכני Homeland Security Investigations.",
     "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq",
     "image_urls": [
       "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq"
     ],
     "quarter": "Q2-2026",
     "status": "needs-review",
+    "admin_approved": true,
     "editor_notes": ""
   }
 ]

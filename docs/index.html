@@ -226,6 +226,25 @@
       unicode-bidi: plaintext;
     }
     .article-location::before { content: "📍"; font-size: 0.75rem; margin-left: 4px; }
+    .article-location-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 6px;
+    }
+    .article-location-row .article-location { margin-bottom: 0; }
+    .maps-link {
+      font-size: 0.75rem; white-space: nowrap;
+      color: #4c5fd5; text-decoration: none;
+      background: #eef2ff; padding: 2px 8px;
+      border-radius: 8px; border: 1px solid #d8deff;
+      font-weight: 600; transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .maps-link:hover { background: #4c5fd5; color: white; }
+    .article-crossing-detail {
+      font-size: 0.75rem; color: #888; font-weight: 400;
+      margin-bottom: 10px; text-align: right; direction: rtl;
+      line-height: 1.5;
+    }
     .article-body {
       font-size: 0.88rem; color: #4a4a5a;
       direction: rtl; text-align: right;
@@ -258,6 +277,36 @@
     /* ── Admin-only elements ── */
     .admin-only { display: none !important; }
     body.admin-mode .admin-only { display: inline-flex !important; }
+    .admin-stat { display: none !important; }
+    body.admin-mode .admin-stat { display: block !important; }
+
+    /* ── Unapproved articles ── */
+    body:not(.admin-mode) .article-card[data-approved="false"] { display: none !important; }
+    .pending-banner {
+      background: #fef9c3; color: #92400e;
+      padding: 7px 16px; text-align: center;
+      font-size: 0.78rem; font-weight: 700;
+      border-bottom: 2px solid #fde68a;
+      letter-spacing: 0.3px;
+    }
+    body.admin-mode .article-card[data-approved="false"] {
+      border: 2px solid #fbbf24;
+      box-shadow: 0 0 0 3px rgba(251,191,36,0.12);
+    }
+
+    /* ── Toast notification ── */
+    #cbp-toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      padding: 12px 28px; border-radius: 14px;
+      font-weight: 700; font-size: 0.9rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+      z-index: 9999; transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events: none; white-space: nowrap;
+    }
+    #cbp-toast.show { transform: translateX(-50%) translateY(0); }
+    #cbp-toast.success { background: #16a34a; color: white; }
+    #cbp-toast.error   { background: #dc2626; color: white; }
 
     .approve-btn {
       font-size: 0.68rem; padding: 3px 10px; border-radius: 8px;
@@ -302,6 +351,7 @@
 </head>
 <body>
 
+<div id="cbp-toast"></div>
 <div class="edit-notice">✏️ מצב עריכה פעיל — לחץ על כל טקסט לעריכה · לחץ על תמונה לשינויה · השינויים נשמרים אוטומטית</div>
 <div class="admin-notice">🔐 מצב מנהל פעיל</div>
 
@@ -310,7 +360,7 @@
     <h1>סקירות CBP | נציגות ניו יורק</h1>
   </div>
   <div class="header-controls">
-    <span class="badge">7 כתבות</span>
+    <span class="badge" id="header-count">7 כתבות</span>
     <button class="edit-btn" id="editToggle" onclick="toggleEdit()">✏️ עריכה</button>
   </div>
 </header>
@@ -318,19 +368,19 @@
 <div class="container">
   <div class="stats-bar">
     <div class="stat-item">
-      <div class="stat-num">7</div>
+      <div class="stat-num" id="total-count">7</div>
       <div class="stat-label">כתבות מתורגמות</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">1</div>
+      <div class="stat-num" id="quarters-count">1</div>
       <div class="stat-label">רבעונים</div>
     </div>
-    <div class="stat-item">
+    <div class="stat-item admin-stat">
       <div class="stat-num" id="approved-count">0</div>
-      <div class="stat-label">מאושרות</div>
+      <div class="stat-label">ממתינות לאישור</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">23/04/2026</div>
+      <div class="stat-num">25/04/2026</div>
       <div class="stat-label">עודכן</div>
     </div>
   </div>
@@ -351,7 +401,7 @@
 
   <div class="quarter-section" data-q="Q2-2026">
     
-      <div class="article-card" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" data-status="needs-review" data-q="Q2-2026">
+      <div class="article-card" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing">
         <div class="img-wrapper" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/compartment_2.jpg.webp?itok=v7frzGzA" alt="" loading="lazy" onerror="this.style.display='none'">
 <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/weapons_in_compartment_2.jpg.webp?itok=GCAGms-X" alt="" loading="lazy" onerror="this.style.display='none'">
@@ -362,10 +412,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין ארצות הברית למקסיקו</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין ארצות הברית למקסיקו">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl">תפיסת משגר רקטות, רובים ואביזרי נשק בניסיון הברחה למקסיקו במעבר DeConcini</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl">נמל הכניסה נוגאלס - DeConcini Crossing, אריזונה</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl">נמל הכניסה נוגאלס - DeConcini Crossing, אריזונה</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=DeConcini+Crossing%2C+%D7%90%D7%A8%D7%99%D7%96%D7%95%D7%A0%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין ארצות הברית למקסיקו</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl"><p dir="rtl">ב-19 באפריל 2026 תפסו קציני CBP העוסקים במבצעי אכיפה יוצאת בנמל הכניסה נוגאלס, מעבר DeConcini שבאריזונה, כמות גדולה של נשק ואביזרים שהוסתרו בתא סמוי ברכב, שנהגה בו אזרחית אמריקאית בת 41 בעת ניסיונה לצאת מארצות הברית ולהיכנס למקסיקו.</p>
 <p dir="rtl">האישה נהגה ב-Lexus IS 200t משנת 2016 ואליה נלוו שלושה קטינים.</p>
 <p dir="rtl">הקצין הראשי בבדיקה ההתחלתית הפנה את הרכב לבדיקה משנית.</p>
@@ -379,14 +433,14 @@
           <div class="article-footer">
             <div class="footer-right">
               <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-weapons-and-parts-deconcini-crossing">⚠ לבדיקה</span>
-              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-weapons-and-parts-deconcini-crossing" onclick="toggleApprove('cbp-officers-seize-weapons-and-parts-deconcini-crossing')" title="אשר כתבה">✓ אשר</button>
+              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-weapons-and-parts-deconcini-crossing" onclick="approveArticle('cbp-officers-seize-weapons-and-parts-deconcini-crossing')" title="אשר כתבה">✓ אשר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-weapons-and-parts-deconcini-crossing')" title="מחק כתבה">🗑</button>
             </div>
             <a class="source-link" href="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing" target="_blank" dir="ltr">מקור: CBP ←</a>
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" data-status="needs-review" data-q="Q2-2026">
+      <div class="article-card" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">
         <div class="img-wrapper no-img-wrapper" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">
           <div class="no-img"><span>📷</span><small>אין תמונה</small></div>
           <div class="img-overlay admin-only" onclick="changeImage('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture')">📷 הוסף תמונה</div>
@@ -395,10 +449,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר אווירי בינלאומי</span>
+              <span class="article-crossing" dir="rtl" title="מעבר אווירי בינלאומי">✈️ מעבר אווירי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl">איתור קוף ו-125 פאונד בשר אסור על ידי מומחי החקלאות של CBP בשדה התעופה אוהר בשיקגו</div>
-            <div class="article-location editable" data-field="location" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl">נמל הכניסה שיקגו - O'Hare International Airport, אילינוי</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl">נמל הכניסה שיקגו - O'Hare International Airport, אילינוי</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=O%27Hare+International+Airport%2C+%D7%90%D7%99%D7%9C%D7%99%D7%A0%D7%95%D7%99" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר אווירי בינלאומי</div>
             <div class="article-body editable" data-field="body" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl"><p dir="rtl">ב-11 באפריל 2026 תפסו מומחי החקלאות של CBP בשדה התעופה הבינלאומי O'Hare בשיקגו שני ממצאים חריגים באירועים נפרדים.</p>
 <p dir="rtl">באירוע הראשון, קצין CBP הפנה נוסע שהגיע מקמרון לבדיקה חקלאית משנית.</p>
 <p dir="rtl">במהלך סריקת המזוודה אותרה אנומליה, ובעקבותיה בוצע חיפוש יסודי שבו גילה מומחה חקלאות של CBP גופת קוף בתוך כבודת הנוסע.</p>
@@ -413,14 +471,14 @@
           <div class="article-footer">
             <div class="footer-right">
               <span class="status-badge status-needs-review" id="badge-monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">⚠ לבדיקה</span>
-              <button class="approve-btn admin-only" id="approvebtn-monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" onclick="toggleApprove('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture')" title="אשר כתבה">✓ אשר</button>
+              <button class="approve-btn admin-only" id="approvebtn-monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" onclick="approveArticle('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture')" title="אשר כתבה">✓ אשר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture')" title="מחק כתבה">🗑</button>
             </div>
             <a class="source-link" href="https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" target="_blank" dir="ltr">מקור: CBP ←</a>
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" data-status="needs-review" data-q="Q2-2026">
+      <div class="article-card" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international">
         <div class="img-wrapper" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-11-million-cocaine-pharr-international')">📷 שנה תמונה</div>
@@ -429,10 +487,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl">תפיסת 83 פאונד קוקאין בשווי 1.1 מיליון דולר מוסתרים בריצפת נגרר בגשר Pharr International Bridge</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl">נמל הכניסה פאר - Pharr International Bridge, טקסס</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl">נמל הכניסה פאר - Pharr International Bridge, טקסס</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Pharr+International+Bridge%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl"><p dir="rtl">ב-15 באפריל 2026 תפסו קציני CBP במתקן המטען של Pharr International Bridge 32 חבילות קוקאין שהוסתרו בתוך ריצפת נגרר ריק, במשקל כולל של 83.24 פאונד (37.76 קילוגרם) ובשווי מוערך של 1,111,503 דולר.</p>
 <p dir="rtl">הנגרר הגיע ממטמורי מקסיקו, והכלי הרכב המסחרי הופנה לבדיקה משנית לאחר שסוכני CBP זיהו אותו כחשוד.</p>
 <p dir="rtl">הבדיקה כללה שימוש בציוד סריקה לא-חודרני וכן בדיקה של צוות כלב גילוי, ולאחריהן בוצעה בדיקה פיזית שהובילה לאיתור הסמים בתוך ריצפת הנגרר.</p>
@@ -442,14 +504,14 @@
           <div class="article-footer">
             <div class="footer-right">
               <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-more-11-million-cocaine-pharr-international">⚠ לבדיקה</span>
-              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-more-11-million-cocaine-pharr-international" onclick="toggleApprove('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="אשר כתבה">✓ אשר</button>
+              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-more-11-million-cocaine-pharr-international" onclick="approveArticle('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="אשר כתבה">✓ אשר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="מחק כתבה">🗑</button>
             </div>
             <a class="source-link" href="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international" target="_blank" dir="ltr">מקור: CBP ←</a>
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" data-status="needs-review" data-q="Q2-2026">
+      <div class="article-card" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
         <div class="img-wrapper" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/78lbscocbushgo41126.jpg.webp?itok=9AhWoC4i" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')">📷 שנה תמונה</div>
@@ -458,10 +520,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" dir="rtl">תפיסת 78 פאונד קוקאין בשווי מיליון דולר מוסתרים במושבי אוטובוס בהידלגו</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" dir="rtl">נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" dir="rtl">נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Hidalgo+Port+of+Entry%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" dir="rtl"><p dir="rtl">ב-11 באפריל 2026, קציני CBP בגשר הבינלאומי Hidalgo International Bridge הפנו אוטובוס נוסעים מסחרי לבדיקה משנית.</p>
 <p dir="rtl">בעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו בתוך מושבי האוטובוס 36 חבילות שהכילו קוקאין, במשקל כולל של 78 פאונד.</p>
 <p dir="rtl">שווי הסמים ברחוב הוערך בכ-1,042,034 דולר.</p>
@@ -472,14 +538,14 @@
           <div class="article-footer">
             <div class="footer-right">
               <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge">⚠ לבדיקה</span>
-              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" onclick="toggleApprove('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')" title="אשר כתבה">✓ אשר</button>
+              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" onclick="approveArticle('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')" title="אשר כתבה">✓ אשר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge')" title="מחק כתבה">🗑</button>
             </div>
             <a class="source-link" href="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-1m-cocaine-bus-hidalgo-international-bridge" target="_blank" dir="ltr">מקור: CBP ←</a>
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" data-status="needs-review" data-q="Q2-2026">
+      <div class="article-card" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
         <div class="img-wrapper" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/26_0416_image_full-gross-weight.jpg.webp?itok=K63KAngi" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')">📷 שנה תמונה</div>
@@ -488,10 +554,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" dir="rtl">תפיסת למעלה מ-60 פאונד קוקאין בשווי 1.15 מיליון דולר מנוסע מהימן בנמל סן יסידרו</div>
-            <div class="article-location editable" data-field="location" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" dir="rtl">נמל הכניסה סן יסידרו - San Ysidro Port of Entry, קליפורניה</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" dir="rtl">נמל הכניסה סן יסידרו - San Ysidro Port of Entry, קליפורניה</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=San+Ysidro+Port+of+Entry%2C+%D7%A7%D7%9C%D7%99%D7%A4%D7%95%D7%A8%D7%A0%D7%99%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</div>
             <div class="article-body editable" data-field="body" data-id="trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" dir="rtl"><p dir="rtl">קציני CBP בנמל הכניסה סן יסידרו תפסו 60.14 פאונד קוקאין שהוסתרו בתוך דלתות רכבו של נוסע הרשום בתוכנית Secure Electronic Network for Travelers Rapid Inspection.</p>
 <p dir="rtl">קצינים הפנו לבדיקה משנית גבר בן 25, אזרח אמריקאי, שנהג ב-Honda Civic משנת 2020.</p>
 <p dir="rtl">במהלך הבדיקה המשנית, טכנולוגיית סריקה בלתי פולשנית חשפה חריגות בדלתות הרכב, וצוות כלבי הגילוי של CBP התריע על נוכחות סמים.</p>
@@ -502,14 +572,14 @@
           <div class="article-footer">
             <div class="footer-right">
               <span class="status-badge status-needs-review" id="badge-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted">⚠ לבדיקה</span>
-              <button class="approve-btn admin-only" id="approvebtn-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" onclick="toggleApprove('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')" title="אשר כתבה">✓ אשר</button>
+              <button class="approve-btn admin-only" id="approvebtn-trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" onclick="approveArticle('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')" title="אשר כתבה">✓ אשר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted')" title="מחק כתבה">🗑</button>
             </div>
             <a class="source-link" href="https://www.cbp.gov/newsroom/national-media-release/trust-verify-cbp-officers-seize-over-11-million-cocaine-trusted" target="_blank" dir="ltr">מקור: CBP ←</a>
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" data-status="needs-review" data-q="Q2-2026">
+      <div class="article-card" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/campos_1.jpg.webp?itok=tfc0kytT" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')">📷 שנה תמונה</div>
@@ -518,10 +588,14 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" dir="rtl">תפיסת למעלה מ-430 פאונד קוקאין ומתאמפטמין בשווי 2.8 מיליון דולר בנמל אוטאי מסה בשתי פעולות אכיפה נפרדות</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" dir="rtl">נמל הכניסה אוטאי מסה - Otay Mesa Port of Entry, קליפורניה</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" dir="rtl">נמל הכניסה אוטאי מסה - Otay Mesa Port of Entry, קליפורניה</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Otay+Mesa+Port+of+Entry%2C+%D7%A7%D7%9C%D7%99%D7%A4%D7%95%D7%A8%D7%A0%D7%99%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" dir="rtl"><p dir="rtl">קציני CBP בנמל הכניסה Otay Mesa תפסו למעלה מ-430 פאונד של קוקאין ומתאמפטמין בשתי פעולות אכיפה נפרדות שהתרחשו ב-7 וב-8 באפריל 2026.</p>
 <p dir="rtl">בפעולה הראשונה, ב-7 באפריל, הופנה לבדיקה משנית גבר מקסיקני בן 51 שנהג ברכב Toyota Prius.</p>
 <p dir="rtl">צוות כלבי הגילוי של CBP התריע על הרכב, ובחיפוש פיזי אותרו 44 חבילות קוקאין שהוסתרו בתוך דלתות הרכב, המושב האחורי ולוחות הדופן האחוריים.</p>
@@ -535,14 +609,14 @@
           <div class="article-footer">
             <div class="footer-right">
               <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port">⚠ לבדיקה</span>
-              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" onclick="toggleApprove('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')" title="אשר כתבה">✓ אשר</button>
+              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" onclick="approveArticle('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')" title="אשר כתבה">✓ אשר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port')" title="מחק כתבה">🗑</button>
             </div>
             <a class="source-link" href="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28-million-hard-narcotics-otay-mesa-port" target="_blank" dir="ltr">מקור: CBP ←</a>
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" data-status="needs-review" data-q="Q2-2026">
+      <div class="article-card" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" data-status="needs-review" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge">
         <div class="img-wrapper" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge">
           <img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/45lbscocpharr40626.jpg.webp?itok=00kE3ykq" alt="" loading="lazy" onerror="this.style.display='none'">
           <div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-605k-cocaine-pharr-international-bridge')">📷 שנה תמונה</div>
@@ -551,20 +625,23 @@
           <div class="article-top">
             <div class="article-meta">
               <span class="article-date" dir="ltr">2026-04-22</span>
-              <span class="article-crossing editable" data-field="crossing_short" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית</span>
+              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.">🚛 מעבר יבשתי</span>
             </div>
             <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" dir="rtl">תפיסת 45.37 פאונד קוקאין בשווי 605,000 דולר ברכב נוסעים בגשר פאר הבינלאומי</div>
-            <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" dir="rtl">נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס</div>
+            <div class="article-location-row">
+              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" dir="rtl">נמל הכניסה הידלגו - Hidalgo Port of Entry, טקסס</div>
+              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Hidalgo+Port+of+Entry%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
+            </div>
+            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-605k-cocaine-pharr-international-bridge" dir="rtl"><p dir="rtl">ב-6 באפריל 2026 תפסו קציני CBP בגשר פאר הבינלאומי (Pharr International Bridge) 45.37 פאונד קוקאין שהוסתרו בתוך רכב נוסעים מסוג Chrysler 200.</p>
 <p dir="rtl">הרכב הופנה לבדיקה משנית על ידי קצין CBP, ובעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקה לא-פולשנית, אותרו ברכב 19 חבילות ובהן הסם החשוד.</p>
 <p dir="rtl">שווי הרחוב המוערך של הסמים עומד על 605,792 דולר.</p>
-<p dir="rtl">הסמים הוחרמו על ידי CBP, והתיק הועבר לחקירה של סוכני Homeland Security Investigations.</p>
-<p dir="rtl">מנהל הנמל קרלוס רודריגז ציין כי התפיסה משקפת את מחויבות הקצינים למשימת אבטחת הגבול ואת השימוש האפקטיבי בטכנולוגיה ובכישורי הבדיקה.</p></div>
+<p dir="rtl">הסמים הוחרמו על ידי CBP, והתיק הועבר לחקירה של סוכני Homeland Security Investigations.</p></div>
           </div>
           <div class="article-footer">
             <div class="footer-right">
               <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-605k-cocaine-pharr-international-bridge">⚠ לבדיקה</span>
-              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-605k-cocaine-pharr-international-bridge" onclick="toggleApprove('cbp-officers-seize-605k-cocaine-pharr-international-bridge')" title="אשר כתבה">✓ אשר</button>
+              <button class="approve-btn admin-only" id="approvebtn-cbp-officers-seize-605k-cocaine-pharr-international-bridge" onclick="approveArticle('cbp-officers-seize-605k-cocaine-pharr-international-bridge')" title="אשר כתבה">✓ אשר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-605k-cocaine-pharr-international-bridge')" title="מחק כתבה">🗑</button>
             </div>
             <a class="source-link" href="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-605k-cocaine-pharr-international-bridge" target="_blank" dir="ltr">מקור: CBP ←</a>
@@ -575,7 +652,7 @@
 </div>
 
 <div class="page-footer">
-  נוצר אוטומטית על ידי cbp-translator · 23/04/2026 11:12
+  נוצר אוטומטית על ידי cbp-translator · 25/04/2026 21:33
 </div>
 
 <script>
@@ -583,7 +660,10 @@ const STORAGE_KEY = 'cbp_edits';
 const IMG_KEY     = 'cbp_images';
 const APPROVE_KEY = 'cbp_approved';
 const DELETE_KEY  = 'cbp_deleted';
-const ADMIN_PASS  = 'cbpIL2026';
+const ADMIN_PASS  = 'ADMIN2026';
+const GITHUB_PAT  = '';
+const GITHUB_REPO = 'AlonSaar/CBP-News-IL';
+const APPROVED_FILE = 'state/approved_urls.json';
 
 function loadEdits()    { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)  || '{}'); } catch(e) { return {}; } }
 function saveEdits(e)   { localStorage.setItem(STORAGE_KEY,  JSON.stringify(e)); }
@@ -675,39 +755,95 @@ function changeImage(id) {
   applyAll();
 }
 
-// ── Approve ──────────────────────────────────────────────────────────────────
-function toggleApprove(id) {
-  const approved = loadApproved();
-  const idx = approved.indexOf(id);
-  if (idx === -1) approved.push(id); else approved.splice(idx, 1);
-  saveApproved(approved);
-  applyApprovals();
-  updateApprovedCount();
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let _toastTimer = null;
+function showToast(msg, type) {
+  const t = document.getElementById('cbp-toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.className = 'show ' + (type || 'success');
+  if (_toastTimer) clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { t.className = ''; }, 4000);
+}
+
+// ── Approve (GitHub API) ──────────────────────────────────────────────────────
+async function approveArticle(id) {
+  const card = document.querySelector('.article-card[data-id="' + id + '"]');
+  if (!card) return;
+  const articleUrl = card.dataset.url;
+  const badge = document.getElementById('badge-' + id);
+  const btn   = document.getElementById('approvebtn-' + id);
+
+  if (!GITHUB_PAT) {
+    showToast('GitHub PAT לא מוגדר — פנה למנהל המערכת', 'error');
+    return;
+  }
+
+  // Immediate UI feedback
+  if (btn)   { btn.textContent = '⏳'; btn.disabled = true; }
+  if (badge) { badge.className = 'status-badge status-approved'; badge.textContent = '⏳ שומר...'; }
+
+  try {
+    const apiBase = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + APPROVED_FILE;
+
+    // GET current file
+    const getResp = await fetch(apiBase, {
+      headers: { 'Authorization': 'Bearer ' + GITHUB_PAT, 'Accept': 'application/vnd.github+json' }
+    });
+    if (!getResp.ok) throw new Error('GET failed: ' + getResp.status);
+    const fileData = await getResp.json();
+
+    // Decode, add URL, re-encode
+    const currentList = JSON.parse(atob(fileData.content.replace(/
+/g, '')));
+    if (!currentList.includes(articleUrl)) currentList.push(articleUrl);
+
+    // PUT updated file
+    const newContent = JSON.stringify(currentList, null, 2);
+    const putResp = await fetch(apiBase, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + GITHUB_PAT,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'approve: ' + id,
+        content: btoa(unescape(encodeURIComponent(newContent))),
+        sha: fileData.sha
+      })
+    });
+    if (!putResp.ok) throw new Error('PUT failed: ' + putResp.status);
+
+    // Success
+    card.dataset.approved = 'true';
+    const pending = card.querySelector('.pending-banner');
+    if (pending) pending.remove();
+    if (badge) { badge.className = 'status-badge status-approved'; badge.textContent = '✓ מאושר'; }
+    if (btn)   { btn.textContent = '✓ מאושר'; btn.classList.add('approved'); btn.disabled = false; }
+    showToast('✓ הכתבה אושרה! האתר יתעדכן תוך כ-2 דקות.', 'success');
+    updateCounts();
+
+  } catch(err) {
+    console.error('Approve failed:', err);
+    if (badge) { badge.className = 'status-badge status-needs-review'; badge.textContent = '⚠ לבדיקה'; }
+    if (btn)   { btn.textContent = '✓ אשר'; btn.disabled = false; }
+    showToast('שגיאה: ' + err.message, 'error');
+  }
 }
 
 function applyApprovals() {
-  const approved = loadApproved();
-  document.querySelectorAll('.article-card').forEach(card => {
-    const id    = card.dataset.id;
-    const badge = document.getElementById('badge-' + id);
-    const btn   = document.getElementById('approvebtn-' + id);
-    if (!badge) return;
-    if (approved.includes(id)) {
-      badge.className = 'status-badge status-approved';
-      badge.textContent = '✓ מאושר';
-      if (btn) { btn.textContent = '✓ מאושר'; btn.classList.add('approved'); }
-    } else {
-      const orig = card.dataset.status || 'needs-review';
-      badge.className = 'status-badge status-' + orig;
-      badge.textContent = orig === 'approved' ? '✓ מאושר' : '⚠ לבדיקה';
-      if (btn) { btn.textContent = '✓ אשר'; btn.classList.remove('approved'); }
-    }
-  });
+  // Approvals now come from the server (data-approved attribute on each card).
+  // This function is kept for backward compat but does nothing on initial load.
 }
 
 function updateApprovedCount() {
+  let pending = 0;
+  document.querySelectorAll('.article-card').forEach(card => {
+    if (card.dataset.approved !== 'true') pending++;
+  });
   const el = document.getElementById('approved-count');
-  if (el) el.textContent = loadApproved().length;
+  if (el) el.textContent = pending;
 }
 
 // ── Delete ───────────────────────────────────────────────────────────────────
@@ -724,6 +860,57 @@ function applyDeleted() {
   document.querySelectorAll('.article-card').forEach(card => {
     card.classList.toggle('hidden', deleted.includes(card.dataset.id));
   });
+  updateCounts();
+}
+
+function updateCounts() {
+  const deleted  = loadDeleted();
+  const isAdmin  = document.body.classList.contains('admin-mode');
+  let total = 0;
+  const qCounts = {};
+
+  document.querySelectorAll('.article-card').forEach(card => {
+    const id = card.dataset.id;
+    const approved = card.dataset.approved === 'true';
+    if (!deleted.includes(id) && (isAdmin || approved)) {
+      total++;
+      const q = card.dataset.q;
+      qCounts[q] = (qCounts[q] || 0) + 1;
+    }
+  });
+
+  // Update stats bar
+  const totalEl = document.getElementById('total-count');
+  if (totalEl) totalEl.textContent = total;
+  const headerEl = document.getElementById('header-count');
+  if (headerEl) headerEl.textContent = total + ' כתבות';
+
+  // Update quarter badges
+  document.querySelectorAll('.qtab[data-q]').forEach(btn => {
+    const q = btn.dataset.q;
+    const count = qCounts[q] || 0;
+    const badge = btn.querySelector('.qtab-badge');
+    if (badge) badge.textContent = count;
+    if (count === 0) { btn.classList.add('qtab-empty'); btn.disabled = true; }
+    else { btn.classList.remove('qtab-empty'); btn.disabled = false; }
+  });
+
+  // Update year badges
+  document.querySelectorAll('.ytab[data-year]').forEach(btn => {
+    const year = btn.dataset.year;
+    if (year === 'all') return;
+    let yearTotal = 0;
+    for (const [q, c] of Object.entries(qCounts)) {
+      if (q.endsWith('-' + year)) yearTotal += c;
+    }
+    const badge = btn.querySelector('.qtab-badge');
+    if (badge) badge.textContent = yearTotal;
+  });
+
+  // Update quarters count (only quarters with remaining articles)
+  const activeQs = Object.values(qCounts).filter(c => c > 0).length;
+  const qCountEl = document.getElementById('quarters-count');
+  if (qCountEl) qCountEl.textContent = activeQs;
 }
 
 // ── Apply saved edits & images ───────────────────────────────────────────────
