@@ -212,9 +212,13 @@
       font-size: 0.9rem; font-weight: 700;
       opacity: 0; transition: opacity 0.2s; cursor: pointer;
       backdrop-filter: blur(3px);
+      pointer-events: none;
     }
     body.edit-mode .img-item:hover .img-overlay,
-    body.edit-mode .no-img-wrapper:hover .img-overlay { opacity: 1; }
+    body.edit-mode .no-img-wrapper:hover .img-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     /* ── Content ── */
     .article-content {
@@ -1548,7 +1552,7 @@
 </div>
 
 <div class="page-footer">
-  נוצר על ידי אלון סער · 26/04/2026 18:36
+  נוצר על ידי אלון סער · 26/04/2026 18:48
   <span class="admin-only" style="margin-right:16px;">
     <button class="pat-btn-footer admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 GitHub PAT</button>
   </span>

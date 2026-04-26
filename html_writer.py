@@ -427,9 +427,13 @@ def generate(articles: list[dict]) -> Path:
       font-size: 0.9rem; font-weight: 700;
       opacity: 0; transition: opacity 0.2s; cursor: pointer;
       backdrop-filter: blur(3px);
+      pointer-events: none;
     }}
     body.edit-mode .img-item:hover .img-overlay,
-    body.edit-mode .no-img-wrapper:hover .img-overlay {{ opacity: 1; }}
+    body.edit-mode .no-img-wrapper:hover .img-overlay {{
+      opacity: 1;
+      pointer-events: auto;
+    }}
 
     /* ── Content ── */
     .article-content {{
