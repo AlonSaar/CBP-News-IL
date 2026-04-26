@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'state/approved_urls.json'
+      - 'state/articles.json'
 
 concurrency:
   group: "pages"

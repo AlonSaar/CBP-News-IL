@@ -79,58 +79,28 @@ def _status_display(status: str) -> tuple[str, str]:
 
 
 def _nav_html(quarters: dict) -> str:
-    """
-    Build a two-level year → quarter navigation.
+    """Flat quarter navigation — always visible, no year-level hierarchy."""
+    sorted_qs = sorted(quarters.keys(), reverse=True)
+    total_all = sum(len(v) for v in quarters.values())
 
-    Top row : [הכל]  [2026 ▾]  [2027 ▾]  …
-    Sub-row  : shown only when a year is active → [Q1]  [Q2]  [Q3]  [Q4]
-               (empty quarters are greyed-out / disabled)
-    """
-    years = sorted(
-        set(q.split("-")[1] for q in quarters if "-" in q),
-        reverse=True,
-    )
-
-    # ── top-level row ─────────────────────────────────────────────────
-    top_tabs = ['<button class="ytab ytab-all active" data-year="all" '
-                'onclick="selectYear(this,\'all\')">הכל</button>']
-    for year in years:
-        total = sum(len(quarters.get(f"Q{n}-{year}", [])) for n in range(1, 5))
-        badge = f'<span class="qtab-badge">{total}</span>'
-        top_tabs.append(
-            f'<button class="ytab" data-year="{year}" '
-            f'onclick="selectYear(this,\'{year}\')">{year}{badge}</button>'
+    tabs = [
+        f'<button class="qtab qtab-all qtab-active" data-q="all" '
+        f'onclick="selectQ(this,\'all\')">הכל<span class="qtab-badge" id="badge-all">{total_all}</span></button>'
+    ]
+    for q in sorted_qs:
+        count = len(quarters[q])
+        if "-" in q:
+            qnum, year = q.split("-", 1)
+            label = f"{qnum} '{year[2:]}"
+        else:
+            label = q
+        badge = f'<span class="qtab-badge" id="badge-{q}">{count}</span>'
+        tabs.append(
+            f'<button class="qtab" data-q="{q}" onclick="selectQ(this,\'{q}\')">'
+            f'{label}{badge}</button>'
         )
 
-    # ── per-year sub-rows (hidden by default) ─────────────────────────
-    sub_rows = []
-    for year in years:
-        btns = []
-        for qnum in ["Q1", "Q2", "Q3", "Q4"]:
-            key   = f"{qnum}-{year}"
-            count = len(quarters.get(key, []))
-            if count == 0:
-                btns.append(
-                    f'<button class="qtab qtab-empty" disabled title="אין כתבות">{qnum}</button>'
-                )
-            else:
-                badge = f'<span class="qtab-badge">{count}</span>'
-                btns.append(
-                    f'<button class="qtab" data-q="{key}" '
-                    f'onclick="selectQuarter(this,\'{key}\')">{qnum}{badge}</button>'
-                )
-        sub_rows.append(
-            f'<div class="qsub-row" data-year="{year}">\n    '
-            + "\n    ".join(btns)
-            + "\n  </div>"
-        )
-
-    return (
-        '<div class="ytab-row">\n  '
-        + "\n  ".join(top_tabs)
-        + "\n</div>\n"
-        + "\n".join(sub_rows)
-    )
+    return '<div class="qtab-row-flat">\n  ' + "\n  ".join(tabs) + "\n</div>"
 
 
 def generate(articles: list[dict]) -> Path:
@@ -180,6 +150,8 @@ def generate(articles: list[dict]) -> Path:
             admin_approved = art.get("admin_approved", True)
             approved_str = "true" if admin_approved else "false"
             pending_banner = "" if admin_approved else '<div class="pending-banner">⏳ ממתין לאישור מנהל — לא מוצג למשתמשים רגילים</div>'
+            pending_active = "" if admin_approved else " btn-state-active"
+            approve_active = " btn-state-active" if admin_approved else ""
             cards += f"""
       <div class="article-card" data-id="{art_id}" data-status="{status_class}" data-q="{q}" data-approved="{approved_str}" data-url="{url}">
         {pending_banner}{img_html}
@@ -200,7 +172,8 @@ def generate(articles: list[dict]) -> Path:
           <div class="article-footer">
             <div class="footer-right">
               <span class="status-badge status-{status_class}" id="badge-{art_id}">{status_label}</span>
-              <button class="approve-btn admin-only" id="approvebtn-{art_id}" onclick="approveArticle('{art_id}')" title="אשר כתבה">✓ אשר</button>
+              <button class="state-btn pending-btn admin-only{pending_active}" id="pendingbtn-{art_id}" onclick="setPending('{art_id}')" title="העבר לבדיקה">⏸ בבדיקה</button>
+              <button class="state-btn approve-btn admin-only{approve_active}" id="approvebtn-{art_id}" onclick="approveArticle('{art_id}')" title="אשר כתבה">✓ מאושר</button>
               <button class="delete-btn admin-only" onclick="deleteArticle('{art_id}')" title="מחק כתבה">🗑</button>
             </div>
             <a class="source-link" href="{url}" target="_blank" dir="ltr">מקור: CBP ←</a>
@@ -300,69 +273,63 @@ def generate(articles: list[dict]) -> Path:
     .stat-num {{ font-size: 1.6rem; font-weight: 800; color: #0f3460; line-height: 1; margin-bottom: 3px; }}
     .stat-label {{ font-size: 0.74rem; color: #888; font-weight: 500; }}
 
-    /* ── Quarter / Year navigation ── */
+    /* ── Quarter navigation ── */
     .quarter-tabs {{
-      margin-bottom: 28px;
+      margin-bottom: 16px;
       background: white; border-radius: 14px;
       padding: 14px 20px;
       box-shadow: 0 1px 6px rgba(0,0,0,0.06);
       border: 1px solid #eaecf0;
     }}
-
-    /* Year row */
-    .ytab-row {{
+    .qtab-row-flat {{
       display: flex; gap: 8px; flex-wrap: wrap;
     }}
-    .ytab {{
-      padding: 8px 22px; border-radius: 22px;
-      font-size: 0.85rem; font-weight: 700;
-      border: 2px solid #e2e8f0;
-      background: white; color: #555;
-      cursor: pointer; font-family: inherit;
-      transition: all 0.18s;
-      display: inline-flex; align-items: center; gap: 7px;
-    }}
-    .ytab:hover {{ border-color: #0f3460; color: #0f3460; }}
-    .ytab.active {{
-      background: #0f3460; color: white;
-      border-color: #0f3460;
-      box-shadow: 0 2px 10px rgba(15,52,96,0.3);
-    }}
-    .ytab.active .qtab-badge {{ background: rgba(255,255,255,0.25); }}
-
-    /* Quarter sub-row */
-    .qsub-row {{
-      display: none;
-      gap: 7px; flex-wrap: wrap;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid #eef0f4;
-    }}
-    .qsub-row.visible {{ display: flex; }}
-
-    /* Quarter pill */
     .qtab {{
-      padding: 5px 18px; border-radius: 18px;
-      font-size: 0.78rem; font-weight: 700;
+      padding: 7px 20px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 700;
       border: 2px solid #e2e8f0;
-      background: #f8faff; color: #666;
+      background: #f8faff; color: #555;
       cursor: pointer; font-family: inherit;
       transition: all 0.15s;
       display: inline-flex; align-items: center; gap: 6px;
     }}
-    .qtab:hover:not(:disabled) {{ border-color: #4c5fd5; color: #4c5fd5; }}
-    .qtab.active {{
+    .qtab:hover {{ border-color: #4c5fd5; color: #4c5fd5; }}
+    .qtab-active {{
       background: #4c5fd5; color: white;
       border-color: #4c5fd5;
       box-shadow: 0 2px 8px rgba(76,95,213,0.3);
     }}
-    .qtab-empty {{ opacity: 0.32; cursor: not-allowed; }}
+    .qtab-active .qtab-badge {{ background: rgba(255,255,255,0.3); }}
     .qtab-badge {{
       background: #e94560; color: white;
       font-size: 0.62rem; padding: 1px 6px;
       border-radius: 10px; font-weight: 800;
     }}
-    .qtab.active .qtab-badge {{ background: rgba(255,255,255,0.3); }}
+
+    /* ── Add article button ── */
+    .add-article-btn {{
+      display: none; margin-bottom: 20px;
+      background: #0f3460; color: white;
+      border: none; border-radius: 12px;
+      padding: 10px 24px; font-size: 0.88rem;
+      font-weight: 700; cursor: pointer;
+      font-family: inherit; transition: all 0.2s;
+      box-shadow: 0 2px 10px rgba(15,52,96,0.25);
+    }}
+    body.admin-mode .add-article-btn {{ display: inline-block; }}
+    .add-article-btn:hover {{ background: #1a3a6e; transform: translateY(-1px); }}
+
+    /* ── Add article form fields ── */
+    .add-field {{ margin-bottom: 14px; }}
+    .add-field label {{ display: block; font-size: 0.8rem; font-weight: 700; color: #555; margin-bottom: 5px; }}
+    .add-field input, .add-field textarea {{
+      width: 100%; padding: 9px 12px; border-radius: 9px;
+      border: 2px solid #e2e8f0; font-family: inherit;
+      font-size: 0.88rem; direction: rtl; color: #1a1a2e;
+      transition: border-color 0.15s;
+    }}
+    .add-field input:focus, .add-field textarea:focus {{ outline: none; border-color: #4c5fd5; }}
+    .add-field textarea {{ resize: vertical; }}
 
     /* ── Article card ── */
     .article-card {{
@@ -525,15 +492,22 @@ def generate(articles: list[dict]) -> Path:
     #cbp-toast.success {{ background: #16a34a; color: white; }}
     #cbp-toast.error   {{ background: #dc2626; color: white; }}
 
+    /* ── State buttons (בבדיקה / מאושר) ── */
+    .state-btn {{
+      font-size: 0.68rem; padding: 4px 10px; border-radius: 8px;
+      font-weight: 700; cursor: pointer; font-family: inherit;
+      transition: all 0.15s; align-items: center;
+    }}
+    .pending-btn {{
+      border: 1px solid #fde68a; background: #fefce8; color: #92400e;
+    }}
+    .pending-btn:hover {{ background: #fef9c3; }}
+    .pending-btn.btn-state-active {{ background: #f59e0b; color: white; border-color: #f59e0b; }}
     .approve-btn {{
-      font-size: 0.68rem; padding: 3px 10px; border-radius: 8px;
-      font-weight: 700; border: 1px solid #bbf7d0;
-      background: #f0fdf4; color: #15803d;
-      cursor: pointer; font-family: inherit; transition: all 0.15s;
-      align-items: center;
+      border: 1px solid #bbf7d0; background: #f0fdf4; color: #15803d;
     }}
     .approve-btn:hover {{ background: #dcfce7; }}
-    .approve-btn.approved {{ background: #16a34a; color: white; border-color: #16a34a; }}
+    .approve-btn.btn-state-active {{ background: #16a34a; color: white; border-color: #16a34a; }}
 
     .delete-btn {{
       font-size: 0.75rem; padding: 3px 8px; border-radius: 8px;
@@ -592,13 +566,19 @@ def generate(articles: list[dict]) -> Path:
       <div class="stat-num" id="quarters-count">{len(quarters)}</div>
       <div class="stat-label">רבעונים</div>
     </div>
-    <div class="stat-item admin-stat">
+  </div>
+  <div class="stats-bar admin-stat">
+    <div class="stat-item">
       <div class="stat-num" id="approved-count">0</div>
-      <div class="stat-label">ממתינות לאישור</div>
+      <div class="stat-label">סקירות מאושרות</div>
     </div>
-    <div class="stat-item admin-stat">
+    <div class="stat-item">
+      <div class="stat-num" id="pending-count">0</div>
+      <div class="stat-label">סקירות בהמתנה</div>
+    </div>
+    <div class="stat-item">
       <div class="stat-num">{now_str.split()[0]}</div>
-      <div class="stat-label">עודכן</div>
+      <div class="stat-label">עדכון אחרון</div>
     </div>
   </div>
 
@@ -606,11 +586,33 @@ def generate(articles: list[dict]) -> Path:
     {nav_html}
   </div>
 
+  <button class="add-article-btn admin-only" onclick="document.getElementById('add-modal').style.display='flex'" title="הוסף כתבה ידנית">＋ הוסף כתבה</button>
+
 {quarters_html}
 </div>
 
 <div class="page-footer">
   נוצר אוטומטית על ידי cbp-translator · {now_str}
+</div>
+
+<!-- Add Article Modal (admin only) -->
+<div id="add-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:white;border-radius:18px;padding:32px;width:min(600px,95vw);max-height:90vh;overflow-y:auto;direction:rtl;">
+    <h2 style="font-size:1.2rem;font-weight:800;color:#0d1b3e;margin-bottom:20px;">➕ הוסף כתבה ידנית</h2>
+    <form id="add-form" onsubmit="event.preventDefault();addArticle()">
+      <div class="add-field"><label>כותרת (עברית) *</label><input id="add-title" type="text" required placeholder="תפיסת..."/></div>
+      <div class="add-field"><label>מיקום (עברית - English, מדינה)</label><input id="add-location" type="text" placeholder="נמל הכניסה... - Port Name, State"/></div>
+      <div class="add-field"><label>סוג מעבר</label><input id="add-crossing" type="text" placeholder="מעבר גבול יבשתי / ימי / אווירי..."/></div>
+      <div class="add-field"><label>תוכן הסקירה (עברית) *</label><textarea id="add-body" rows="6" required placeholder="פסקת הסקירה בעברית..."></textarea></div>
+      <div class="add-field"><label>URL תמונה</label><input id="add-image" type="url" placeholder="https://..."/></div>
+      <div class="add-field"><label>תאריך הכתבה *</label><input id="add-date" type="date" required/></div>
+      <div class="add-field"><label>קישור מקור CBP</label><input id="add-url" type="url" placeholder="https://www.cbp.gov/newsroom/..."/></div>
+      <div style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end;">
+        <button type="button" onclick="document.getElementById('add-modal').style.display='none'" style="padding:10px 22px;border-radius:10px;border:2px solid #e2e8f0;background:white;cursor:pointer;font-family:inherit;font-weight:600;">ביטול</button>
+        <button type="submit" id="add-submit-btn" style="padding:10px 28px;border-radius:10px;background:#0f3460;color:white;border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:0.95rem;">הוסף כתבה</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script>
@@ -632,42 +634,15 @@ function saveApproved(a){{ localStorage.setItem(APPROVE_KEY, JSON.stringify(a));
 function loadDeleted()  {{ try {{ return JSON.parse(localStorage.getItem(DELETE_KEY)  || '[]');  }} catch(e) {{ return []; }} }}
 function saveDeleted(d) {{ localStorage.setItem(DELETE_KEY,  JSON.stringify(d)); }}
 
-// ── Year / Quarter navigation ────────────────────────────────────────────────
-
-// Show/hide sections helper
-function _showSections(predicate) {{
+// ── Quarter navigation ────────────────────────────────────────────────────────
+function selectQ(btn, q) {{
+  document.querySelectorAll('.qtab').forEach(b => b.classList.remove('qtab-active'));
+  btn.classList.add('qtab-active');
+  const isAdmin = document.body.classList.contains('admin-mode');
   document.querySelectorAll('.quarter-section').forEach(sec => {{
-    sec.style.display = predicate(sec.dataset.q) ? '' : 'none';
+    sec.style.display = (q === 'all' || sec.dataset.q === q) ? '' : 'none';
   }});
   applyDeleted();
-}}
-
-function selectYear(btn, year) {{
-  // Deactivate all year tabs and hide all sub-rows + quarter tabs
-  document.querySelectorAll('.ytab').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.qsub-row').forEach(r => r.classList.remove('visible'));
-  document.querySelectorAll('.qtab').forEach(b => b.classList.remove('active'));
-
-  btn.classList.add('active');
-
-  if (year === 'all') {{
-    _showSections(() => true);
-  }} else {{
-    // Show articles for this whole year
-    _showSections(q => q && q.endsWith('-' + year));
-    // Reveal the quarter sub-row for this year
-    const subRow = document.querySelector('.qsub-row[data-year="' + year + '"]');
-    if (subRow) subRow.classList.add('visible');
-  }}
-}}
-
-function selectQuarter(btn, q) {{
-  // Deactivate other quarter tabs within the same sub-row only
-  if (btn.closest('.qsub-row')) {{
-    btn.closest('.qsub-row').querySelectorAll('.qtab').forEach(b => b.classList.remove('active'));
-  }}
-  btn.classList.add('active');
-  _showSections(sq => sq === q);
 }}
 
 // ── Admin mode ──────────────────────────────────────────────────────────────
@@ -724,83 +699,148 @@ function showToast(msg, type) {{
   _toastTimer = setTimeout(() => {{ t.className = ''; }}, 4000);
 }}
 
-// ── Approve (GitHub API) ──────────────────────────────────────────────────────
+// ── GitHub API helper ─────────────────────────────────────────────────────────
+async function ghGet(path) {{
+  const r = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path, {{
+    headers: {{ 'Authorization': 'Bearer ' + GITHUB_PAT, 'Accept': 'application/vnd.github+json' }}
+  }});
+  if (!r.ok) throw new Error('GET ' + path + ' failed: ' + r.status);
+  return r.json();
+}}
+async function ghPut(path, sha, content, message) {{
+  const r = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path, {{
+    method: 'PUT',
+    headers: {{ 'Authorization': 'Bearer ' + GITHUB_PAT, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' }},
+    body: JSON.stringify({{ message, content: btoa(unescape(encodeURIComponent(content))), sha }})
+  }});
+  if (!r.ok) throw new Error('PUT ' + path + ' failed: ' + r.status);
+  return r.json();
+}}
+
+// ── Approve ───────────────────────────────────────────────────────────────────
 async function approveArticle(id) {{
+  if (!GITHUB_PAT) {{ showToast('GitHub PAT לא מוגדר', 'error'); return; }}
   const card = document.querySelector('.article-card[data-id="' + id + '"]');
   if (!card) return;
   const articleUrl = card.dataset.url;
-  const badge = document.getElementById('badge-' + id);
-  const btn   = document.getElementById('approvebtn-' + id);
-
-  if (!GITHUB_PAT) {{
-    showToast('GitHub PAT לא מוגדר — פנה למנהל המערכת', 'error');
-    return;
-  }}
-
-  // Immediate UI feedback
-  if (btn)   {{ btn.textContent = '⏳'; btn.disabled = true; }}
-  if (badge) {{ badge.className = 'status-badge status-approved'; badge.textContent = '⏳ שומר...'; }}
-
+  const appBtn = document.getElementById('approvebtn-' + id);
+  const penBtn = document.getElementById('pendingbtn-' + id);
+  if (appBtn) {{ appBtn.textContent = '⏳'; appBtn.disabled = true; }}
   try {{
-    const apiBase = 'https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + APPROVED_FILE;
-
-    // GET current file
-    const getResp = await fetch(apiBase, {{
-      headers: {{ 'Authorization': 'Bearer ' + GITHUB_PAT, 'Accept': 'application/vnd.github+json' }}
-    }});
-    if (!getResp.ok) throw new Error('GET failed: ' + getResp.status);
-    const fileData = await getResp.json();
-
-    // Decode, add URL, re-encode
-    const currentList = JSON.parse(atob(fileData.content.replace(/\n/g, '')));
-    if (!currentList.includes(articleUrl)) currentList.push(articleUrl);
-
-    // PUT updated file
-    const newContent = JSON.stringify(currentList, null, 2);
-    const putResp = await fetch(apiBase, {{
-      method: 'PUT',
-      headers: {{
-        'Authorization': 'Bearer ' + GITHUB_PAT,
-        'Accept': 'application/vnd.github+json',
-        'Content-Type': 'application/json'
-      }},
-      body: JSON.stringify({{
-        message: 'approve: ' + id,
-        content: btoa(unescape(encodeURIComponent(newContent))),
-        sha: fileData.sha
-      }})
-    }});
-    if (!putResp.ok) throw new Error('PUT failed: ' + putResp.status);
-
-    // Success
+    const f = await ghGet(APPROVED_FILE);
+    const list = JSON.parse(atob(f.content.replace(/\n/g,'')));
+    if (!list.includes(articleUrl)) list.push(articleUrl);
+    await ghPut(APPROVED_FILE, f.sha, JSON.stringify(list, null, 2), 'approve: ' + id);
     card.dataset.approved = 'true';
-    const pending = card.querySelector('.pending-banner');
-    if (pending) pending.remove();
+    const banner = card.querySelector('.pending-banner');
+    if (banner) banner.remove();
+    if (appBtn) {{ appBtn.textContent = '✓ מאושר'; appBtn.classList.add('btn-state-active'); appBtn.disabled = false; }}
+    if (penBtn) {{ penBtn.classList.remove('btn-state-active'); }}
+    const badge = document.getElementById('badge-' + id);
     if (badge) {{ badge.className = 'status-badge status-approved'; badge.textContent = '✓ מאושר'; }}
-    if (btn)   {{ btn.textContent = '✓ מאושר'; btn.classList.add('approved'); btn.disabled = false; }}
     showToast('✓ הכתבה אושרה! האתר יתעדכן תוך כ-2 דקות.', 'success');
     updateCounts();
-
   }} catch(err) {{
-    console.error('Approve failed:', err);
-    if (badge) {{ badge.className = 'status-badge status-needs-review'; badge.textContent = '⚠ לבדיקה'; }}
-    if (btn)   {{ btn.textContent = '✓ אשר'; btn.disabled = false; }}
+    if (appBtn) {{ appBtn.textContent = '✓ מאושר'; appBtn.disabled = false; }}
     showToast('שגיאה: ' + err.message, 'error');
   }}
 }}
 
+// ── Set Pending (unapprove) ───────────────────────────────────────────────────
+async function setPending(id) {{
+  if (!GITHUB_PAT) {{ showToast('GitHub PAT לא מוגדר', 'error'); return; }}
+  const card = document.querySelector('.article-card[data-id="' + id + '"]');
+  if (!card) return;
+  const articleUrl = card.dataset.url;
+  const penBtn = document.getElementById('pendingbtn-' + id);
+  const appBtn = document.getElementById('approvebtn-' + id);
+  if (penBtn) {{ penBtn.textContent = '⏳'; penBtn.disabled = true; }}
+  try {{
+    const f = await ghGet(APPROVED_FILE);
+    const list = JSON.parse(atob(f.content.replace(/\n/g,'')));
+    const idx = list.indexOf(articleUrl);
+    if (idx !== -1) list.splice(idx, 1);
+    await ghPut(APPROVED_FILE, f.sha, JSON.stringify(list, null, 2), 'pending: ' + id);
+    card.dataset.approved = 'false';
+    if (!card.querySelector('.pending-banner')) {{
+      const banner = document.createElement('div');
+      banner.className = 'pending-banner';
+      banner.textContent = '⏳ ממתין לאישור מנהל — לא מוצג למשתמשים רגילים';
+      card.insertBefore(banner, card.firstChild);
+    }}
+    if (penBtn) {{ penBtn.textContent = '⏸ בבדיקה'; penBtn.classList.add('btn-state-active'); penBtn.disabled = false; }}
+    if (appBtn) {{ appBtn.classList.remove('btn-state-active'); }}
+    const badge = document.getElementById('badge-' + id);
+    if (badge) {{ badge.className = 'status-badge status-needs-review'; badge.textContent = '⚠ לבדיקה'; }}
+    showToast('הכתבה הועברה לבדיקה. האתר יתעדכן תוך כ-2 דקות.', 'success');
+    updateCounts();
+  }} catch(err) {{
+    if (penBtn) {{ penBtn.textContent = '⏸ בבדיקה'; penBtn.disabled = false; }}
+    showToast('שגיאה: ' + err.message, 'error');
+  }}
+}}
+
+// ── Add Article ───────────────────────────────────────────────────────────────
+async function addArticle() {{
+  const title   = document.getElementById('add-title').value.trim();
+  const body    = document.getElementById('add-body').value.trim();
+  const date    = document.getElementById('add-date').value;
+  if (!title || !body || !date) {{ showToast('נא למלא כותרת, גוף ותאריך', 'error'); return; }}
+
+  const location    = document.getElementById('add-location').value.trim();
+  const crossing    = document.getElementById('add-crossing').value.trim();
+  const imageUrl    = document.getElementById('add-image').value.trim();
+  const sourceUrl   = document.getElementById('add-url').value.trim() || ('manual-' + Date.now());
+  const d = new Date(date);
+  const quarter = 'Q' + Math.ceil((d.getMonth()+1)/3) + '-' + d.getFullYear();
+
+  const newArt = {{
+    run_date: new Date().toISOString().slice(0,16)+' UTC',
+    article_date: date, url: sourceUrl,
+    title, location,
+    crossing_type: crossing ? 'סוג מעבר: ' + crossing : '',
+    body, image_url: imageUrl,
+    image_urls: imageUrl ? [imageUrl] : [],
+    quarter, status: 'approved', admin_approved: true, editor_notes: ''
+  }};
+
+  const btn = document.getElementById('add-submit-btn');
+  btn.disabled = true; btn.textContent = '⏳ שומר...';
+  try {{
+    // Update articles.json
+    const af = await ghGet('state/articles.json');
+    const arts = JSON.parse(atob(af.content.replace(/\n/g,'')));
+    arts.unshift(newArt);
+    await ghPut('state/articles.json', af.sha, JSON.stringify(arts, null, 2), 'add: ' + title.slice(0,50));
+
+    // Update approved_urls.json (triggers rebuild)
+    const pf = await ghGet(APPROVED_FILE);
+    const purls = JSON.parse(atob(pf.content.replace(/\n/g,'')));
+    purls.push(sourceUrl);
+    await ghPut(APPROVED_FILE, pf.sha, JSON.stringify(purls, null, 2), 'approve: ' + sourceUrl.slice(-50));
+
+    showToast('✓ הכתבה נוספה! האתר יתעדכן תוך כ-2 דקות.', 'success');
+    document.getElementById('add-modal').style.display = 'none';
+    document.getElementById('add-form').reset();
+  }} catch(err) {{
+    showToast('שגיאה: ' + err.message, 'error');
+  }}
+  btn.disabled = false; btn.textContent = 'הוסף כתבה';
+}}
+
 function applyApprovals() {{
-  // Approvals now come from the server (data-approved attribute on each card).
-  // This function is kept for backward compat but does nothing on initial load.
+  // Approvals come from data-approved attribute set at generation time.
 }}
 
 function updateApprovedCount() {{
-  let pending = 0;
+  let approved = 0, pending = 0;
   document.querySelectorAll('.article-card').forEach(card => {{
-    if (card.dataset.approved !== 'true') pending++;
+    if (card.dataset.approved === 'true') approved++; else pending++;
   }});
-  const el = document.getElementById('approved-count');
-  if (el) el.textContent = pending;
+  const ae = document.getElementById('approved-count');
+  if (ae) ae.textContent = approved;
+  const pe = document.getElementById('pending-count');
+  if (pe) pe.textContent = pending;
 }}
 
 // ── Delete ───────────────────────────────────────────────────────────────────
@@ -842,26 +882,17 @@ function updateCounts() {{
   const headerEl = document.getElementById('header-count');
   if (headerEl) headerEl.textContent = total + ' כתבות';
 
-  // Update quarter badges
+  // Update quarter tab badges
   document.querySelectorAll('.qtab[data-q]').forEach(btn => {{
     const q = btn.dataset.q;
-    const count = qCounts[q] || 0;
-    const badge = btn.querySelector('.qtab-badge');
-    if (badge) badge.textContent = count;
-    if (count === 0) {{ btn.classList.add('qtab-empty'); btn.disabled = true; }}
-    else {{ btn.classList.remove('qtab-empty'); btn.disabled = false; }}
-  }});
-
-  // Update year badges
-  document.querySelectorAll('.ytab[data-year]').forEach(btn => {{
-    const year = btn.dataset.year;
-    if (year === 'all') return;
-    let yearTotal = 0;
-    for (const [q, c] of Object.entries(qCounts)) {{
-      if (q.endsWith('-' + year)) yearTotal += c;
+    if (q === 'all') {{
+      const badge = btn.querySelector('.qtab-badge');
+      if (badge) badge.textContent = total;
+    }} else {{
+      const count = qCounts[q] || 0;
+      const badge = btn.querySelector('.qtab-badge');
+      if (badge) badge.textContent = count;
     }}
-    const badge = btn.querySelector('.qtab-badge');
-    if (badge) badge.textContent = yearTotal;
   }});
 
   // Update quarters count (only quarters with remaining articles)
@@ -904,10 +935,6 @@ function applyAll() {{
 // ── Init ─────────────────────────────────────────────────────────────────────
 checkAdmin();
 applyAll();
-
-// Auto-expand the most recent year so Q1/Q2/Q3/Q4 are visible immediately
-const firstYearBtn = document.querySelector('.ytab[data-year]:not([data-year="all"])');
-if (firstYearBtn) selectYear(firstYearBtn, firstYearBtn.dataset.year);
 </script>
 </body>
 </html>"""
