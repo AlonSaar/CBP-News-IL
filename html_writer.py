@@ -26,9 +26,27 @@ ADMIN_PASSWORD = "ADMIN2026"
 SITE_TITLE = "סקירות CBP | נציגות ניו יורק"
 
 
+_CATSCАН_RE = None
+
+def _normalize_scanner_terms(text: str) -> str:
+    """Replace legacy non-invasive scanner phrases with the standard Hebrew term."""
+    import re
+    global _CATSCАН_RE
+    if _CATSCАН_RE is None:
+        _CATSCАН_RE = re.compile(
+            r'(?:לבדיקה\s+לא[- ]פולשנית'
+            r'|מערכת\s+סריקה\s+לא[- ]חודרנית'
+            r'|סריקה\s+לא[- ]פולשנית'
+            r'|בדיקה\s+לא[- ]פולשנית)',
+            re.UNICODE,
+        )
+    return _CATSCАН_RE.sub('בדיקת סיטי (CAT SCAN)', text)
+
+
 def _format_body(body: str) -> str:
     if not body:
         return ""
+    body = _normalize_scanner_terms(body)
     sentences = [s.strip() for s in body.split(". ") if s.strip()]
     paragraphs = []
     for s in sentences:
@@ -994,8 +1012,10 @@ function applyApprovals() {{
 }}
 
 function updateApprovedCount() {{
+  const deleted = loadDeleted();
   let approved = 0, pending = 0;
   document.querySelectorAll('.article-card').forEach(card => {{
+    if (deleted.includes(card.dataset.id)) return;  // skip locally-deleted
     if (card.dataset.approved === 'true') approved++; else pending++;
   }});
   const ae = document.getElementById('approved-count');
@@ -1004,13 +1024,54 @@ function updateApprovedCount() {{
   if (pe) pe.textContent = pending;
 }}
 
-// ── Delete ───────────────────────────────────────────────────────────────────
-function deleteArticle(id) {{
-  if (!confirm('למחוק כתבה זו מהתצוגה?')) return;
-  const deleted = loadDeleted();
-  if (!deleted.includes(id)) deleted.push(id);
-  saveDeleted(deleted);
-  applyDeleted();
+// ── Delete (permanent — removes from GitHub backend) ─────────────────────────
+async function deleteArticle(id) {{
+  if (!confirm('למחוק כתבה זו לצמיתות?\\nהכתבה תוסר מהמאגר ולא תחזור יותר.')) return;
+  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT למחיקת הכתבה:')) return;
+  const card = document.querySelector('.article-card[data-id="' + id + '"]');
+  if (!card) return;
+  const articleUrl = card.dataset.url;
+
+  // Optimistic hide
+  card.style.opacity = '0.4';
+  card.style.pointerEvents = 'none';
+
+  try {{
+    // 1. Remove from articles.json
+    const af = await ghGet('state/articles.json');
+    const arts = JSON.parse(atob(af.content.replace(/\\n/g,'')));
+    const filtered = arts.filter(a => (a.url || '').split('/').pop() !== id && a.url !== articleUrl);
+    if (filtered.length === arts.length) {{
+      // fallback: try matching by url slug
+      console.warn('deleteArticle: no match found for id=' + id + ', url=' + articleUrl);
+    }}
+    await ghPut('state/articles.json', af.sha,
+      JSON.stringify(filtered, null, 2),
+      'delete: ' + id + ' [skip ci]');
+
+    // 2. Remove from approved_urls.json (triggers rebuild)
+    const pf = await ghGet(APPROVED_FILE);
+    const purls = JSON.parse(atob(pf.content.replace(/\\n/g,'')));
+    const filtered2 = purls.filter(u => u !== articleUrl);
+    await ghPut(APPROVED_FILE, pf.sha,
+      JSON.stringify(filtered2, null, 2),
+      'delete approved: ' + id);
+
+    // 3. Hide locally too (in case user stays on page before rebuild)
+    const deleted = loadDeleted();
+    if (!deleted.includes(id)) deleted.push(id);
+    saveDeleted(deleted);
+    card.classList.add('hidden');
+    card.style.opacity = '';
+    card.style.pointerEvents = '';
+
+    showToast('✓ הכתבה נמחקה לצמיתות. האתר יתעדכן תוך כ-2 דקות.', 'success');
+    updateCounts();
+  }} catch(err) {{
+    card.style.opacity = '';
+    card.style.pointerEvents = '';
+    showToast('שגיאה במחיקה: ' + err.message, 'error');
+  }}
 }}
 
 function applyDeleted() {{

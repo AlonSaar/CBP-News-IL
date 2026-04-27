@@ -8,7 +8,7 @@ Decide if a CBP article qualifies for Hebrew translation.
    - Animals, wildlife, or any living creatures (live animals, insects, birds, fish, wildlife parts such as ivory, hides, feathers, shells)
    - Plants (narcotic plants, agricultural contraband, restricted seeds, prohibited vegetation)
    - Food or agricultural products (prohibited meat, produce, smuggled food items, agricultural contraband)
-   - Human trafficking or smuggling of persons (migrants hidden in vehicles, stash houses, human smuggling networks)
+   - Migrants or persons CONCEALED inside a vehicle, truck, trailer, compartment, car trunk, or cargo — i.e. physical smuggling using a vehicle or structure to hide people while crossing a port of entry.
 
 The article must describe an actual seizure or interdiction event with specific details — not just a general policy or statistics report.
 
@@ -20,6 +20,7 @@ The article must describe an actual seizure or interdiction event with specific 
 - Currency-only seizures (no drugs/weapons/animals/plants/persons).
 - Statistics or year-in-review reports with no specific seizure described.
 - General enforcement updates with no specific seized items.
+- Migrants or persons apprehended while walking / crossing on foot — even between ports of entry. Only qualify if they were physically hidden inside a vehicle or structure.
 
 ## Response format
 
@@ -32,4 +33,4 @@ Examples:
 - `NO: currency seizure only`
 - `NO: personnel announcement`
 - `NO: statistics report, no specific seizure`
-- `NO: policy update`
+- `NO: migrants on foot, not concealed in vehicle`

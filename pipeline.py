@@ -74,10 +74,21 @@ def _load_articles() -> list[dict]:
     if not ARTICLES_PATH.exists():
         return []
     try:
-        return json.loads(ARTICLES_PATH.read_text(encoding="utf-8"))
+        arts = json.loads(ARTICLES_PATH.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError) as exc:
         logger.error("Failed to load articles store: %s", exc)
         return []
+    # Auto-deduplicate by URL on every load (keeps first/newest occurrence)
+    seen: set[str] = set()
+    unique: list[dict] = []
+    for a in arts:
+        u = a.get("url", "")
+        if u not in seen:
+            seen.add(u)
+            unique.append(a)
+    if len(unique) < len(arts):
+        logger.warning("Auto-removed %d duplicate articles on load", len(arts) - len(unique))
+    return unique
 
 
 def _save_articles(articles: list[dict]) -> None:
@@ -230,6 +241,7 @@ def run(
 
     # Load existing articles store
     all_articles = _load_articles()
+    existing_urls: set[str] = {a.get("url", "") for a in all_articles}
     new_articles: list[dict] = []
 
     logger.info("=== Pipeline start | existing articles: %d ===", len(all_articles))
@@ -249,7 +261,15 @@ def run(
 
         # Step 2: Dedupe check (skip if --reprocess is set)
         if not reprocess and dedupe.seen(url):
-            logger.info("SKIP (dedupe): %s", url)
+            logger.info("SKIP (dedupe store): %s", url)
+            stats.skipped_dedupe += 1
+            continue
+
+        # Belt-and-suspenders: also skip if URL already in articles.json
+        if url in existing_urls:
+            logger.info("SKIP (already in articles.json): %s", url)
+            if not dry_run:
+                dedupe.mark(url, "skipped", reason="already in articles.json")
             stats.skipped_dedupe += 1
             continue
 
@@ -421,19 +441,4 @@ def main() -> int:
 
     from datetime import date
     since_date = date.fromisoformat(args.since) if args.since else None
-    until_date = date.fromisoformat(args.until) if args.until else None
-    stats = run(
-        dry_run=args.dry_run,
-        use_sitemap=args.use_sitemap,
-        limit=args.limit,
-        month=args.month,
-        last_week=args.last_week,
-        since_date=since_date,
-        until_date=until_date,
-        reprocess=args.reprocess,
-    )
-    return 0 if stats.errors == 0 else 1
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    until_dat
