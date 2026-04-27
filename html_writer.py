@@ -184,10 +184,12 @@ def generate(articles: list[dict]) -> Path:
                 )
                 img_html = f'<div class="img-wrapper" data-id="{art_id}">{items_html}</div>'
             else:
-                img_html = f'''<div class="img-wrapper no-img-wrapper" data-id="{art_id}">
-          <div class="no-img"><span>📷</span><small>אין תמונה</small></div>
-          <div class="img-overlay admin-only" onclick="changeImage('{art_id}',0)">📷 הוסף תמונה</div>
-        </div>'''
+                img_html = (
+                    f'<div class="img-wrapper no-img-wrapper" data-id="{art_id}">'
+                    f'<div class="no-img"><span>📷</span><small>אין תמונה</small></div>'
+                    f'<button class="add-img-btn admin-only" onclick="changeImage(\'{art_id}\',0)" title="הוסף תמונה">📷 הוסף תמונה</button>'
+                    f'</div>'
+                )
 
             maps_link = f'<a class="maps-link" href="{maps_url}" target="_blank" title="פתח במפות Google">🗺️ מפה</a>' if maps_url else ""
             admin_approved = art.get("admin_approved", True)
@@ -602,6 +604,20 @@ def generate(articles: list[dict]) -> Path:
     body.edit-mode .editable:hover {{ background: rgba(233,69,96,0.04); }}
     body.edit-mode .editable:focus {{ outline: 2px solid #e94560; background: #fff9fa; }}
 
+    /* ── Add image button (no-img articles in admin) ── */
+    .add-img-btn {{
+      display: none;
+      margin-top: 10px;
+      background: rgba(255,255,255,0.15);
+      border: 2px dashed rgba(255,255,255,0.4);
+      color: white; padding: 8px 18px; border-radius: 10px;
+      font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.2s;
+    }}
+    body.admin-mode .add-img-btn {{ display: inline-block; }}
+    .add-img-btn:hover {{ background: rgba(255,255,255,0.25); border-color: white; }}
+
     /* ── Page footer ── */
     .page-footer {{
       text-align: center; padding: 36px; color: #bbb;
@@ -852,17 +868,53 @@ function onEdit(e) {{
   saveEdits(edits);
 }}
 
-// ── Image change ─────────────────────────────────────────────────────────────
-function changeImage(id, idx) {{
+// ── Image change — saves permanently to GitHub articles.json ─────────────────
+async function changeImage(id, idx) {{
   if (!document.body.classList.contains('edit-mode')) return;
-  const key = id + '__' + (idx || 0);
-  const newUrl = prompt('הכנס URL של תמונה:', loadImgs()[key] || '');
+  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT לשינוי תמונה:')) return;
+
+  // Find current image URL to pre-fill the prompt
+  const wrapper = document.querySelector('.img-wrapper[data-id="' + id + '"]');
+  const imgItems = wrapper ? wrapper.querySelectorAll('.img-item img') : [];
+  const currentUrl = imgItems[idx] ? imgItems[idx].src : '';
+
+  const newUrl = prompt('הכנס URL של תמונה:', currentUrl);
   if (newUrl === null) return;
-  const imgs = loadImgs();
-  if (newUrl.trim() === '') delete imgs[key];
-  else imgs[key] = newUrl.trim();
-  saveImgs(imgs);
-  applyAll();
+  const trimmed = newUrl.trim();
+
+  try {{
+    // Update articles.json on GitHub
+    const af = await ghGet('state/articles.json');
+    const arts = JSON.parse(atob(af.content.replace(/\\n/g,'')));
+    const art = arts.find(a => (a.url || '').split('/').pop() === id);
+    if (!art) throw new Error('כתבה לא נמצאה: ' + id);
+
+    if (!art.image_urls) art.image_urls = art.image_url ? [art.image_url] : [];
+    if (trimmed === '') {{
+      art.image_urls.splice(idx, 1);
+      if (idx === 0) art.image_url = art.image_urls[0] || '';
+    }} else {{
+      art.image_urls[idx] = trimmed;
+      if (idx === 0) art.image_url = trimmed;
+    }}
+
+    await ghPut('state/articles.json', af.sha,
+      JSON.stringify(arts, null, 2),
+      'image: update ' + id + ' [skip ci]');
+
+    // Update DOM immediately
+    if (wrapper && imgItems[idx]) {{
+      if (trimmed === '') {{
+        imgItems[idx].style.display = 'none';
+      }} else {{
+        imgItems[idx].src = trimmed;
+        imgItems[idx].style.display = '';
+      }}
+    }}
+    showToast('✓ תמונה עודכנה! האתר יתעדכן לאחר ה-rebuild הבא.', 'success');
+  }} catch(err) {{
+    showToast('שגיאה בעדכון תמונה: ' + err.message, 'error');
+  }}
 }}
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
