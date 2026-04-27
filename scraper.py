@@ -401,20 +401,21 @@ def list_new(
 
     - max_articles: upper cap (ignored when since/until are set).
     - since / until: inclusive date bounds.
-    - use_sitemap: bypass index pagination and use the XML sitemap instead.
-      Recommended for historical / date-range queries because CBP's index
-      only serves page 0 in static HTML; later pages are JS-rendered.
+    - use_sitemap: use the XML sitemap (better for deep historical scans).
+      CBP's index only serves page 0 in static HTML; later pages are
+      JS-rendered. For recent scans (last 30 days) page 0 is sufficient.
+      For historical queries pass use_sitemap=True or use --use-sitemap.
     """
-    if use_sitemap or (since is not None):
-        # For any date-filtered run, the sitemap is the only reliable source
-        # of historical URLs since CBP pagination is JavaScript-rendered.
+    if use_sitemap:
         return list_from_sitemap(since=since, until=until)
 
     session = _session()
     articles: list[Article] = []
     seen_urls: set[str] = set()
     paginate = since is not None or until is not None
-    max_pages = 60 if paginate else 1  # safety cap (60 pages ≈ ~6 months of CBP news)
+    # For recent date ranges page 0 is enough (CBP publishes ~5-10 articles/week).
+    # Cap at 3 pages to avoid JS-rendered empty pages when paginating.
+    max_pages = 3 if paginate else 1
 
     for page in range(max_pages):
         page_articles, stop = _scrape_index_page(page, session, seen_urls, since, until)

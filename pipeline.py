@@ -247,9 +247,16 @@ def run(
     logger.info("=== Pipeline start | existing articles: %d ===", len(all_articles))
 
     # Step 1: Scrape index.
-    # When a date range is requested, use the XML sitemap — CBP's index page
-    # only serves links on page 0 (later pages are JS-rendered).
-    articles = list_new(since=since, until=until, use_sitemap=use_sitemap or bool(since))
+    # Use the XML sitemap only when:
+    #   (a) explicitly requested via --use-sitemap, OR
+    #   (b) the date range is historical (since > 30 days ago) — CBP's index
+    #       pagination beyond page 0 is JS-rendered, making deep scans unreliable.
+    # For recent scans (last-week / current month) page 0 of the index is sufficient
+    # and far more efficient than fetching the full sitemap (~1,360 URLs).
+    _auto_sitemap = False
+    if not use_sitemap and since is not None:
+        _auto_sitemap = (date.today() - since).days > 30
+    articles = list_new(since=since, until=until, use_sitemap=use_sitemap or _auto_sitemap)
     stats.total_fetched = len(articles)
 
     for article in articles:
@@ -423,7 +430,7 @@ def main() -> int:
     parser.add_argument("--reprocess", action="store_true",
                         help="Ignore the dedupe store and re-translate already-seen URLs.")
     parser.add_argument("--use-sitemap", action="store_true",
-                        help="Use CBP XML sitemap instead of index pagination (auto-enabled with --since).")
+                        help="Use CBP XML sitemap instead of index pagination. Recommended for queries older than 30 days.")
     parser.add_argument("--regenerate-only", action="store_true",
                         help="Skip scraping/translation. Reload articles, sync approvals, regenerate HTML only.")
     args = parser.parse_args()
@@ -441,4 +448,19 @@ def main() -> int:
 
     from datetime import date
     since_date = date.fromisoformat(args.since) if args.since else None
-    until_dat
+    until_date = date.fromisoformat(args.until) if args.until else None
+    stats = run(
+        dry_run=args.dry_run,
+        limit=args.limit,
+        month=args.month,
+        last_week=args.last_week,
+        since_date=since_date,
+        until_date=until_date,
+        reprocess=args.reprocess,
+        use_sitemap=args.use_sitemap,
+    )
+    return 0 if stats.errors == 0 else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
