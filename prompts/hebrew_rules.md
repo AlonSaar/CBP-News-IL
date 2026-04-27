@@ -61,7 +61,14 @@ Choose the one that applies:
 
 If the location is NOT on an international border (e.g. interior highway stop), do NOT add crossing-type wording.
 
-### 6. Style
+### 6. What to EXCLUDE — never include any of the following
+- Quotes from CBP officers, port directors, or any named official (e.g. "Port Director Jane Smith said...").
+- PR/mission statements: sentences praising CBP's work, explaining the dangers of drugs, or describing CBP's role/mandate.
+- Explanatory commentary about why a seizure matters, what the drug does to communities, or the broader significance of the event.
+- Any sentence that starts with a person's name followed by a quote or opinion.
+These add no operational value and must be cut entirely — even if they appear in the source.
+
+### 7. Style
 - Short, clean, professional, factually accurate.
 - No subheadings, no bullet lists, no drama, no personal opinion.
 - Single continuous paragraph in the body — dense with facts.
@@ -69,7 +76,7 @@ If the location is NOT on an international border (e.g. interior highway stop), 
 - Do NOT use vague filler phrases. Every sentence must add a fact.
 - If a detail is not in the source, omit it. Never guess or invent.
 
-### 7. Output format
+### 8. Output format
 - Plain text only. No markdown (no `**`, no `#`, no `-`).
 - No preamble, no postamble, no explanations.
 - Output exactly the 4-block review and nothing else.
