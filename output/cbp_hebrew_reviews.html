@@ -369,6 +369,33 @@
     body.edit-mode .editable:hover { background: rgba(233,69,96,0.04); }
     body.edit-mode .editable:focus { outline: 2px solid #e94560; background: #fff9fa; }
 
+    /* ── Crossing-type filter bar ── */
+    .filter-bar {
+      background: white; border-radius: 14px;
+      padding: 12px 20px; margin-bottom: 16px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      border: 1px solid #eaecf0;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .filter-label {
+      font-size: 0.75rem; font-weight: 700; color: #999;
+      white-space: nowrap;
+    }
+    .filter-btn {
+      padding: 6px 18px; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 700;
+      border: 2px solid #e2e8f0;
+      background: #f8faff; color: #555;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.15s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .filter-btn:hover { border-color: #0f3460; color: #0f3460; }
+    .filter-btn-active {
+      background: #0f3460; color: white; border-color: #0f3460;
+      box-shadow: 0 2px 8px rgba(15,52,96,0.25);
+    }
+
     /* ── Add image button (no-img articles in admin) ── */
     .add-img-btn {
       display: none;
@@ -415,14 +442,14 @@
     <h1>סקירות CBP | נציגות ניו יורק</h1>
   </div>
   <div class="header-controls">
-    <span class="badge" id="header-count">23 כתבות</span>
+    <span class="badge" id="header-count">22 כתבות</span>
   </div>
 </header>
 
 <div class="container">
   <div class="stats-bar">
     <div class="stat-item">
-      <div class="stat-num" id="total-count">23</div>
+      <div class="stat-num" id="total-count">22</div>
       <div class="stat-label">כתבות מתורגמות</div>
     </div>
     <div class="stat-item">
@@ -446,8 +473,17 @@
   </div>
 
   <div class="quarter-tabs">
-    <div class="year-nav-row"><button class="year-btn year-btn-all year-btn-active" data-year="all" onclick="selectYear(this,'all')">הכל<span class="year-badge">23</span></button><button class="year-btn" data-year="2026" onclick="selectYear(this,'2026')">2026<span class="year-badge">23</span></button></div>
-<div class="quarter-sub-row" data-year="2026" style="display:none"><button class="qtab" data-q="Q1-2026" onclick="selectQ(this,'Q1-2026')">רבעון 1<span class="qtab-badge" id="qbadge-Q1-2026">15</span></button><button class="qtab" data-q="Q2-2026" onclick="selectQ(this,'Q2-2026')">רבעון 2<span class="qtab-badge" id="qbadge-Q2-2026">8</span></button></div>
+    <div class="year-nav-row"><button class="year-btn year-btn-all year-btn-active" data-year="all" onclick="selectYear(this,'all')">הכל<span class="year-badge">22</span></button><button class="year-btn" data-year="2026" onclick="selectYear(this,'2026')">2026<span class="year-badge">22</span></button></div>
+<div class="quarter-sub-row" data-year="2026" style="display:none"><button class="qtab" data-q="Q1-2026" onclick="selectQ(this,'Q1-2026')">רבעון 1<span class="qtab-badge" id="qbadge-Q1-2026">15</span></button><button class="qtab" data-q="Q2-2026" onclick="selectQ(this,'Q2-2026')">רבעון 2<span class="qtab-badge" id="qbadge-Q2-2026">7</span></button></div>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-label">סנן לפי מעבר:</span>
+    <button class="filter-btn filter-btn-active" data-filter="all"  onclick="setFilter(this,'all')">🔍 הכל</button>
+    <button class="filter-btn" data-filter="land" onclick="setFilter(this,'land')">🚛 יבשתי</button>
+    <button class="filter-btn" data-filter="sea"  onclick="setFilter(this,'sea')">🚢 ימי</button>
+    <button class="filter-btn" data-filter="air"  onclick="setFilter(this,'air')">✈️ אווירי</button>
+    <button class="filter-btn" data-filter="mail" onclick="setFilter(this,'mail')">📬 דואר/מטען</button>
   </div>
 
   <button class="add-article-btn admin-only" onclick="document.getElementById('add-modal').style.display='flex'" title="הוסף כתבה ידנית">＋ הוסף כתבה</button>
@@ -455,7 +491,7 @@
 
   <div class="quarter-section" data-q="Q2-2026">
     
-      <div class="article-card" data-id="cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa" data-status="needs-review" data-q="Q2-2026" data-approved="false" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa">
+      <div class="article-card" data-id="cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa" data-status="needs-review" data-q="Q2-2026" data-approved="false" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa" data-crossing="land">
         <div class="pending-banner">⏳ ממתין לאישור מנהל — לא מוצג למשתמשים רגילים</div><div class="img-wrapper" data-id="cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/cbp-meth.jpg.webp?itok=L-NeSoCF" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -469,7 +505,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Otay+Mesa+Commercial+Facility%2C+%D7%A7%D7%9C%D7%99%D7%A4%D7%95%D7%A8%D7%A0%D7%99%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa" dir="rtl"><p dir="rtl">ב-14 באפריל 2026 תפסו קציני CBP במתקן המסחרי אוטאי מסה למעלה מ-3,000 פאונד מתאמפטמין שהוסתרו בתוך נגרר מטען, בשווי מוערך של 4,924,960 דולר.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa" dir="rtl"><p dir="rtl">תפסו קציני CBP במתקן המסחרי אוטאי מסה למעלה מ-3,000 פאונד מתאמפטמין שהוסתרו בתוך נגרר מטען, בשווי מוערך של 4,924,960 דולר.</p>
 <p dir="rtl">מניפסט המשלוח ציין את תכולת הנגרר כקרטונים מגולגלים.</p>
 <p dir="rtl">קציני CBP הפנו לבדיקה משנית טרקטור מסוג 2017 Freightliner Cascadia יחד עם נגררו והנהג, אזרח מקסיקני בן 31.</p>
 <p dir="rtl">בדיקת סיטי (CAT SCAN) (סריקה) חשפה אנומליות בדופן הקדמית של הנגרר, וכלב גילוי של CBP התריע על אותו אזור.</p>
@@ -487,7 +523,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing">
+      <div class="article-card" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/compartment_2.jpg.webp?itok=v7frzGzA" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-weapons-and-parts-deconcini-crossing',0)">📷 שנה תמונה</div></div>
 <div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/weapons_in_compartment_2.jpg.webp?itok=GCAGms-X" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-weapons-and-parts-deconcini-crossing',1)">📷 שנה תמונה</div></div>
 <div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/weapons_total.jpg.webp?itok=cOw5Q50t" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-weapons-and-parts-deconcini-crossing',2)">📷 שנה תמונה</div></div></div>
@@ -503,7 +539,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=DeConcini+Crossing%2C+%D7%90%D7%A8%D7%99%D7%96%D7%95%D7%A0%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין ארצות הברית למקסיקו</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl"><p dir="rtl">ב-19 באפריל 2026 תפסו קציני CBP העוסקים במבצעי אכיפה יוצאת בנמל הכניסה נוגאלס, מעבר DeConcini שבאריזונה, כמות גדולה של נשק ואביזרים שהוסתרו בתא סמוי ברכב, שנהגה בו אזרחית אמריקאית בת 41 בעת ניסיונה לצאת מארצות הברית ולהיכנס למקסיקו.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-weapons-and-parts-deconcini-crossing" dir="rtl"><p dir="rtl">תפסו קציני CBP העוסקים במבצעי אכיפה יוצאת בנמל הכניסה נוגאלס, מעבר DeConcini שבאריזונה, כמות גדולה של נשק ואביזרים שהוסתרו בתא סמוי ברכב, שנהגה בו אזרחית אמריקאית בת 41 בעת ניסיונה לצאת מארצות הברית ולהיכנס למקסיקו.</p>
 <p dir="rtl">האישה נהגה ב-Lexus IS 200t משנת 2016 ואליה נלוו שלושה קטינים.</p>
 <p dir="rtl">הקצין הראשי בבדיקה ההתחלתית הפנה את הרכב לבדיקה משנית.</p>
 <p dir="rtl">סריקה בלתי פולשנית חשפה חריגה באזור המושב האחורי של הרכב.</p>
@@ -524,7 +560,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture">
+      <div class="article-card" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" data-crossing="air">
         <div class="img-wrapper no-img-wrapper" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture"><div class="no-img"><span>📷</span><small>אין תמונה</small></div><button class="add-img-btn admin-only" onclick="changeImage('monkey-and-125-pounds-prohibited-meat-intercepted-agriculture',0)" title="הוסף תמונה">📷 הוסף תמונה</button></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -538,7 +574,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=O%27Hare+International+Airport%2C+%D7%90%D7%99%D7%9C%D7%99%D7%A0%D7%95%D7%99" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר אווירי בינלאומי</div>
-            <div class="article-body editable" data-field="body" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl"><p dir="rtl">ב-11 באפריל 2026 תפסו מומחי החקלאות של CBP בשדה התעופה הבינלאומי O'Hare בשיקגו שני ממצאים חריגים באירועים נפרדים.</p>
+            <div class="article-body editable" data-field="body" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl"><p dir="rtl">תפסו מומחי החקלאות של CBP בשדה התעופה הבינלאומי O'Hare בשיקגו שני ממצאים חריגים באירועים נפרדים.</p>
 <p dir="rtl">באירוע הראשון, קצין CBP הפנה נוסע שהגיע מקמרון לבדיקה חקלאית משנית.</p>
 <p dir="rtl">במהלך סריקת המזוודה אותרה אנומליה, ובעקבותיה בוצע חיפוש יסודי שבו גילה מומחה חקלאות של CBP גופת קוף בתוך כבודת הנוסע.</p>
 <p dir="rtl">בשל חשש כבד לבריאות הציבור, שרידי הקוף הוחרמו על ידי CBP והושמדו בהתאם להנחיות הסוכנויות הממשלתיות הרלוונטיות.</p>
@@ -560,39 +596,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" data-status="needs-review" data-q="Q2-2026" data-approved="false" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international">
-        <div class="pending-banner">⏳ ממתין לאישור מנהל — לא מוצג למשתמשים רגילים</div><div class="img-wrapper" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-11-million-cocaine-pharr-international',0)">📷 שנה תמונה</div></div></div>
-        <div class="article-content" dir="rtl">
-          <div class="article-top">
-            <div class="article-meta">
-              <span class="article-date" dir="ltr">2026-04-20</span>
-              <span class="article-crossing" dir="rtl" title="מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.">🚛 מעבר יבשתי</span>
-            </div>
-            <div class="article-title editable" data-field="title" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl">תפיסת 83 פאונד קוקאין מוסתרים בתוך רצפת נגרר מסחרי ריק במעבר Pharr International Bridge</div>
-            <div class="article-location-row">
-              <div class="article-location editable" data-field="location" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl">נמל הכניסה פאר - Pharr International Bridge, טקסס</div>
-              <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Pharr+International+Bridge%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
-            </div>
-            <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-more-11-million-cocaine-pharr-international" dir="rtl"><p dir="rtl">ב-15 באפריל, קציני CBP במתקן המטען של Pharr International Bridge תפסו 83.24 פאונד (37.76 קילוגרם) קוקאין שהוסתרו בתוך רצפת נגרר מסחרי ריק שהגיע מריינוסה, מקסיקו.</p>
-<p dir="rtl">הרכב, רכב טרקטור-נגרר מסחרי, הופנה לבדיקה משנית לאחר הגעתו למתקן, שם בוצעה סריקה באמצעות ציוד בדיקה לא-חודרני וכן בדיקה על ידי צוות כלב גילוי.</p>
-<p dir="rtl">בדיקה פיזית שנערכה בהמשך הובילה לאיתור 32 חבילות קוקאין שהוסתרו בתוך רצפת הנגרר.</p>
-<p dir="rtl">שווי מוערך של הסמים עומד על 1,111,503 דולר.</p>
-<p dir="rtl">קציני CBP החרימו את הסמים, את הטרקטור ואת הנגרר.</p>
-<p dir="rtl">התיק הועבר לחקירה על ידי סוכני Homeland Security Investigations.</p></div>
-          </div>
-          <div class="article-footer">
-            <div class="footer-right">
-              <span class="status-badge status-needs-review" id="badge-cbp-officers-seize-more-11-million-cocaine-pharr-international">⏸ בהמתנה</span>
-              <button class="state-btn pending-btn admin-only btn-state-active" id="pendingbtn-cbp-officers-seize-more-11-million-cocaine-pharr-international" onclick="setPending('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="העבר לבדיקה">⏸ בבדיקה</button>
-              <button class="state-btn approve-btn admin-only" id="approvebtn-cbp-officers-seize-more-11-million-cocaine-pharr-international" onclick="approveArticle('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="אשר כתבה">✓ מאושר</button>
-              <button class="delete-btn admin-only" onclick="deleteArticle('cbp-officers-seize-more-11-million-cocaine-pharr-international')" title="מחק כתבה">🗑</button>
-            </div>
-            <a class="source-link" href="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international" target="_blank" dir="ltr">מקור: CBP ←</a>
-          </div>
-        </div>
-      </div>
-      <div class="article-card" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-6-million-methamphetamine-world-trade">
+      <div class="article-card" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resizenearly663lbsmethwtb21326.jpg.webp?itok=HXiMTyPm" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-nearly-6-million-methamphetamine-world-trade',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -606,7 +610,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Laredo+Port+of+Entry%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" dir="rtl"><p dir="rtl">קציני CBP ממשרד מבצעי השטח של נמל הכניסה לארדו תפסו ב-13 בפברואר 2026 כמות של 662.95 פאונד מתאמפטמין, שהוסתרו בתוך משאית מסחרית שהובילה משלוח של אבקת ציפוי, במהלך בדיקה ב-World Trade Bridge.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-nearly-6-million-methamphetamine-world-trade" dir="rtl"><p dir="rtl">קציני CBP ממשרד מבצעי השטח של נמל הכניסה לארדו תפסו כמות של 662.95 פאונד מתאמפטמין, שהוסתרו בתוך משאית מסחרית שהובילה משלוח של אבקת ציפוי, במהלך בדיקה ב-World Trade Bridge.</p>
 <p dir="rtl">קצין CBP הפנה את המשאית לבדיקה משנית, ולאחר סריקה באמצעות כלב גילוי ובמערכת בדיקת סיטי (CAT SCAN) אותרו 30 חבילות שהכילו את הסמים.</p>
 <p dir="rtl">שווי המוערך של הסמים עומד על 5,926,392 דולר.</p>
 <p dir="rtl">הסמים הוחרמו על ידי CBP.</p>
@@ -624,7 +628,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resize112lbsmethwtb33126.jpg.webp?itok=VRkeE3bG" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry',0)">📷 שנה תמונה</div></div>
 <div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/25lbscocjlb40126.png.webp?itok=Lx5HlE0_" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
@@ -640,9 +644,9 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-13m-hard-narcotics-laredo-port-entry" dir="rtl"><p dir="rtl">במסגרת שתי פעולות אכיפה נפרדות שבוצעו בנמל הכניסה לארדו שבטקסס, תפסו קציני CBP סמים קשים בשווי מוערך של למעלה מ-1.3 מיליון דולר.</p>
-<p dir="rtl">הפעולה הראשונה התרחשה ב-31 במרץ במעבר World Trade Bridge, כאשר קצין CBP הפנה לבדיקה משנית אזרח מקסיקני בן 64 שנהג במשאית גרורה שהובילה משלוח תיקי עור.</p>
+<p dir="rtl">הפעולה הראשונה התרחשה במעבר World Trade Bridge, כאשר קצין CBP הפנה לבדיקה משנית אזרח מקסיקני בן 64 שנהג במשאית גרורה שהובילה משלוח תיקי עור.</p>
 <p dir="rtl">לאחר בדיקה כלבנית וסריקה באמצעות מערכת בדיקת סיטי (CAT SCAN), אותרו בתוך הנגרר 49 חבילות המכילות בסך הכול 112.47 פאונד של מתאמפטמין חשוד; שווי הסמים ברחוב הוערך בכ-1,034,227 דולר.</p>
-<p dir="rtl">הפעולה השנייה התרחשה ב-1 באפריל במעבר Juarez-Lincoln Bridge, כאשר קצין CBP הפנה לבדיקה משנית רכב מסוג Chrysler 200 משנת 2015 שנהג בו אזרח אמריקאי בן 25, לצדו נוסעת אזרחית אמריקאית בת 24.</p>
+<p dir="rtl">הפעולה השנייה התרחשה במעבר Juarez-Lincoln Bridge, כאשר קצין CBP הפנה לבדיקה משנית רכב מסוג Chrysler 200 משנת 2015 שנהג בו אזרח אמריקאי בן 25, לצדו נוסעת אזרחית אמריקאית בת 24.</p>
 <p dir="rtl">לאחר בדיקה כלבנית וסריקה באמצעות מערכת בדיקת סיטי (CAT SCAN), אותרו בתוך הרכב 10 חבילות המכילות בסך הכול 25.37 פאונד של קוקאין חשוד בשווי מוערך של כ-338,808 דולר.</p>
 <p dir="rtl">CBP החרים את הסמים, את הרכב המסחרי יחד עם הגרורה, ואת הרכב הפרטי.</p>
 <p dir="rtl">סוכני Homeland Security Investigations עצרו את נהג המשאית, את נהג ה-Chrysler ואת הנוסעת, ופתחו בחקירות פליליות בשני התיקים.</p></div>
@@ -658,7 +662,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/237lbsmethep32926.jpg.webp?itok=4BaetAHm" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry',0)">📷 שנה תמונה</div></div>
 <div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/57lbscocep32726.jpeg.webp?itok=bc2P-Qwa" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
@@ -674,9 +678,9 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-28m-narcotics-eagle-pass-port-entry" dir="rtl"><p dir="rtl">קציני CBP בנמל הכניסה Eagle Pass תפסו סמים בשני אירועי אכיפה נפרדים שהתרחשו בסוף שבוע אחד, עם שווי רחוב כולל של למעלה מ-2.8 מיליון דולר.</p>
-<p dir="rtl">האירוע הראשון התרחש ב-27 במרץ בגשר Camino Real International Bridge, כאשר קצין CBP הפנה לבדיקה משנית אזרחית אמריקאית בת 28 שנהגה ב-2005 Chevrolet Suburban.</p>
+<p dir="rtl">האירוע הראשון התרחש בגשר Camino Real International Bridge, כאשר קצין CBP הפנה לבדיקה משנית אזרחית אמריקאית בת 28 שנהגה ב-2005 Chevrolet Suburban.</p>
 <p dir="rtl">בעקבות בדיקת כלב גילוי ובדיקת בדיקת סיטי (CAT SCAN), אותרו ברצפת הרכב 25 חבילות המכילות סך של 57.09 פאונד של קוקאין חשוד, בשווי רחוב מוערך של 762,392 דולר.</p>
-<p dir="rtl">האירוע השני התרחש ב-29 במרץ בגשר Eagle Pass International Bridge, כאשר קצין CBP הפנה לבדיקה משנית אזרח מקסיקני בן 45 שנהג ב-2015 Chevrolet Traverse וגרר נגרר.</p>
+<p dir="rtl">האירוע השני התרחש בגשר Eagle Pass International Bridge, כאשר קצין CBP הפנה לבדיקה משנית אזרח מקסיקני בן 45 שנהג ב-2015 Chevrolet Traverse וגרר נגרר.</p>
 <p dir="rtl">בעקבות בדיקת כלב גילוי ובדיקת בדיקת סיטי (CAT SCAN), אותרו ברצפת הנגרר 107 חבילות המכילות סך של 237.21 פאונד של מתאמפטמין חשוד, בשווי רחוב מוערך של 2,120,581 דולר.</p>
 <p dir="rtl">סוכני CBP החרימו את הסמים ואת שני הרכבים.</p>
 <p dir="rtl">סוכני Homeland Security Investigations עצרו את שני הנהגים ופתחו בחקירות פליליות בנוגע לשני האירועים.</p>
@@ -693,7 +697,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-26-million-methamphetamine-pharr">
+      <div class="article-card" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr" data-status="approved" data-q="Q2-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-26-million-methamphetamine-pharr" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/nearly298lbsmethpharr33026.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-26-million-methamphetamine-pharr',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -707,7 +711,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Pharr+International+Bridge%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr" dir="rtl"><p dir="rtl">ב-30 במרץ תפסו קציני CBP במתקן המטען של Pharr International Bridge משאית טרקטור מסחרית שנסעה מריינוסה שבמקסיקו לעבר ארצות הברית.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr" dir="rtl"><p dir="rtl">תפסו קציני CBP במתקן המטען של Pharr International Bridge משאית טרקטור מסחרית שנסעה מריינוסה שבמקסיקו לעבר ארצות הברית.</p>
 <p dir="rtl">הרכב הופנה לבדיקה משנית, שם נעשה שימוש בציוד סריקה בלתי פולשני וכן בצוות כלבי גילוי.</p>
 <p dir="rtl">הבדיקה הפיזית שנערכה בעקבות כך הובילה לאיתור 1,055 חבילות של מתאמפטמין חשוד שהוסתרו בתוך משלוח גזרים, שהוצהר על תעודת המשלוח כמטען גזרים בלבד.</p>
 <p dir="rtl">המשקל הכולל של החומר שנתפס עמד על 297.62 פאונד (135 קילוגרם), ושוויו המוערך ברחוב הינו 2,660,580 דולר.</p>
@@ -729,7 +733,7 @@
   </div>
   <div class="quarter-section" data-q="Q1-2026">
     
-      <div class="article-card" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/fentanyl_seizure.png.webp?itok=ZzZXNoHr" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -743,7 +747,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=San+Ysidro+Port+of+Entry%2C+%D7%A7%D7%9C%D7%99%D7%A4%D7%95%D7%A8%D7%A0%D7%99%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" dir="rtl"><p dir="rtl">ב-10 במרץ 2026 תפסו קציני CBP בנמל הכניסה San Ysidro כ-20.6 פאונד אבקת פנטניל ו-3.1 פאונד הרואין, שהוסתרו בתוך דלתות רכבו של נהג בן 26, אזרח מקסיקני, שנסע ברכב מסוג נסן סנטרה משנת 2017.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-fentanyl-heroin-san-ysidro-port-entry" dir="rtl"><p dir="rtl">תפסו קציני CBP בנמל הכניסה San Ysidro כ-20.6 פאונד אבקת פנטניל ו-3.1 פאונד הרואין, שהוסתרו בתוך דלתות רכבו של נהג בן 26, אזרח מקסיקני, שנסע ברכב מסוג נסן סנטרה משנת 2017.</p>
 <p dir="rtl">הנהג הופנה לבדיקה משנית לאחר שביקש כניסה לארצות הברית.</p>
 <p dir="rtl">במהלך הבדיקה זוהו אנומליות בדלתות הרכב באמצעות מערכת הדמיה לא-חודרנית, ובמקביל התריע צוות כלב גילוי של CBP על נוכחות סמים.</p>
 <p dir="rtl">בחיפוש שנערך לאחר מכן אותרו 10 חבילות המוסתרות בתוך הדלתות.</p>
@@ -765,7 +769,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-17-million-methamphetamine-pharr">
+      <div class="article-card" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-17-million-methamphetamine-pharr" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326a.jpg.webp?itok=6sJoCrPL" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-17-million-methamphetamine-pharr',0)">📷 שנה תמונה</div></div>
 <div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/1984lbsmethpharr32326b.png.webp?itok=lwLamS0c" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-more-17-million-methamphetamine-pharr',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
@@ -799,7 +803,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port">
+      <div class="article-card" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_weight_lbs_1.jpg.webp?itok=-d35IvoQ" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port',0)">📷 שנה תמונה</div></div>
 <div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/total_76.10_lbs_.jpg.webp?itok=rz0GXtG8" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
@@ -815,11 +819,11 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-120-pounds-methamphetamine-nogales-port" dir="rtl"><p dir="rtl">קציני CBP בנמל הכניסה נוגאלס תפסו למעלה מ-120 פאונד מתאמפטמין במהלך שתי פעולות אכיפה נפרדות.</p>
-<p dir="rtl">ב-10 במרץ, קציני CBP הפועלים ב-Mariposa Crossing תפסו כ-44 פאונד מתאמפטמין שהוסתרו ברכב מסוג Acura RL משנת 2007.</p>
+<p dir="rtl">קציני CBP הפועלים ב-Mariposa Crossing תפסו כ-44 פאונד מתאמפטמין שהוסתרו ברכב מסוג Acura RL משנת 2007.</p>
 <p dir="rtl">סריקה באמצעות מערכת בדיקה לא-חודרנית ובדיקה פיזית מעמיקה חשפו 32 חבילות המכילות את הסמים, שאותרו בגב המושב האחורי של הרכב.</p>
 <p dir="rtl">קציני CBP החרימו את הסמים ואת הרכב.</p>
 <p dir="rtl">סוכני Homeland Security Investigations עצרו את הנהג ופתחו בחקירה פלילית.</p>
-<p dir="rtl">ב-11 במרץ, קציני CBP הפועלים ב-Deconcini Crossing תפסו למעלה מ-76 פאונד מתאמפטמין שהוסתרו ברכב מסוג Volkswagen Polo משנת 2019.</p>
+<p dir="rtl">קציני CBP הפועלים ב-Deconcini Crossing תפסו למעלה מ-76 פאונד מתאמפטמין שהוסתרו ברכב מסוג Volkswagen Polo משנת 2019.</p>
 <p dir="rtl">סריקה באמצעות מערכת בדיקה לא-חודרנית ובדיקה פיזית מעמיקה חשפו 70 חבילות המכילות את הסמים, שאותרו בתא רצפה כוזב שהוסתר בתוך הרכב.</p>
 <p dir="rtl">קציני CBP החרימו את הסמים ואת הרכב.</p>
 <p dir="rtl">סוכני Homeland Security Investigations עצרו את הנהג ופתחו בחקירה פלילית.</p>
@@ -836,7 +840,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank">
+      <div class="article-card" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" data-crossing="land">
         <div class="img-wrapper" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/gmc_-_gas_tank_non-factory_compartment_mw_discovered.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -850,7 +854,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=San+Ysidro+Port+of+Entry%2C+%D7%A7%D7%9C%D7%99%D7%A4%D7%95%D7%A8%D7%A0%D7%99%D7%94" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.</div>
-            <div class="article-body editable" data-field="body" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" dir="rtl"><p dir="rtl">ב-27 בפברואר 2026, בשעה 19:30, תפסו קציני CBP בנמל הכניסה סן יסידרו נהג בן 20 שניסה להבריח אזרח מקסיקני שהוסתר בתוך תא סמוי שאינו מקורי, שנבנה בתוך מיכל הדלק של רכב SUV מדגם GMC משנת 2005.</p>
+            <div class="article-body editable" data-field="body" data-id="san-ysidro-cbp-officers-find-person-hidden-vehicle-s-gas-tank" dir="rtl"><p dir="rtl">בשעה 19:30, תפסו קציני CBP בנמל הכניסה סן יסידרו נהג בן 20 שניסה להבריח אזרח מקסיקני שהוסתר בתוך תא סמוי שאינו מקורי, שנבנה בתוך מיכל הדלק של רכב SUV מדגם GMC משנת 2005.</p>
 <p dir="rtl">במהלך הבדיקה הראשונית, צוות כלבי גילוי של CBP הגיב לאזור התחתי של הרכב, ובעקבות כך הופנה הרכב לבדיקה משנית, שבמהלכה אותר האדם המוסתר בתוך התא.</p>
 <p dir="rtl">כוחות החירום פינו את הנפגע לבית החולים Scripps Mercy Hospital בצ'ולה ויסטה שבקליפורניה לצורך טיפול בכוויות שנגרמו לו במהלך ניסיון ההברחה.</p>
 <p dir="rtl">הנהג נעצר ונרשם לכלא Metropolitan Correctional Center בסן דייגו.</p>
@@ -867,7 +871,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port">
+      <div class="article-card" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipofdrmixednarco31026.png.webp?itok=JkaUu_1G" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -882,7 +886,7 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-22-million-cocaine-heroin-fentanyl-del-rio-port" dir="rtl"><p dir="rtl">קציני CBP מאגף מבצעי השדה תפסו תערובת סמים קשים הכוללת קוקאין, הרואין ופנטניל בשווי מוערך של 2,279,351 דולר, שהוסתרו בתוך רכב נוסעים.</p>
-<p dir="rtl">האירוע אירע ב-10 במרץ 2026 ב-Del Rio International Bridge, כאשר קצין CBP הפנה GMC Yukon משנת 2016 לבדיקה משנית.</p>
+<p dir="rtl">האירוע אירע ב-Del Rio International Bridge, כאשר קצין CBP הפנה GMC Yukon משנת 2016 לבדיקה משנית.</p>
 <p dir="rtl">הרכב נהוג בידי אזרחית אמריקאית בת 32.</p>
 <p dir="rtl">בעקבות בדיקת כלב גילוי ובדיקה באמצעות מערכת בדיקת סיטי (CAT SCAN), אותרו בתוך הרכב חבילות המכילות 117.33 פאונד קוקאין חשוד, 23.14 פאונד הרואין חשוד ו-11.5 פאונד פנטניל חשוד.</p>
 <p dir="rtl">הסמים והרכב הוחרמו על ידי CBP.</p>
@@ -900,7 +904,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge">
+      <div class="article-card" data-id="cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/resizecocherwtb31126.jpg.webp?itok=lCXv4BiQ" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-365k-hard-narcotics-world-trade-bridge',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -932,7 +936,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercepted-three-live-parrots-brownsville-port-entry">
+      <div class="article-card" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercepted-three-live-parrots-brownsville-port-entry" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/3parrotsbro31326.png.webp?itok=UPFFCUg3" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-intercepted-three-live-parrots-brownsville-port-entry',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -947,7 +951,7 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-intercepted-three-live-parrots-brownsville-port-entry" dir="rtl"><p dir="rtl">קציני CBP שהוצבו בנמל הכניסה בראונסוויל אותרו שלושה תוכים חיים שהוסתרו בתוך קופסה בתוך רכב, בניסיון מחשד להברחת בעלי חיים בלתי חוקית.</p>
-<p dir="rtl">האירוע התרחש ב-13 במרץ 2026 במעבר Gateway International Bridge, כאשר קציני CBP הפנו רכב מדגם GMC Yukon משנת 2007 לבדיקה משנית.</p>
+<p dir="rtl">האירוע התרחש במעבר Gateway International Bridge, כאשר קציני CBP הפנו רכב מדגם GMC Yukon משנת 2007 לבדיקה משנית.</p>
 <p dir="rtl">במהלך הבדיקה אותרו שלושת התוכים כשהם מוסתרים בתוך קופסה בתוך הרכב.</p>
 <p dir="rtl">סוכני חקירות מיוחדות של Homeland Security Investigations פתחו בחקירה פלילית בעקבות התפיסה.</p>
 <p dir="rtl">CBP שיתף פעולה עם סוכנויות שותפות, בהן U.S.</p>
@@ -968,7 +972,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor">
+      <div class="article-card" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/buckets.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -983,7 +987,7 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" dir="rtl"><p dir="rtl">קציני CBP במתקן המטען Otay Mesa תפסו 944 פאונד מתאמפטמין נוזלי שהוסתרו בתוך מיכל הדלק של משאית גרירה.</p>
-<p dir="rtl">האירוע התרחש ב-2 במרץ 2026, כאשר נהג בן 26, אזרח מקסיקו, הגיע לנקודת הכניסה תוך כדי נהיגה בטרקטור המושך נגרר, במטרה להיכנס לארצות הברית ממקסיקו.</p>
+<p dir="rtl">האירוע התרחש כאשר נהג בן 26, אזרח מקסיקו, הגיע לנקודת הכניסה תוך כדי נהיגה בטרקטור המושך נגרר, במטרה להיכנס לארצות הברית ממקסיקו.</p>
 <p dir="rtl">לאחר הבדיקה הראשונית, הופנה הנהג והרכב לבדיקה משנית.</p>
 <p dir="rtl">באזור הבדיקה המשנית, השתמשו קציני CBP בטכנולוגיית סריקה בלתי חודרנית לבדיקת הרכב, ולאחר מכן הפנו אותו לבדיקה מעמיקה יותר.</p>
 <p dir="rtl">במהלך הבדיקה פתחו קציני CBP את מיכל הדלק של המשאית והכניסו לתוכו גשוש, שחשף חומר ג'לטיני בלתי מוכר המעורבב עם הסולר.</p>
@@ -1003,7 +1007,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercept-live-pythons-world-trade-bridge">
+      <div class="article-card" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-intercept-live-pythons-world-trade-bridge" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526b.png.webp?itok=shHUVhJu" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-intercept-live-pythons-world-trade-bridge',0)">📷 שנה תמונה</div></div>
 <div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/39pythonswtb30526a.png.webp?itok=P8FXeufU" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-intercept-live-pythons-world-trade-bridge',1)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
@@ -1018,7 +1022,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=World+Trade+Bridge%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge" dir="rtl"><p dir="rtl">קציני CBP מאגף מבצעי היציאה תפסו 39 נחשי פיתון חיים שהוסתרו בתוך קשת טרקטור ב-World Trade Bridge בלרדו, טקסס, ב-5 במרץ 2026.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge" dir="rtl"><p dir="rtl">קציני CBP מאגף מבצעי היציאה תפסו 39 נחשי פיתון חיים שהוסתרו בתוך קשת טרקטור ב-World Trade Bridge בלרדו, טקסס,.</p>
 <p dir="rtl">במהלך מבצעי הפקה יוצאת, קציני CBP עצרו טרקטור מדגם Peterbilt משנת 2021 שנסע לכיוון מקסיקו, והפנו את הנהג ואת הרכב לבדיקה.</p>
 <p dir="rtl">הנחשים אותרו בתוך הטרקטור לאחר שהנהג הצהיר בפני הסוכנים שאין ברשותו טובין אסורים.</p>
 <p dir="rtl">סוכני U.S.</p>
@@ -1040,7 +1044,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas">
+      <div class="article-card" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/raul_hector_port_of_entry_weapons_seizure.jpg.webp?itok=VvW9kPOA" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -1055,7 +1059,7 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-seizes-7-weapons-and-11000-rounds-ammunition-port-douglas" dir="rtl"><p dir="rtl">במסגרת מבצע אכיפת יציאה מארצות הברית, תפסו קציני CBP שבעה רובי AK-47 ו-11,000 כדורי תחמושת מאזרח אמריקאי בן 24 שניסה לחצות את הגבול לכיוון מקסיקו.</p>
-<p dir="rtl">האירוע התרחש ב-15 בפברואר 2026, כאשר הנהג, שנסע ברכב מסוג Dodge Ram 1500, הופנה לבדיקה משנית.</p>
+<p dir="rtl">האירוע התרחש כאשר הנהג, שנסע ברכב מסוג Dodge Ram 1500, הופנה לבדיקה משנית.</p>
 <p dir="rtl">במהלך החיפוש בתוך הרכב אותרו מספר חבילות שהכילו את שבעת הרובים ואת התחמושת.</p>
 <p dir="rtl">הנשק והרכב הוחרמו.</p>
 <p dir="rtl">הנהג נעצר והועבר לטיפול של Homeland Security Investigations.</p></div>
@@ -1071,7 +1075,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel">
+      <div class="article-card" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel" data-crossing="sea">
         <div class="img-wrapper" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/puerto_rico_seizure.jpg.webp?itok=y4oMSGk8" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -1086,7 +1090,7 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר ימי. משמש להגעת אוניות מטען, כלי שיט מסחריים וסירות.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-214-pounds-cocaine-concealed-under-cargo-vessel" dir="rtl"><p dir="rtl">קציני CBP תפסו כ-214 פאונד (כ-97 קילוגרם) קוקאין שהוסתרו בתוך מתקן "טפילי" שחובר אל גוף האונייה M/V MEDSTAR, אשר הגיעה מריו איינה שברפובליקה הדומיניקנית לנמל סן חואן בפוארטו ריקו.</p>
-<p dir="rtl">הסמים אותרו ב-26 בפברואר במהלך עלייה שגרתית לאונייה, כאשר הקצינים פרסו טכנולוגיית רחפן תת-ימי לצורך בדיקת גוף הכלי.</p>
+<p dir="rtl">הסמים אותרו במהלך עלייה שגרתית לאונייה, כאשר הקצינים פרסו טכנולוגיית רחפן תת-ימי לצורך בדיקת גוף הכלי.</p>
 <p dir="rtl">שווי הסמים הוערך בכ-1.7 מיליון דולר.</p>
 <p dir="rtl">יחידת הצלילה המשטרתית של עיריית סן חואן סייעה בשליפת המתקן מגוף האונייה.</p>
 <p dir="rtl">Homeland Security Investigations הגיעו לזירה לתמיכה במבצע.</p>
@@ -1104,7 +1108,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-1m-methamphetamine-roma-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-1m-methamphetamine-roma-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-over-1m-methamphetamine-roma-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-1m-methamphetamine-roma-port-entry" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-1m-methamphetamine-roma-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/snipof121lbsmethrma30826.png.webp?itok=TwIWwHHA" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-1m-methamphetamine-roma-port-entry',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -1136,7 +1140,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity">
+      <div class="article-card" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/test_0.jpg.webp?itok=-IHfyKsv" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -1150,7 +1154,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Laredo+Port+of+Entry%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" dir="rtl"><p dir="rtl">ב-26 בפברואר 2026, קציני CBP מה-Office of Field Operations בנמל הכניסה לארדו תפסו 129.63 פאונד קוקאין שהוסתרו בתוך משאית מסחרית שסחבה נגרר ריק בגשר Colombia-Solidarity.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-nearly-17-million-cocaine-colombia-solidarity" dir="rtl"><p dir="rtl">קציני CBP מה-Office of Field Operations בנמל הכניסה לארדו תפסו 129.63 פאונד קוקאין שהוסתרו בתוך משאית מסחרית שסחבה נגרר ריק בגשר Colombia-Solidarity.</p>
 <p dir="rtl">הנהג ורכבו הופנו לבדיקה משנית לאחר שקצין CBP זיהה חשד במהלך בדיקה ראשונית.</p>
 <p dir="rtl">בעקבות בדיקת כלב נרקוטיקים וסריקה באמצעות מערכת בדיקת סיטי (CAT SCAN), אותרו בתוך המשאית 54 חבילות שהכילו את הקוקאין.</p>
 <p dir="rtl">שווי הסמים ברחוב הוערך בכ-1,730,836 דולר.</p>
@@ -1169,7 +1173,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry">
+      <div class="article-card" data-id="cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/resize65lbsmethcolsol20826.jpg.webp?itok=l6-hF0r2" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-seize-over-602k-methamphetamine-laredo-port-entry',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -1201,7 +1205,7 @@
           </div>
         </div>
       </div>
-      <div class="article-card" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-world-trade-bridge-seize-over-68-million-cocaine">
+      <div class="article-card" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" data-status="approved" data-q="Q1-2026" data-approved="true" data-url="https://www.cbp.gov/newsroom/national-media-release/cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" data-crossing="land">
         <div class="img-wrapper" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine"><div class="img-item"><img class="article-image" src="https://www.cbp.gov/sites/default/files/resizenearly517lbscocwtb21026.jpg" alt="" loading="lazy" onerror="this.style.display='none'"><div class="img-overlay admin-only" onclick="changeImage('cbp-officers-world-trade-bridge-seize-over-68-million-cocaine',0)">📷 שנה תמונה</div></div></div>
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -1215,7 +1219,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Laredo+Port+of+Entry%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" dir="rtl"><p dir="rtl">ב-10 בפברואר 2026 תפסו קציני CBP ב-World Trade Bridge בלארדו, טקסס, 516.76 פאונד קוקאין שהוסתרו בתוך משלוח פרחים טריים.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" dir="rtl"><p dir="rtl">תפסו קציני CBP ב-World Trade Bridge בלארדו, טקסס, 516.76 פאונד קוקאין שהוסתרו בתוך משלוח פרחים טריים.</p>
 <p dir="rtl">הקצין תפס טרקטור ונגרר מדגם T3 International משנת 2018 שהצהיר על שינוע של "ורדים ופרחים טריים", והפנה את הרכב לבדיקה משנית.</p>
 <p dir="rtl">בעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקת סיטי (CAT SCAN), אותרו בתוך הסחורה 211 חבילות שהכילו את הסם.</p>
 <p dir="rtl">שווי מוערך של הקוקאין ברחוב עמד על 6,899,798 דולר.</p>
@@ -1236,9 +1240,9 @@
 </div>
 
 <div class="page-footer">
-  נוצר על ידי אלון סער · 28/04/2026 00:37
+  נוצר על ידי אלון סער · 28/04/2026 19:02
   <span class="admin-only" style="margin-right:16px;">
-    <button class="pat-btn-footer admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 GitHub PAT</button>
+    <button class="pat-btn-footer admin-only" onclick="managePAT()" title="ניהול חיבור GitHub">🔌 GitHub</button>
   </span>
 </div>
 
@@ -1279,7 +1283,37 @@ function saveImgs(e)    { localStorage.setItem(IMG_KEY,     JSON.stringify(e)); 
 function loadDeleted()  { try { return JSON.parse(localStorage.getItem(DELETE_KEY)  || '[]');  } catch(e) { return []; } }
 function saveDeleted(d) { localStorage.setItem(DELETE_KEY,  JSON.stringify(d)); }
 
-// ── PAT management ────────────────────────────────────────────────────────────
+// ── Encrypted PAT — decrypted with admin password ────────────────────────────
+const ENCRYPTED_PAT = {"s":"huyVvG+ve731UXXC8Q2NjA==","d":"ZECAzH9hb7c9IwxPrS9BPx7DrZVCSrChVGF5fEkLQqrc0fgSEaN4nuIM6ZkmXa5468HfjcX2+s2FY14DopXpr8kXys6wKQ0u4rRqaqfzNsGjK55C45JrF5+DalUB"};
+
+async function _deriveKeystream(password, saltB64, length) {
+  const salt = Uint8Array.from(atob(saltB64), c => c.charCodeAt(0));
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
+  const keyBits = await crypto.subtle.deriveBits({name:'PBKDF2',salt,iterations:100000,hash:'SHA-256'}, km, 256);
+  const key = new Uint8Array(keyBits);
+  const stream = new Uint8Array(length);
+  let offset = 0, ctr = 0;
+  while (offset < length) {
+    const block = new Uint8Array(36);
+    block.set(key);
+    new DataView(block.buffer).setUint32(32, ctr);
+    const hash = new Uint8Array(await crypto.subtle.digest('SHA-256', block));
+    for (let i = 0; i < hash.length && offset < length; i++, offset++) stream[offset] = hash[i];
+    ctr++;
+  }
+  return stream;
+}
+
+async function _decryptPAT(password) {
+  try {
+    const data = Uint8Array.from(atob(ENCRYPTED_PAT.d), c => c.charCodeAt(0));
+    const ks = await _deriveKeystream(password, ENCRYPTED_PAT.s, data.length);
+    const dec = new Uint8Array(data.length);
+    for (let i = 0; i < data.length; i++) dec[i] = data[i] ^ ks[i];
+    return new TextDecoder().decode(dec);
+  } catch(e) { return null; }
+}
+
 function loadPAT() {
   GITHUB_PAT = localStorage.getItem(PAT_KEY) || '';
   return GITHUB_PAT;
@@ -1289,18 +1323,28 @@ function savePAT(pat) {
   if (pat) localStorage.setItem(PAT_KEY, pat);
   else localStorage.removeItem(PAT_KEY);
 }
-function promptForPAT(msg) {
-  const current = localStorage.getItem(PAT_KEY) || '';
-  const pat = prompt(msg || 'הכנס GitHub PAT לאישור/דחייה של כתבות:', current);
-  if (pat === null) return false;
-  savePAT(pat.trim());
-  if (GITHUB_PAT) { showToast('✓ GitHub PAT נשמר', 'success'); return true; }
-  return false;
+async function promptForPassword() {
+  const pw = prompt('🔐 סיסמת מנהל:');
+  if (pw === null) return false;
+  const pat = await _decryptPAT(pw.trim());
+  if (!pat || pat.length < 10) {
+    showToast('❌ סיסמה שגויה', 'error');
+    return false;
+  }
+  savePAT(pat);
+  showToast('✓ מחובר', 'success');
+  return true;
 }
 function managePAT() {
   const cur = localStorage.getItem(PAT_KEY);
-  const info = cur ? 'PAT שמור (מסתיים ב-' + cur.slice(-4) + ')' : 'PAT לא מוגדר';
-  promptForPAT(info + '\nהכנס PAT חדש (השאר ריק למחיקה):');
+  if (cur) {
+    if (confirm('חיבור GitHub פעיל.\nלחץ אישור לניתוק.')) {
+      savePAT('');
+      showToast('✓ חיבור נותק', 'success');
+    }
+  } else {
+    promptForPassword().then(ok => { if (ok) syncApprovalStates(); });
+  }
 }
 
 // ── Year / Quarter navigation ─────────────────────────────────────────────────
@@ -1328,6 +1372,27 @@ function selectQ(btn, q) {
     sec.style.display = (sec.dataset.q === q) ? '' : 'none';
   });
   applyDeleted();
+}
+
+// ── Crossing-type filter ──────────────────────────────────────────────────────
+let _activeFilter = 'all';
+function setFilter(btn, filter) {
+  _activeFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('filter-btn-active'));
+  btn.classList.add('filter-btn-active');
+  applyFilter();
+}
+function applyFilter() {
+  const deleted = loadDeleted();
+  const isAdmin = document.body.classList.contains('admin-mode');
+  document.querySelectorAll('.article-card').forEach(card => {
+    if (deleted.includes(card.dataset.id)) return;
+    const approved = card.dataset.approved === 'true';
+    if (!isAdmin && !approved) return;
+    const matchFilter = _activeFilter === 'all' || card.dataset.crossing === _activeFilter;
+    card.classList.toggle('hidden', !matchFilter);
+  });
+  updateCounts();
 }
 
 // ── Sync approval state live from GitHub ─────────────────────────────────────
@@ -1380,10 +1445,8 @@ function checkAdmin() {
     });
     loadPAT();
     if (!GITHUB_PAT) {
-      setTimeout(() => {
-        if (promptForPAT('מצב מנהל פעיל!\nהכנס GitHub PAT לאישור/דחייה של כתבות:')) {
-          syncApprovalStates();
-        }
+      setTimeout(async () => {
+        if (await promptForPassword()) syncApprovalStates();
       }, 700);
     } else {
       syncApprovalStates();
@@ -1417,7 +1480,7 @@ function onEdit(e) {
 // ── Image change — saves permanently to GitHub articles.json ─────────────────
 async function changeImage(id, idx) {
   if (!document.body.classList.contains('edit-mode')) return;
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT לשינוי תמונה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
 
   // Find current image URL to pre-fill the prompt
   const wrapper = document.querySelector('.img-wrapper[data-id="' + id + '"]');
@@ -1494,7 +1557,7 @@ async function ghPut(path, sha, content, message) {
 
 // ── Approve ───────────────────────────────────────────────────────────────────
 async function approveArticle(id) {
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT לאישור הכתבה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
   const card = document.querySelector('.article-card[data-id="' + id + '"]');
   if (!card) return;
   const articleUrl = card.dataset.url;
@@ -1523,7 +1586,7 @@ async function approveArticle(id) {
 
 // ── Set Pending (unapprove) ───────────────────────────────────────────────────
 async function setPending(id) {
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT לדחיית הכתבה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
   const card = document.querySelector('.article-card[data-id="' + id + '"]');
   if (!card) return;
   const articleUrl = card.dataset.url;
@@ -1558,7 +1621,7 @@ async function setPending(id) {
 
 // ── Add Article ───────────────────────────────────────────────────────────────
 async function addArticle() {
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT להוספת כתבה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
   const title   = document.getElementById('add-title').value.trim();
   const body    = document.getElementById('add-body').value.trim();
   const date    = document.getElementById('add-date').value;
@@ -1625,7 +1688,7 @@ function updateApprovedCount() {
 // ── Delete (permanent — removes from GitHub backend) ─────────────────────────
 async function deleteArticle(id) {
   if (!confirm('למחוק כתבה זו לצמיתות?\nהכתבה תוסר מהמאגר ולא תחזור יותר.')) return;
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT למחיקת הכתבה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
   const card = document.querySelector('.article-card[data-id="' + id + '"]');
   if (!card) return;
   const articleUrl = card.dataset.url;
@@ -1675,9 +1738,9 @@ async function deleteArticle(id) {
 function applyDeleted() {
   const deleted = loadDeleted();
   document.querySelectorAll('.article-card').forEach(card => {
-    card.classList.toggle('hidden', deleted.includes(card.dataset.id));
+    if (deleted.includes(card.dataset.id)) card.classList.add('hidden');
   });
-  updateCounts();
+  applyFilter();
 }
 
 function updateCounts() {

@@ -66,6 +66,7 @@ If the location is NOT on an international border (e.g. interior highway stop), 
 - PR/mission statements: sentences praising CBP's work, explaining the dangers of drugs, or describing CBP's role/mandate.
 - Explanatory commentary about why a seizure matters, what the drug does to communities, or the broader significance of the event.
 - Any sentence that starts with a person's name followed by a quote or opinion.
+- Specific dates (e.g. "On March 10, 2026..." / "ב-10 במרץ 2026"). The article date is already shown in the metadata — do not repeat it in the body text. If a sentence begins with a date, simply drop the date and start with the action.
 These add no operational value and must be cut entirely — even if they appear in the source.
 
 ### 7. Style

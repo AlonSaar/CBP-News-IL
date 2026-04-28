@@ -192,13 +192,25 @@ def generate(articles: list[dict]) -> Path:
                 )
 
             maps_link = f'<a class="maps-link" href="{maps_url}" target="_blank" title="פתח במפות Google">🗺️ מפה</a>' if maps_url else ""
+            # Crossing type filter category
+            ct_raw = art.get("crossing_type", "").lower()
+            if "ימי" in ct_raw:
+                crossing_cat = "sea"
+            elif "אווירי" in ct_raw:
+                crossing_cat = "air"
+            elif "יבשתי" in ct_raw:
+                crossing_cat = "land"
+            elif "דואר" in ct_raw or "מתקן" in ct_raw:
+                crossing_cat = "mail"
+            else:
+                crossing_cat = "other"
             admin_approved = art.get("admin_approved", True)
             approved_str = "true" if admin_approved else "false"
             pending_banner = "" if admin_approved else '<div class="pending-banner">⏳ ממתין לאישור מנהל — לא מוצג למשתמשים רגילים</div>'
             pending_active = "" if admin_approved else " btn-state-active"
             approve_active = " btn-state-active" if admin_approved else ""
             cards += f"""
-      <div class="article-card" data-id="{art_id}" data-status="{status_class}" data-q="{q}" data-approved="{approved_str}" data-url="{url}">
+      <div class="article-card" data-id="{art_id}" data-status="{status_class}" data-q="{q}" data-approved="{approved_str}" data-url="{url}" data-crossing="{crossing_cat}">
         {pending_banner}{img_html}
         <div class="article-content" dir="rtl">
           <div class="article-top">
@@ -604,6 +616,33 @@ def generate(articles: list[dict]) -> Path:
     body.edit-mode .editable:hover {{ background: rgba(233,69,96,0.04); }}
     body.edit-mode .editable:focus {{ outline: 2px solid #e94560; background: #fff9fa; }}
 
+    /* ── Crossing-type filter bar ── */
+    .filter-bar {{
+      background: white; border-radius: 14px;
+      padding: 12px 20px; margin-bottom: 16px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      border: 1px solid #eaecf0;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }}
+    .filter-label {{
+      font-size: 0.75rem; font-weight: 700; color: #999;
+      white-space: nowrap;
+    }}
+    .filter-btn {{
+      padding: 6px 18px; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 700;
+      border: 2px solid #e2e8f0;
+      background: #f8faff; color: #555;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.15s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }}
+    .filter-btn:hover {{ border-color: #0f3460; color: #0f3460; }}
+    .filter-btn-active {{
+      background: #0f3460; color: white; border-color: #0f3460;
+      box-shadow: 0 2px 8px rgba(15,52,96,0.25);
+    }}
+
     /* ── Add image button (no-img articles in admin) ── */
     .add-img-btn {{
       display: none;
@@ -684,6 +723,15 @@ def generate(articles: list[dict]) -> Path:
     {nav_html}
   </div>
 
+  <div class="filter-bar">
+    <span class="filter-label">סנן לפי מעבר:</span>
+    <button class="filter-btn filter-btn-active" data-filter="all"  onclick="setFilter(this,'all')">🔍 הכל</button>
+    <button class="filter-btn" data-filter="land" onclick="setFilter(this,'land')">🚛 יבשתי</button>
+    <button class="filter-btn" data-filter="sea"  onclick="setFilter(this,'sea')">🚢 ימי</button>
+    <button class="filter-btn" data-filter="air"  onclick="setFilter(this,'air')">✈️ אווירי</button>
+    <button class="filter-btn" data-filter="mail" onclick="setFilter(this,'mail')">📬 דואר/מטען</button>
+  </div>
+
   <button class="add-article-btn admin-only" onclick="document.getElementById('add-modal').style.display='flex'" title="הוסף כתבה ידנית">＋ הוסף כתבה</button>
 
 {quarters_html}
@@ -692,7 +740,7 @@ def generate(articles: list[dict]) -> Path:
 <div class="page-footer">
   נוצר על ידי אלון סער · {now_str}
   <span class="admin-only" style="margin-right:16px;">
-    <button class="pat-btn-footer admin-only" onclick="managePAT()" title="הגדר GitHub PAT">🔑 GitHub PAT</button>
+    <button class="pat-btn-footer admin-only" onclick="managePAT()" title="ניהול חיבור GitHub">🔌 GitHub</button>
   </span>
 </div>
 
@@ -733,7 +781,37 @@ function saveImgs(e)    {{ localStorage.setItem(IMG_KEY,     JSON.stringify(e));
 function loadDeleted()  {{ try {{ return JSON.parse(localStorage.getItem(DELETE_KEY)  || '[]');  }} catch(e) {{ return []; }} }}
 function saveDeleted(d) {{ localStorage.setItem(DELETE_KEY,  JSON.stringify(d)); }}
 
-// ── PAT management ────────────────────────────────────────────────────────────
+// ── Encrypted PAT — decrypted with admin password ────────────────────────────
+const ENCRYPTED_PAT = {{"s":"huyVvG+ve731UXXC8Q2NjA==","d":"ZECAzH9hb7c9IwxPrS9BPx7DrZVCSrChVGF5fEkLQqrc0fgSEaN4nuIM6ZkmXa5468HfjcX2+s2FY14DopXpr8kXys6wKQ0u4rRqaqfzNsGjK55C45JrF5+DalUB"}};
+
+async function _deriveKeystream(password, saltB64, length) {{
+  const salt = Uint8Array.from(atob(saltB64), c => c.charCodeAt(0));
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
+  const keyBits = await crypto.subtle.deriveBits({{name:'PBKDF2',salt,iterations:100000,hash:'SHA-256'}}, km, 256);
+  const key = new Uint8Array(keyBits);
+  const stream = new Uint8Array(length);
+  let offset = 0, ctr = 0;
+  while (offset < length) {{
+    const block = new Uint8Array(36);
+    block.set(key);
+    new DataView(block.buffer).setUint32(32, ctr);
+    const hash = new Uint8Array(await crypto.subtle.digest('SHA-256', block));
+    for (let i = 0; i < hash.length && offset < length; i++, offset++) stream[offset] = hash[i];
+    ctr++;
+  }}
+  return stream;
+}}
+
+async function _decryptPAT(password) {{
+  try {{
+    const data = Uint8Array.from(atob(ENCRYPTED_PAT.d), c => c.charCodeAt(0));
+    const ks = await _deriveKeystream(password, ENCRYPTED_PAT.s, data.length);
+    const dec = new Uint8Array(data.length);
+    for (let i = 0; i < data.length; i++) dec[i] = data[i] ^ ks[i];
+    return new TextDecoder().decode(dec);
+  }} catch(e) {{ return null; }}
+}}
+
 function loadPAT() {{
   GITHUB_PAT = localStorage.getItem(PAT_KEY) || '';
   return GITHUB_PAT;
@@ -743,18 +821,28 @@ function savePAT(pat) {{
   if (pat) localStorage.setItem(PAT_KEY, pat);
   else localStorage.removeItem(PAT_KEY);
 }}
-function promptForPAT(msg) {{
-  const current = localStorage.getItem(PAT_KEY) || '';
-  const pat = prompt(msg || 'הכנס GitHub PAT לאישור/דחייה של כתבות:', current);
-  if (pat === null) return false;
-  savePAT(pat.trim());
-  if (GITHUB_PAT) {{ showToast('✓ GitHub PAT נשמר', 'success'); return true; }}
-  return false;
+async function promptForPassword() {{
+  const pw = prompt('🔐 סיסמת מנהל:');
+  if (pw === null) return false;
+  const pat = await _decryptPAT(pw.trim());
+  if (!pat || pat.length < 10) {{
+    showToast('❌ סיסמה שגויה', 'error');
+    return false;
+  }}
+  savePAT(pat);
+  showToast('✓ מחובר', 'success');
+  return true;
 }}
 function managePAT() {{
   const cur = localStorage.getItem(PAT_KEY);
-  const info = cur ? 'PAT שמור (מסתיים ב-' + cur.slice(-4) + ')' : 'PAT לא מוגדר';
-  promptForPAT(info + '\\nהכנס PAT חדש (השאר ריק למחיקה):');
+  if (cur) {{
+    if (confirm('חיבור GitHub פעיל.\\nלחץ אישור לניתוק.')) {{
+      savePAT('');
+      showToast('✓ חיבור נותק', 'success');
+    }}
+  }} else {{
+    promptForPassword().then(ok => {{ if (ok) syncApprovalStates(); }});
+  }}
 }}
 
 // ── Year / Quarter navigation ─────────────────────────────────────────────────
@@ -782,6 +870,27 @@ function selectQ(btn, q) {{
     sec.style.display = (sec.dataset.q === q) ? '' : 'none';
   }});
   applyDeleted();
+}}
+
+// ── Crossing-type filter ──────────────────────────────────────────────────────
+let _activeFilter = 'all';
+function setFilter(btn, filter) {{
+  _activeFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('filter-btn-active'));
+  btn.classList.add('filter-btn-active');
+  applyFilter();
+}}
+function applyFilter() {{
+  const deleted = loadDeleted();
+  const isAdmin = document.body.classList.contains('admin-mode');
+  document.querySelectorAll('.article-card').forEach(card => {{
+    if (deleted.includes(card.dataset.id)) return;
+    const approved = card.dataset.approved === 'true';
+    if (!isAdmin && !approved) return;
+    const matchFilter = _activeFilter === 'all' || card.dataset.crossing === _activeFilter;
+    card.classList.toggle('hidden', !matchFilter);
+  }});
+  updateCounts();
 }}
 
 // ── Sync approval state live from GitHub ─────────────────────────────────────
@@ -834,10 +943,8 @@ function checkAdmin() {{
     }});
     loadPAT();
     if (!GITHUB_PAT) {{
-      setTimeout(() => {{
-        if (promptForPAT('מצב מנהל פעיל!\\nהכנס GitHub PAT לאישור/דחייה של כתבות:')) {{
-          syncApprovalStates();
-        }}
+      setTimeout(async () => {{
+        if (await promptForPassword()) syncApprovalStates();
       }}, 700);
     }} else {{
       syncApprovalStates();
@@ -871,7 +978,7 @@ function onEdit(e) {{
 // ── Image change — saves permanently to GitHub articles.json ─────────────────
 async function changeImage(id, idx) {{
   if (!document.body.classList.contains('edit-mode')) return;
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT לשינוי תמונה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
 
   // Find current image URL to pre-fill the prompt
   const wrapper = document.querySelector('.img-wrapper[data-id="' + id + '"]');
@@ -948,7 +1055,7 @@ async function ghPut(path, sha, content, message) {{
 
 // ── Approve ───────────────────────────────────────────────────────────────────
 async function approveArticle(id) {{
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT לאישור הכתבה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
   const card = document.querySelector('.article-card[data-id="' + id + '"]');
   if (!card) return;
   const articleUrl = card.dataset.url;
@@ -977,7 +1084,7 @@ async function approveArticle(id) {{
 
 // ── Set Pending (unapprove) ───────────────────────────────────────────────────
 async function setPending(id) {{
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT לדחיית הכתבה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
   const card = document.querySelector('.article-card[data-id="' + id + '"]');
   if (!card) return;
   const articleUrl = card.dataset.url;
@@ -1012,7 +1119,7 @@ async function setPending(id) {{
 
 // ── Add Article ───────────────────────────────────────────────────────────────
 async function addArticle() {{
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT להוספת כתבה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
   const title   = document.getElementById('add-title').value.trim();
   const body    = document.getElementById('add-body').value.trim();
   const date    = document.getElementById('add-date').value;
@@ -1079,7 +1186,7 @@ function updateApprovedCount() {{
 // ── Delete (permanent — removes from GitHub backend) ─────────────────────────
 async function deleteArticle(id) {{
   if (!confirm('למחוק כתבה זו לצמיתות?\\nהכתבה תוסר מהמאגר ולא תחזור יותר.')) return;
-  if (!GITHUB_PAT && !promptForPAT('הכנס GitHub PAT למחיקת הכתבה:')) return;
+  if (!GITHUB_PAT && !(await promptForPassword())) return;
   const card = document.querySelector('.article-card[data-id="' + id + '"]');
   if (!card) return;
   const articleUrl = card.dataset.url;
@@ -1129,9 +1236,9 @@ async function deleteArticle(id) {{
 function applyDeleted() {{
   const deleted = loadDeleted();
   document.querySelectorAll('.article-card').forEach(card => {{
-    card.classList.toggle('hidden', deleted.includes(card.dataset.id));
+    if (deleted.includes(card.dataset.id)) card.classList.add('hidden');
   }});
-  updateCounts();
+  applyFilter();
 }}
 
 function updateCounts() {{
