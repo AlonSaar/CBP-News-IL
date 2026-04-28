@@ -1,5 +1,39 @@
 [
   {
+    "run_date": "2026-04-28 00:36 UTC",
+    "article_date": "2026-04-24",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa",
+    "title": "תפיסת למעלה מ-3,000 פאונד מתאמפטמין שהוסתרו בנגרר מטען במתקן המסחרי אוטאי מסה",
+    "location": "מתקן המסחרי אוטאי מסה - Otay Mesa Commercial Facility, קליפורניה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "ב-14 באפריל 2026 תפסו קציני CBP במתקן המסחרי אוטאי מסה למעלה מ-3,000 פאונד מתאמפטמין שהוסתרו בתוך נגרר מטען, בשווי מוערך של 4,924,960 דולר. מניפסט המשלוח ציין את תכולת הנגרר כקרטונים מגולגלים. קציני CBP הפנו לבדיקה משנית טרקטור מסוג 2017 Freightliner Cascadia יחד עם נגררו והנהג, אזרח מקסיקני בן 31. בדיקה לא-פולשנית (סריקה) חשפה אנומליות בדופן הקדמית של הנגרר, וכלב גילוי של CBP התריע על אותו אזור. בבדיקה פיזית שבוצעה לאחר מכן אותרו 300 חבילות המכילות חומר גבישי עטוף בניילון שקוף. הבדיקות אישרו כי מדובר במתאמפטמין, במשקל כולל של 3,078.10 פאונד.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/cbp-meth.jpg.webp?itok=L-NeSoCF",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/cbp-meth.jpg.webp?itok=L-NeSoCF"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "admin_approved": false,
+    "editor_notes": ""
+  },
+  {
+    "run_date": "2026-04-28 00:36 UTC",
+    "article_date": "2026-04-20",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international",
+    "title": "תפיסת 83 פאונד קוקאין מוסתרים בתוך רצפת נגרר מסחרי ריק במעבר Pharr International Bridge",
+    "location": "נמל הכניסה פאר - Pharr International Bridge, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "ב-15 באפריל, קציני CBP במתקן המטען של Pharr International Bridge תפסו 83.24 פאונד (37.76 קילוגרם) קוקאין שהוסתרו בתוך רצפת נגרר מסחרי ריק שהגיע מריינוסה, מקסיקו. הרכב, רכב טרקטור-נגרר מסחרי, הופנה לבדיקה משנית לאחר הגעתו למתקן, שם בוצעה סריקה באמצעות ציוד בדיקה לא-חודרני וכן בדיקה על ידי צוות כלב גילוי. בדיקה פיזית שנערכה בהמשך הובילה לאיתור 32 חבילות קוקאין שהוסתרו בתוך רצפת הנגרר. שווי מוערך של הסמים עומד על 1,111,503 דולר. קציני CBP החרימו את הסמים, את הטרקטור ואת הנגרר. התיק הועבר לחקירה על ידי סוכני Homeland Security Investigations.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/83lbscocainepharr41526.jpeg.webp?itok=FQWySKmm"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "admin_approved": false,
+    "editor_notes": ""
+  },
+  {
     "run_date": "2026-04-23 02:35 UTC",
     "article_date": "2026-04-22",
     "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing",
