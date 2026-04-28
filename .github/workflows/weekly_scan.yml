@@ -3,7 +3,7 @@ name: Weekly CBP Scan
 on:
   schedule:
     # Every Monday at 08:00 AM New York time (13:00 UTC, covers EST/EDT)
-    - cron: '0 13 * * 1'
+    - cron: '0 11 * * 1'
   workflow_dispatch:
     # Also allows manual trigger from GitHub UI with optional date override
     inputs:
