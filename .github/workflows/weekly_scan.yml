@@ -67,4 +67,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit — no new articles this week."
           else
-            git commit -m "Weekly scan $(da
+            git commit -m "Weekly scan $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
+            git push
+          fi
