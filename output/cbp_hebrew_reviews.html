@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>סקירות CBP | נציגות ניו יורק</title>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -423,11 +426,28 @@
     }
     .pat-btn-footer:hover { background: #e2e8f0; color: #64748b; }
 
+    /* ── Back to top ── */
+    #back-to-top {
+      position: fixed; bottom: 28px; right: 24px;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #0f3460; color: white;
+      border: none; cursor: pointer;
+      font-size: 1.3rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 18px rgba(15,52,96,0.4);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.25s;
+      z-index: 500; line-height: 1;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: auto; }
+    #back-to-top:hover { background: #1a3a6e; transform: translateY(-3px); }
+
     @media (max-width: 740px) {
       .article-card { grid-template-columns: 1fr; }
       .img-wrapper { width: 100%; }
       header { padding: 0 16px; }
       .container { padding: 20px 12px; }
+      #back-to-top { bottom: 18px; right: 14px; width: 40px; height: 40px; font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -506,8 +526,8 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa" dir="rtl"><p dir="rtl">תפסו קציני CBP במתקן המסחרי אוטאי מסה למעלה מ-3,000 פאונד מתאמפטמין שהוסתרו בתוך נגרר מטען, בשווי מוערך של 4,924,960 דולר.</p>
-<p dir="rtl">מניפסט המשלוח ציין את תכולת הנגרר כקרטונים מגולגלים.</p>
-<p dir="rtl">קציני CBP הפנו לבדיקה משנית טרקטור מסוג 2017 Freightliner Cascadia יחד עם נגררו והנהג, אזרח מקסיקני בן 31.</p>
+<p dir="rtl">הצהרת המטען המשלוח ציין את תכולת הנגרר כקרטונים מגולגלים.</p>
+<p dir="rtl">קציני CBP הפנו לבדיקה משנית משאית מסוג 2017 Freightliner Cascadia יחד עם נגררו והנהג, אזרח מקסיקני בן 31.</p>
 <p dir="rtl">בדיקת סיטי (CAT SCAN) (סריקה) חשפה אנומליות בדופן הקדמית של הנגרר, וכלב גילוי של CBP התריע על אותו אזור.</p>
 <p dir="rtl">בבדיקה פיזית שבוצעה לאחר מכן אותרו 300 חבילות המכילות חומר גבישי עטוף בניילון שקוף.</p>
 <p dir="rtl">הבדיקות אישרו כי מדובר במתאמפטמין, במשקל כולל של 3,078.10 פאונד.</p></div>
@@ -576,7 +596,7 @@
             <div class="article-crossing-detail" dir="rtl">מעבר אווירי בינלאומי</div>
             <div class="article-body editable" data-field="body" data-id="monkey-and-125-pounds-prohibited-meat-intercepted-agriculture" dir="rtl"><p dir="rtl">תפסו מומחי החקלאות של CBP בשדה התעופה הבינלאומי O'Hare בשיקגו שני ממצאים חריגים באירועים נפרדים.</p>
 <p dir="rtl">באירוע הראשון, קצין CBP הפנה נוסע שהגיע מקמרון לבדיקה חקלאית משנית.</p>
-<p dir="rtl">במהלך סריקת המזוודה אותרה אנומליה, ובעקבותיה בוצע חיפוש יסודי שבו גילה מומחה חקלאות של CBP גופת קוף בתוך כבודת הנוסע.</p>
+<p dir="rtl">במהלך סריקת המזוודה אותרה חריגות, ובעקבותיה בוצע חיפוש יסודי שבו גילה מומחה חקלאות של CBP גופת קוף בתוך כבודת הנוסע.</p>
 <p dir="rtl">בשל חשש כבד לבריאות הציבור, שרידי הקוף הוחרמו על ידי CBP והושמדו בהתאם להנחיות הסוכנויות הממשלתיות הרלוונטיות.</p>
 <p dir="rtl">באירוע השני, נוסע שהגיע מליבריה ניסה להבריח בשר גירה אסור באופן מכוון ומסתיר.</p>
 <p dir="rtl">מומחי החקלאות של CBP בדקו שמונה קופסאות שנמצאו בכבודת הנוסע וגילו בשר, עצמות ושיער שהוסתרו בתוך פירות ים מיובשים.</p>
@@ -711,7 +731,7 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=Pharr+International+Bridge%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr" dir="rtl"><p dir="rtl">תפסו קציני CBP במתקן המטען של Pharr International Bridge משאית טרקטור מסחרית שנסעה מריינוסה שבמקסיקו לעבר ארצות הברית.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-more-26-million-methamphetamine-pharr" dir="rtl"><p dir="rtl">תפסו קציני CBP במתקן המטען של Pharr International Bridge משאית משאית מסחרית שנסעה מריינוסה שבמקסיקו לעבר ארצות הברית.</p>
 <p dir="rtl">הרכב הופנה לבדיקה משנית, שם נעשה שימוש בציוד סריקה בלתי פולשני וכן בצוות כלבי גילוי.</p>
 <p dir="rtl">הבדיקה הפיזית שנערכה בעקבות כך הובילה לאיתור 1,055 חבילות של מתאמפטמין חשוד שהוסתרו בתוך משלוח גזרים, שהוצהר על תעודת המשלוח כמטען גזרים בלבד.</p>
 <p dir="rtl">המשקל הכולל של החומר שנתפס עמד על 297.62 פאונד (135 קילוגרם), ושוויו המוערך ברחוב הינו 2,660,580 דולר.</p>
@@ -785,7 +805,7 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-more-17-million-methamphetamine-pharr" dir="rtl"><p dir="rtl">קציני CBP במתקן המטען של Pharr International Bridge תפסו 862 חבילות מתאמפטמין במשקל כולל של 1,984.16 פאונד (כ-900 קילוגרם), שהוסתרו בתוך משלוח פטל שחור שהוצהר כסחורה חקלאית.</p>
-<p dir="rtl">בערב ה-23 במרץ, קציני CBP זיהו משאית מסחרית מסוג טרקטור-נגרר שנסעה מריינוסה שבמקסיקו, והופנתה לבדיקה משנית בעמדת העגינה לצורך בדיקה באמצעות ציוד סריקה לא-פולשני.</p>
+<p dir="rtl">בערב ה-23 במרץ, קציני CBP זיהו משאית מסחרית מסוג משאית-נגרר שנסעה מריינוסה שבמקסיקו, והופנתה לבדיקה משנית בעמדת העגינה לצורך בדיקה באמצעות ציוד סריקה לא-פולשני.</p>
 <p dir="rtl">במהלך הבדיקה חילצו הקציניים את כלל החבילות שהיו מוסתרות בתוך המשלוח.</p>
 <p dir="rtl">שווי מוערך של הסמים עומד על 17,737,200 דולר.</p>
 <p dir="rtl">קציני CBP החרימו את הסמים ואת הרכב.</p>
@@ -987,7 +1007,7 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-seize-over-900-pounds-liquid-methamphetamine-tractor" dir="rtl"><p dir="rtl">קציני CBP במתקן המטען Otay Mesa תפסו 944 פאונד מתאמפטמין נוזלי שהוסתרו בתוך מיכל הדלק של משאית גרירה.</p>
-<p dir="rtl">האירוע התרחש כאשר נהג בן 26, אזרח מקסיקו, הגיע לנקודת הכניסה תוך כדי נהיגה בטרקטור המושך נגרר, במטרה להיכנס לארצות הברית ממקסיקו.</p>
+<p dir="rtl">האירוע התרחש כאשר נהג בן 26, אזרח מקסיקו, הגיע לנקודת הכניסה תוך כדי נהיגה במשאית המושך נגרר, במטרה להיכנס לארצות הברית ממקסיקו.</p>
 <p dir="rtl">לאחר הבדיקה הראשונית, הופנה הנהג והרכב לבדיקה משנית.</p>
 <p dir="rtl">באזור הבדיקה המשנית, השתמשו קציני CBP בטכנולוגיית סריקה בלתי חודרנית לבדיקת הרכב, ולאחר מכן הפנו אותו לבדיקה מעמיקה יותר.</p>
 <p dir="rtl">במהלך הבדיקה פתחו קציני CBP את מיכל הדלק של המשאית והכניסו לתוכו גשוש, שחשף חומר ג'לטיני בלתי מוכר המעורבב עם הסולר.</p>
@@ -1022,12 +1042,12 @@
               <a class="maps-link" href="https://www.google.com/maps/search/?api=1&query=World+Trade+Bridge%2C+%D7%98%D7%A7%D7%A1%D7%A1" target="_blank" title="פתח במפות Google">🗺️ מפה</a>
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
-            <div class="article-body editable" data-field="body" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge" dir="rtl"><p dir="rtl">קציני CBP מאגף מבצעי היציאה תפסו 39 נחשי פיתון חיים שהוסתרו בתוך קשת טרקטור ב-World Trade Bridge בלרדו, טקסס,.</p>
-<p dir="rtl">במהלך מבצעי הפקה יוצאת, קציני CBP עצרו טרקטור מדגם Peterbilt משנת 2021 שנסע לכיוון מקסיקו, והפנו את הנהג ואת הרכב לבדיקה.</p>
-<p dir="rtl">הנחשים אותרו בתוך הטרקטור לאחר שהנהג הצהיר בפני הסוכנים שאין ברשותו טובין אסורים.</p>
+            <div class="article-body editable" data-field="body" data-id="cbp-officers-intercept-live-pythons-world-trade-bridge" dir="rtl"><p dir="rtl">קציני CBP מאגף מבצעי היציאה תפסו 39 נחשי פיתון חיים שהוסתרו בתוך קשת משאית ב-World Trade Bridge בלרדו, טקסס,.</p>
+<p dir="rtl">במהלך מבצעי הפקה יוצאת, קציני CBP עצרו משאית מדגם Peterbilt משנת 2021 שנסע לכיוון מקסיקו, והפנו את הנהג ואת הרכב לבדיקה.</p>
+<p dir="rtl">הנחשים אותרו בתוך המשאית לאחר שהנהג הצהיר בפני הסוכנים שאין ברשותו טובין אסורים.</p>
 <p dir="rtl">סוכני U.S.</p>
 <p dir="rtl">Fish and Wildlife Service זומנו למקום ולקחו לידיהם את בעלי החיים; בשל מצבם, הועברו הנחשים לסביבה מבוקרת.</p>
-<p dir="rtl">הוחרמו הטרקטור והנגרר.</p>
+<p dir="rtl">הוחרמו המשאית והנגרר.</p>
 <p dir="rtl">הוטלו קנסות בגין הפרות יצוא בסך כולל של 34,824 דולר בקשר לאירוע.</p>
 <p dir="rtl">התיק נמצא בחקירה משותפת של U.S.</p>
 <p dir="rtl">Fish and Wildlife Service ו-Homeland Security Investigations.</p>
@@ -1220,7 +1240,7 @@
             </div>
             <div class="article-crossing-detail" dir="rtl">מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.</div>
             <div class="article-body editable" data-field="body" data-id="cbp-officers-world-trade-bridge-seize-over-68-million-cocaine" dir="rtl"><p dir="rtl">תפסו קציני CBP ב-World Trade Bridge בלארדו, טקסס, 516.76 פאונד קוקאין שהוסתרו בתוך משלוח פרחים טריים.</p>
-<p dir="rtl">הקצין תפס טרקטור ונגרר מדגם T3 International משנת 2018 שהצהיר על שינוע של "ורדים ופרחים טריים", והפנה את הרכב לבדיקה משנית.</p>
+<p dir="rtl">הקצין תפס משאית ונגרר מדגם T3 International משנת 2018 שהצהיר על שינוע של "ורדים ופרחים טריים", והפנה את הרכב לבדיקה משנית.</p>
 <p dir="rtl">בעקבות בדיקת כלב גילוי וסריקה באמצעות מערכת בדיקת סיטי (CAT SCAN), אותרו בתוך הסחורה 211 חבילות שהכילו את הסם.</p>
 <p dir="rtl">שווי מוערך של הקוקאין ברחוב עמד על 6,899,798 דולר.</p>
 <p dir="rtl">הסמים הוחרמו על ידי CBP, והתיק הועבר לחקירה של סוכני Homeland Security Investigations.</p></div>
@@ -1240,7 +1260,7 @@
 </div>
 
 <div class="page-footer">
-  נוצר על ידי אלון סער · 28/04/2026 19:02
+  נוצר על ידי אלון סער · 28/04/2026 20:08
   <span class="admin-only" style="margin-right:16px;">
     <button class="pat-btn-footer admin-only" onclick="managePAT()" title="ניהול חיבור GitHub">🔌 GitHub</button>
   </span>
@@ -1265,6 +1285,8 @@
     </form>
   </div>
 </div>
+
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="חזרה לראש הדף">↑</button>
 
 <script>
 const STORAGE_KEY   = 'cbp_edits';
@@ -1835,6 +1857,12 @@ function applyAll() {
   applyDeleted();
   updateApprovedCount();
 }
+
+// ── Back to top scroll listener ───────────────────────────────────────────────
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('back-to-top');
+  if (btn) btn.classList.toggle('visible', window.scrollY > 300);
+});
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 checkAdmin();

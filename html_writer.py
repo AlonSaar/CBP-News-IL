@@ -250,6 +250,9 @@ def generate(articles: list[dict]) -> Path:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>{SITE_TITLE}</title>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -670,11 +673,28 @@ def generate(articles: list[dict]) -> Path:
     }}
     .pat-btn-footer:hover {{ background: #e2e8f0; color: #64748b; }}
 
+    /* ── Back to top ── */
+    #back-to-top {{
+      position: fixed; bottom: 28px; right: 24px;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #0f3460; color: white;
+      border: none; cursor: pointer;
+      font-size: 1.3rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 18px rgba(15,52,96,0.4);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.25s;
+      z-index: 500; line-height: 1;
+    }}
+    #back-to-top.visible {{ opacity: 1; pointer-events: auto; }}
+    #back-to-top:hover {{ background: #1a3a6e; transform: translateY(-3px); }}
+
     @media (max-width: 740px) {{
       .article-card {{ grid-template-columns: 1fr; }}
       .img-wrapper {{ width: 100%; }}
       header {{ padding: 0 16px; }}
       .container {{ padding: 20px 12px; }}
+      #back-to-top {{ bottom: 18px; right: 14px; width: 40px; height: 40px; font-size: 1.1rem; }}
     }}
   </style>
 </head>
@@ -763,6 +783,8 @@ def generate(articles: list[dict]) -> Path:
     </form>
   </div>
 </div>
+
+<button id="back-to-top" onclick="window.scrollTo({{top:0,behavior:'smooth'}})" title="חזרה לראש הדף">↑</button>
 
 <script>
 const STORAGE_KEY   = 'cbp_edits';
@@ -1333,6 +1355,12 @@ function applyAll() {{
   applyDeleted();
   updateApprovedCount();
 }}
+
+// ── Back to top scroll listener ───────────────────────────────────────────────
+window.addEventListener('scroll', function() {{
+  const btn = document.getElementById('back-to-top');
+  if (btn) btn.classList.toggle('visible', window.scrollY > 300);
+}});
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 checkAdmin();
