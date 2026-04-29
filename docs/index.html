@@ -1910,7 +1910,7 @@ function applyAll() {
 
 // ── Mobile cache buster — reload if cached version is older than 2 hours ─────
 (function() {
-  const BUILD_TS = 1777470633;
+  const BUILD_TS = 1777471552;
   const KEY = 'cbp_build_ts';
   const stored = parseInt(localStorage.getItem(KEY) || '0', 10);
   if (stored && BUILD_TS > stored + 7200) {
