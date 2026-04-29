@@ -775,6 +775,7 @@ def generate(articles: list[dict]) -> Path:
 
 <script>
 const STORAGE_KEY   = 'cbp_edits';
+const SAVED_KEY     = 'cbp_saved';   // shadow: edits confirmed saved to GitHub
 const IMG_KEY       = 'cbp_images';
 const DELETE_KEY    = 'cbp_deleted';
 const PAT_KEY       = 'cbp_admin_pat';
@@ -785,6 +786,8 @@ let   GITHUB_PAT    = '';
 
 function loadEdits()    {{ try {{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{{}}'); }} catch(e) {{ return {{}}; }} }}
 function saveEdits(e)   {{ localStorage.setItem(STORAGE_KEY, JSON.stringify(e)); }}
+function loadSaved()    {{ try {{ return JSON.parse(localStorage.getItem(SAVED_KEY)   || '{{}}'); }} catch(e) {{ return {{}}; }} }}
+function saveSaved(e)   {{ localStorage.setItem(SAVED_KEY,   JSON.stringify(e)); }}
 function loadImgs()     {{ try {{ return JSON.parse(localStorage.getItem(IMG_KEY)     || '{{}}'); }} catch(e) {{ return {{}}; }} }}
 function saveImgs(e)    {{ localStorage.setItem(IMG_KEY,     JSON.stringify(e)); }}
 function loadDeleted()  {{ try {{ return JSON.parse(localStorage.getItem(DELETE_KEY)  || '[]');  }} catch(e) {{ return []; }} }}
@@ -1000,12 +1003,15 @@ async function _persistFieldToGitHub(id, field, htmlValue) {{
     else if (field === 'body')     art.body     = bodyHtmlToText(htmlValue);
     await ghPut('state/articles.json', af.sha,
       JSON.stringify(arts, null, 2),
-      'edit: ' + field + ' ' + id + ' [skip ci]');
-    // Clear localStorage for this field — baked HTML after rebuild will be canonical
+      'edit: ' + field + ' ' + id);  // no [skip ci] — triggers rebuild
+    // Move from "pending edits" to "confirmed saved" shadow store
     const edits = loadEdits();
-    delete edits[id + '_' + field];
+    const saved = loadSaved();
+    saved[id + '_' + field] = htmlValue;  // keep for instant display on reload
+    delete edits[id + '_' + field];       // clear pending edit
     saveEdits(edits);
-    showToast('✓ נשמר ב-GitHub', 'success');
+    saveSaved(saved);
+    showToast('✓ נשמר — האתר יתעדכן תוך כ-2 דקות', 'success');
   }} catch(e) {{
     // localStorage still has the edit as fallback; show nothing (silent fail)
     console.warn('Field save failed:', e.message);
@@ -1382,10 +1388,32 @@ function updateCounts() {{
 // ── Apply saved edits & images ───────────────────────────────────────────────
 function applyEditsAndImages() {{
   const edits = loadEdits();
+  const saved = loadSaved();
+  const staleSaved = [];
+
   document.querySelectorAll('.editable[data-id]').forEach(el => {{
     const key = el.dataset.id + '_' + el.dataset.field;
-    if (edits[key] !== undefined) el.innerHTML = edits[key];
+    // Priority: pending edit > confirmed-saved > baked HTML
+    if (edits[key] !== undefined) {{
+      el.innerHTML = edits[key];
+    }} else if (saved[key] !== undefined) {{
+      // Check if baked HTML already matches (rebuild completed)
+      const bakedText = el.innerHTML.replace(/<[^>]+>/g,'').trim();
+      const savedText = saved[key].replace(/<[^>]+>/g,'').trim();
+      if (bakedText === savedText) {{
+        staleSaved.push(key);  // rebuild done — no longer needed
+      }} else {{
+        el.innerHTML = saved[key];  // show saved version while rebuild is pending
+      }}
+    }}
   }});
+
+  // Prune stale shadow entries whose rebuild has completed
+  if (staleSaved.length) {{
+    const s = loadSaved();
+    staleSaved.forEach(k => delete s[k]);
+    saveSaved(s);
+  }}
   const imgs = loadImgs();
   Object.entries(imgs).forEach(([key, url]) => {{
     const parts = key.split('__');
