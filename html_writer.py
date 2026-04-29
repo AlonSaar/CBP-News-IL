@@ -975,13 +975,56 @@ function toggleEdit() {{
   }});
 }}
 
+// ── Text → plain conversion (strips <p> tags, joins sentences) ────────────────
+function bodyHtmlToText(html) {{
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const paras = div.querySelectorAll('p');
+  if (paras.length === 0) return div.textContent.trim();
+  return Array.from(paras).map(p => p.textContent.trim()).filter(Boolean).join(' ');
+}}
+
+// ── Debounced save of a single field to GitHub articles.json ──────────────────
+const _editSaveTimers = {{}};
+async function _persistFieldToGitHub(id, field, htmlValue) {{
+  if (!GITHUB_PAT) return;
+  try {{
+    const af = await ghGet('state/articles.json');
+    const arts = JSON.parse(b64DecodeUtf8(af.content));
+    const card = document.querySelector('.article-card[data-id="' + id + '"]');
+    const articleUrl = card ? card.dataset.url : null;
+    const art = arts.find(a => a.url === articleUrl || (a.url || '').split('/').pop() === id);
+    if (!art) return;
+    if (field === 'title')    art.title    = htmlValue.replace(/<[^>]+>/g, '').trim();
+    else if (field === 'location') art.location = htmlValue.replace(/<[^>]+>/g, '').trim();
+    else if (field === 'body')     art.body     = bodyHtmlToText(htmlValue);
+    await ghPut('state/articles.json', af.sha,
+      JSON.stringify(arts, null, 2),
+      'edit: ' + field + ' ' + id + ' [skip ci]');
+    // Clear localStorage for this field — baked HTML after rebuild will be canonical
+    const edits = loadEdits();
+    delete edits[id + '_' + field];
+    saveEdits(edits);
+    showToast('✓ נשמר ב-GitHub', 'success');
+  }} catch(e) {{
+    // localStorage still has the edit as fallback; show nothing (silent fail)
+    console.warn('Field save failed:', e.message);
+  }}
+}}
+
 function onEdit(e) {{
   const el = e.target;
   if (!el.dataset.id) return;
-  const key = el.dataset.id + '_' + el.dataset.field;
+  const id    = el.dataset.id;
+  const field = el.dataset.field;
+  const key   = id + '_' + field;
+  // Save to localStorage immediately (instant feedback)
   const edits = loadEdits();
   edits[key] = el.innerHTML;
   saveEdits(edits);
+  // Debounce: persist to GitHub 2.5 s after user stops typing
+  clearTimeout(_editSaveTimers[key]);
+  _editSaveTimers[key] = setTimeout(() => _persistFieldToGitHub(id, field, el.innerHTML), 2500);
 }}
 
 // ── Image change — saves permanently to GitHub articles.json ─────────────────
