@@ -250,9 +250,6 @@ def generate(articles: list[dict]) -> Path:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <title>{SITE_TITLE}</title>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -1014,7 +1011,7 @@ async function changeImage(id, idx) {{
   try {{
     // Update articles.json on GitHub
     const af = await ghGet('state/articles.json');
-    const arts = JSON.parse(atob(af.content.replace(/\\n/g,'')));
+    const arts = JSON.parse(b64DecodeUtf8(af.content));
     const art = arts.find(a => (a.url || '').split('/').pop() === id);
     if (!art) throw new Error('כתבה לא נמצאה: ' + id);
 
@@ -1084,6 +1081,11 @@ function showToast(msg, type) {{
 }}
 
 // ── GitHub API helper ─────────────────────────────────────────────────────────
+// Proper UTF-8 base64 decode (handles Hebrew and any non-ASCII content)
+function b64DecodeUtf8(b64) {{
+  const bytes = Uint8Array.from(atob(b64.replace(/\\n/g,'')), c => c.charCodeAt(0));
+  return new TextDecoder('utf-8').decode(bytes);
+}}
 async function ghGet(path) {{
   const r = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path, {{
     headers: {{ 'Authorization': 'Bearer ' + GITHUB_PAT, 'Accept': 'application/vnd.github+json' }}
@@ -1195,7 +1197,7 @@ async function addArticle() {{
   try {{
     // Update articles.json
     const af = await ghGet('state/articles.json');
-    const arts = JSON.parse(atob(af.content.replace(/\\n/g,'')));
+    const arts = JSON.parse(b64DecodeUtf8(af.content));
     arts.unshift(newArt);
     await ghPut('state/articles.json', af.sha, JSON.stringify(arts, null, 2), 'add: ' + title.slice(0,50));
 
@@ -1246,7 +1248,7 @@ async function deleteArticle(id) {{
   try {{
     // 1. Remove from articles.json
     const af = await ghGet('state/articles.json');
-    const arts = JSON.parse(atob(af.content.replace(/\\n/g,'')));
+    const arts = JSON.parse(b64DecodeUtf8(af.content));
     const filtered = arts.filter(a => (a.url || '').split('/').pop() !== id && a.url !== articleUrl);
     if (filtered.length === arts.length) {{
       // fallback: try matching by url slug
@@ -1381,6 +1383,19 @@ function applyAll() {{
   applyDeleted();
   updateApprovedCount();
 }}
+
+// ── Mobile cache buster — reload if cached version is older than 2 hours ─────
+(function() {{
+  const BUILD_TS = {int(datetime.now().timestamp())};
+  const KEY = 'cbp_build_ts';
+  const stored = parseInt(localStorage.getItem(KEY) || '0', 10);
+  if (stored && BUILD_TS > stored + 7200) {{
+    localStorage.setItem(KEY, BUILD_TS);
+    location.reload(true);
+  }} else {{
+    localStorage.setItem(KEY, BUILD_TS);
+  }}
+}})();
 
 // ── Back to top scroll listener ───────────────────────────────────────────────
 window.addEventListener('scroll', function() {{
