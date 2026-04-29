@@ -1029,18 +1029,44 @@ async function changeImage(id, idx) {{
 
     await ghPut('state/articles.json', af.sha,
       JSON.stringify(arts, null, 2),
-      'image: update ' + id + ' [skip ci]');
+      'image: update ' + id);
 
     // Update DOM immediately
-    if (wrapper && imgItems[idx]) {{
-      if (trimmed === '') {{
-        imgItems[idx].style.display = 'none';
-      }} else {{
-        imgItems[idx].src = trimmed;
-        imgItems[idx].style.display = '';
+    if (wrapper) {{
+      if (imgItems[idx]) {{
+        // existing image slot
+        if (trimmed === '') {{
+          imgItems[idx].style.display = 'none';
+        }} else {{
+          imgItems[idx].src = trimmed;
+          imgItems[idx].style.display = '';
+        }}
+      }} else if (trimmed) {{
+        // no-img article — build the slot from scratch
+        wrapper.classList.remove('no-img-wrapper');
+        const noImg = wrapper.querySelector('.no-img');
+        const addBtn = wrapper.querySelector('.add-img-btn');
+        if (noImg) noImg.remove();
+        if (addBtn) addBtn.remove();
+        const item = document.createElement('div');
+        item.className = 'img-item';
+        const newImg = document.createElement('img');
+        newImg.className = 'article-image'; newImg.src = trimmed; newImg.alt = ''; newImg.loading = 'lazy';
+        newImg.onerror = function() {{ this.style.display='none'; }};
+        const overlay = document.createElement('div');
+        overlay.className = 'img-overlay admin-only';
+        overlay.textContent = '📷 שנה תמונה';
+        overlay.onclick = function() {{ changeImage(id, 0); }};
+        item.appendChild(newImg);
+        item.appendChild(overlay);
+        wrapper.insertBefore(item, wrapper.firstChild);
       }}
     }}
-    showToast('✓ תמונה עודכנה! האתר יתעדכן לאחר ה-rebuild הבא.', 'success');
+    // Clear any stale localStorage image for this article
+    const imgs = loadImgs();
+    delete imgs[id + '__' + idx];
+    saveImgs(imgs);
+    showToast('✓ תמונה עודכנה! האתר יתעדכן תוך כ-2 דקות.', 'success');
   }} catch(err) {{
     showToast('שגיאה בעדכון תמונה: ' + err.message, 'error');
   }}
