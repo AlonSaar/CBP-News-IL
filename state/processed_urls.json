@@ -63,5 +63,15 @@
     "status": "added",
     "timestamp": "2026-04-28T00:36:53+00:00",
     "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-hosts-attorney-virtual-career-expo": {
+    "status": "skipped",
+    "timestamp": "2026-04-29T00:37:49+00:00",
+    "reason": "NO: personnel announcement"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-81-million-methamphetamine-pharr": {
+    "status": "added",
+    "timestamp": "2026-04-29T00:38:07+00:00",
+    "quarter": "Q2-2026"
   }
 }

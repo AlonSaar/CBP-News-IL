@@ -1,5 +1,22 @@
 [
   {
+    "run_date": "2026-04-29 00:37 UTC",
+    "article_date": "2026-04-28",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-81-million-methamphetamine-pharr",
+    "title": "תפיסת כ-412 ק\"ג מתאמפטמין מוסתרים במשטחי אריחים במשאית מסחרית בגשר פאר הבינלאומי",
+    "location": "נמל הכניסה פאר - Pharr International Bridge, טקסס",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש בעיקר לתנועת משאיות מטען וכלי רכב מסחריים החוצים את הגבול.",
+    "body": "קציני CBP במתקן המטען של Pharr International Bridge תפסו 908.30 פאונד (כ-412 ק\"ג) מתאמפטמין שהוסתרו בתוך משטחי אריחים, בשווי מוערך של 8,119,696 דולר. המשאית המסחרית הגיעה מריינוסה שבמקסיקו, וכאשר הגיעה למתקן הבדיקה הופנתה לבדיקה משנית תוך שימוש בציוד סריקה בלתי פולשני ובדיקה על ידי צוות כלבי גילוי. בדיקה פיזית של משטחי האריחים חשפה חבילות אבקה לבנה שנבדקו ונמצאו חיוביות למתאמפטמין. סוכני CBP חילצו 200 חבילות מתוך המשטחים. יצוין כי בהצהרת המטען צוין כי המשלוח מכיל אריחים בלבד. קציני CBP החרימו את הסמים ואת המשאית, והתיק הועבר לטיפולם של סוכני Homeland Security Investigations לצורך פתיחת חקירה פלילית.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/908lbsmethpharr42126.jpg.webp?itok=GVNH4WZu",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/908lbsmethpharr42126.jpg.webp?itok=GVNH4WZu"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "admin_approved": false,
+    "editor_notes": ""
+  },
+  {
     "run_date": "2026-04-28 00:36 UTC",
     "article_date": "2026-04-24",
     "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa",
