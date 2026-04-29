@@ -1133,6 +1133,10 @@ async function ghGet(path) {{
   return r.json();
 }}
 async function ghPut(path, sha, content, message) {{
+  // Validate JSON before sending (catches corruption before it reaches GitHub)
+  try {{ JSON.parse(content); }} catch(e) {{
+    throw new Error('ghPut aborted — invalid JSON for ' + path + ': ' + e.message);
+  }}
   const r = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + path, {{
     method: 'PUT',
     headers: {{ 'Authorization': 'Bearer ' + GITHUB_PAT, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' }},
