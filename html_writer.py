@@ -662,13 +662,6 @@ def generate(articles: list[dict]) -> Path:
       text-align: center; padding: 36px; color: #bbb;
       font-size: 0.78rem; border-top: 1px solid #eaecf0; margin-top: 20px;
     }}
-    .pat-btn-footer {{
-      background: #f1f5f9; border: 1px solid #e2e8f0;
-      color: #94a3b8; padding: 5px 14px; border-radius: 14px;
-      font-size: 0.72rem; cursor: pointer; font-family: inherit; font-weight: 600;
-      transition: all 0.2s;
-    }}
-    .pat-btn-footer:hover {{ background: #e2e8f0; color: #64748b; }}
 
     /* ── Back to top ── */
     #back-to-top {{
@@ -755,10 +748,7 @@ def generate(articles: list[dict]) -> Path:
 </div>
 
 <div class="page-footer">
-  נוצר על ידי אלון סער · {now_str}
-  <span class="admin-only" style="margin-right:16px;">
-    <button class="pat-btn-footer admin-only" onclick="managePAT()" title="ניהול חיבור GitHub">🔌 GitHub</button>
-  </span>
+  נוצר על ידי אלון סער · כל הזכויות שמורות ©
 </div>
 
 <!-- Add Article Modal (admin only) -->
