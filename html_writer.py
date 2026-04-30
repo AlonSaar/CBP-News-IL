@@ -1020,7 +1020,7 @@ async function _persistFieldToGitHub(id, field, htmlValue) {{
     else if (field === 'body')     art.body     = bodyHtmlToText(htmlValue);
     await ghPut('state/articles.json', af.sha,
       JSON.stringify(arts, null, 2),
-      'edit: ' + field + ' ' + id + ' [skip ci]');
+      'edit: ' + field + ' ' + id);
     // Move from "pending edits" to "confirmed saved" shadow store
     const edits = loadEdits();
     const saved = loadSaved();
