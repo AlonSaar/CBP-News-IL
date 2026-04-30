@@ -2000,7 +2000,11 @@ function applyAll() {
 
 // ── Mobile cache buster — reload if cached version is older than 2 hours ─────
 (function() {
+<<<<<<< Updated upstream
   const BUILD_TS = 1777516947;
+=======
+  const BUILD_TS = 1777513694;
+>>>>>>> Stashed changes
   const KEY = 'cbp_build_ts';
   const stored = parseInt(localStorage.getItem(KEY) || '0', 10);
   if (stored && BUILD_TS > stored + 7200) {
