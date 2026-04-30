@@ -218,7 +218,7 @@ def generate(articles: list[dict]) -> Path:
               <span class="article-date" dir="ltr">{art.get("article_date", "")}</span>
               <span class="article-crossing" dir="rtl" title="{ct_detail}">{ct_icon} {ct_label}</span>
             </div>
-            <a href="#top" class="article-title-link"><div class="article-title editable" data-field="title" data-id="{art_id}" dir="rtl">{art.get("title", "")}</div></a>
+            <a href="https://cbp-il.click/" class="article-title-link"><div class="article-title editable" data-field="title" data-id="{art_id}" dir="rtl">{art.get("title", "")}</div></a>
             <div class="article-location-row">
               <div class="article-location editable" data-field="location" data-id="{art_id}" dir="rtl">{location}</div>
               {maps_link}
@@ -1020,7 +1020,7 @@ async function _persistFieldToGitHub(id, field, htmlValue) {{
     else if (field === 'body')     art.body     = bodyHtmlToText(htmlValue);
     await ghPut('state/articles.json', af.sha,
       JSON.stringify(arts, null, 2),
-      'edit: ' + field + ' ' + id);  // no [skip ci] — triggers rebuild
+      'edit: ' + field + ' ' + id + ' [skip ci]');
     // Move from "pending edits" to "confirmed saved" shadow store
     const edits = loadEdits();
     const saved = loadSaved();

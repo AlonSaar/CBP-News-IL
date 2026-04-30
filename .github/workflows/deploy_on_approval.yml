@@ -50,12 +50,20 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "Redeploy: approval update $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
-            # Pull any commits that landed while the workflow was running,
-            # keeping our regenerated HTML on conflicts (it's always authoritative).
-            git pull --rebase origin main || {
-              git checkout --ours docs/index.html output/cbp_hebrew_reviews.html 2>/dev/null || true
-              git add docs/index.html output/cbp_hebrew_reviews.html 2>/dev/null || true
-              git rebase --continue
-            }
-            git push
+            # Retry push up to 3 times — rebase on remote if newer commits exist.
+            # In a rebase, --theirs = our commit being replayed (freshly generated files).
+            for attempt in 1 2 3; do
+              if git push; then
+                echo "✓ Pushed on attempt $attempt"; break
+              fi
+              echo "Push rejected (attempt $attempt) — rebasing on remote..."
+              git fetch origin main
+              GIT_EDITOR=true git rebase origin/main || {
+                git checkout --theirs docs/index.html                  2>/dev/null || true
+                git checkout --theirs output/cbp_hebrew_reviews.html   2>/dev/null || true
+                git checkout --theirs output/cbp_hebrew_reviews.pptx   2>/dev/null || true
+                git add docs/ output/ 2>/dev/null || true
+                GIT_EDITOR=true git rebase --continue
+              }
+            done
           fi
