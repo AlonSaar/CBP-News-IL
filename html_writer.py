@@ -218,7 +218,7 @@ def generate(articles: list[dict]) -> Path:
               <span class="article-date" dir="ltr">{art.get("article_date", "")}</span>
               <span class="article-crossing" dir="rtl" title="{ct_detail}">{ct_icon} {ct_label}</span>
             </div>
-            <a href="https://cbp-il.click/" class="article-title-link"><div class="article-title editable" data-field="title" data-id="{art_id}" dir="rtl">{art.get("title", "")}</div></a>
+            <div class="article-title editable" data-field="title" data-id="{art_id}" dir="rtl">{art.get("title", "")}</div>
             <div class="article-location-row">
               <div class="article-location editable" data-field="location" data-id="{art_id}" dir="rtl">{location}</div>
               {maps_link}
@@ -704,7 +704,7 @@ def generate(articles: list[dict]) -> Path:
 
 <header>
   <div class="header-brand">
-    <h1>{SITE_TITLE}</h1>
+    <h1><a href="https://cbp-il.click/" style="color:inherit;text-decoration:none;">{SITE_TITLE}</a></h1>
   </div>
   <div class="header-controls">
     <span class="badge" id="header-count">{len(articles)} כתבות</span>
