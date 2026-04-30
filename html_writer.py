@@ -1466,17 +1466,23 @@ function applyAll() {{
   updateApprovedCount();
 }}
 
-// ── Mobile cache buster — reload if cached version is older than 2 hours ─────
+// ── Build change detector — clears stale shadow edits on new deployment ───────
 (function() {{
   const BUILD_TS = {int(datetime.now().timestamp())};
   const KEY = 'cbp_build_ts';
   const stored = parseInt(localStorage.getItem(KEY) || '0', 10);
-  if (stored && BUILD_TS > stored + 7200) {{
-    localStorage.setItem(KEY, BUILD_TS);
-    location.reload(true);
-  }} else {{
-    localStorage.setItem(KEY, BUILD_TS);
+  if (stored && BUILD_TS !== stored) {{
+    // New build deployed — clear confirmed-saved shadow store so admin
+    // always sees the freshly baked HTML instead of a stale local version.
+    localStorage.removeItem('cbp_saved');
+    if (BUILD_TS > stored + 7200) {{
+      // Also hard-reload if the page itself is more than 2h old
+      localStorage.setItem(KEY, BUILD_TS);
+      location.reload(true);
+      return;
+    }}
   }}
+  localStorage.setItem(KEY, BUILD_TS);
 }})();
 
 // ── Back to top scroll listener ───────────────────────────────────────────────
