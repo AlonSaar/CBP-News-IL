@@ -30,7 +30,7 @@
     ],
     "quarter": "Q2-2026",
     "status": "needs-review",
-    "admin_approved": true,
+    "admin_approved": false,
     "editor_notes": ""
   },
   {
@@ -67,7 +67,7 @@
     "quarter": "Q2-2026",
     "status": "needs-review",
     "editor_notes": "",
-    "admin_approved": true
+    "admin_approved": false
   },
   {
     "run_date": "2026-04-23 22:15 UTC",
