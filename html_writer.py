@@ -218,7 +218,7 @@ def generate(articles: list[dict]) -> Path:
               <span class="article-date" dir="ltr">{art.get("article_date", "")}</span>
               <span class="article-crossing" dir="rtl" title="{ct_detail}">{ct_icon} {ct_label}</span>
             </div>
-            <div class="article-title editable" data-field="title" data-id="{art_id}" dir="rtl">{art.get("title", "")}</div>
+            <a href="#top" class="article-title-link"><div class="article-title editable" data-field="title" data-id="{art_id}" dir="rtl">{art.get("title", "")}</div></a>
             <div class="article-location-row">
               <div class="article-location editable" data-field="location" data-id="{art_id}" dir="rtl">{location}</div>
               {maps_link}
@@ -488,10 +488,18 @@ def generate(articles: list[dict]) -> Path:
       color: #4c5fd5; padding: 3px 10px; border-radius: 8px;
       font-weight: 700; direction: rtl; border: 1px solid #d8deff;
     }}
+    .article-title-link {{
+      text-decoration: none; display: block;
+    }}
+    .article-title-link:hover .article-title {{
+      color: #4c5fd5;
+      text-decoration: underline;
+    }}
     .article-title {{
       font-size: 1.1rem; font-weight: 800; color: #0d1b3e;
       line-height: 1.5; margin-bottom: 6px;
       text-align: right; direction: rtl;
+      transition: color 0.15s;
     }}
     .article-location {{
       font-size: 0.8rem; color: #e94560; font-weight: 700;
@@ -688,7 +696,7 @@ def generate(articles: list[dict]) -> Path:
     }}
   </style>
 </head>
-<body>
+<body id="top">
 
 <div id="cbp-toast"></div>
 <div class="edit-notice">✏️ מצב עריכה פעיל — לחץ על כל טקסט לעריכה · לחץ על תמונה לשינויה · השינויים נשמרים אוטומטית</div>
