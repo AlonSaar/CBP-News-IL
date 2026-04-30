@@ -946,21 +946,30 @@ async function syncApprovalStates() {{
 // ── Admin mode ────────────────────────────────────────────────────────────────
 function checkAdmin() {{
   const params = new URLSearchParams(window.location.search);
-  if (params.get('admin') === ADMIN_PASS) {{
-    document.body.classList.add('admin-mode');
-    document.body.classList.add('edit-mode');
-    document.querySelectorAll('.editable').forEach(el => {{
-      el.contentEditable = 'true';
-      el.addEventListener('input', onEdit);
-    }});
-    loadPAT();
-    if (!GITHUB_PAT) {{
-      setTimeout(async () => {{
-        if (await promptForPassword()) syncApprovalStates();
-      }}, 700);
-    }} else {{
-      syncApprovalStates();
-    }}
+  if (params.get('admin') !== ADMIN_PASS) return;
+
+  // Force a fresh page fetch on every admin session so the browser never
+  // serves a cached version of the HTML. We do this by adding ?v=<timestamp>
+  // the first time (before the page has been refreshed this session).
+  if (!params.get('v')) {{
+    params.set('v', Date.now());
+    location.replace('?' + params.toString());
+    return;  // page reloads; checkAdmin will run again with v= present
+  }}
+
+  document.body.classList.add('admin-mode');
+  document.body.classList.add('edit-mode');
+  document.querySelectorAll('.editable').forEach(el => {{
+    el.contentEditable = 'true';
+    el.addEventListener('input', onEdit);
+  }});
+  loadPAT();
+  if (!GITHUB_PAT) {{
+    setTimeout(async () => {{
+      if (await promptForPassword()) syncApprovalStates();
+    }}, 700);
+  }} else {{
+    syncApprovalStates();
   }}
 }}
 
