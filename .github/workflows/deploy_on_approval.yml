@@ -50,5 +50,12 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "Redeploy: approval update $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
+            # Pull any commits that landed while the workflow was running,
+            # keeping our regenerated HTML on conflicts (it's always authoritative).
+            git pull --rebase origin main || {
+              git checkout --ours docs/index.html output/cbp_hebrew_reviews.html 2>/dev/null || true
+              git add docs/index.html output/cbp_hebrew_reviews.html 2>/dev/null || true
+              git rebase --continue
+            }
             git push
           fi
