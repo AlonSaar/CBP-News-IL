@@ -1,5 +1,23 @@
 [
   {
+    "run_date": "2026-05-04 12:21 UTC",
+    "article_date": "2026-04-30",
+    "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-28-million-fentanyl-meth-two-separate",
+    "title": "תפיסת כ-58 ק\"ג פנטניל ומתאמפטמין בשתי תפיסות נפרדות במעבר הגבול סן איסידרו",
+    "location": "נמל הכניסה סן איסידרו - San Ysidro Port of Entry, קליפורניה",
+    "crossing_type": "סוג מעבר: מעבר גבול יבשתי בין מקסיקו לארצות הברית. משמש לתנועת משאיות מטען, רכבים פרטיים והולכי רגל.",
+    "body": "במהלך שש ימים תפסו קציני CBP במעבר הגבול סן איסידרו שתי תפיסות נפרדות של פנטניל ומתאמפטמין בשווי מוערך של כ-2.8 מיליון דולר. בתפיסה הראשונה הופנתה אישה מקסיקנית בת 27 הנוהגת ב-Honda Pilot מדגם 2019 לבדיקה משנית. סריקה בלתי פולשנית גילתה חריגות בגג הרכב, ולאחריה כלב גילוי של CBP התריע על אותו האזור. בדיקה פיזית חשפה 94 חבילות שהוסתרו בתוך גג הרכב: כ-35 פאונד (כ-16 ק\"ג) אבקת פנטניל בשווי מוערך של כ-1.95 מיליון דולר, וכ-80 פאונד (כ-36 ק\"ג) מתאמפטמין בשווי מוערך של כ-80,550 דולר. קציני CBP החרימו את הסמים ואת הרכב, והנהגת נעצרה ועומדת כעת בפני כתב אישום פדרלי בגין הברחת סמים. בתפיסה השנייה הופנה רכב Toyota Corolla מדגם 2025 לבדיקה משנית; הרכב הונהג על ידי אזרח מקסיקני בן 20 שנרשם לתוכנית SENTRI (Secure Electronic Network for Travelers Rapid Inspection). כלב גילוי של CBP התריע במהלך סיור קדם-ראשוני, מה שהוביל להפניה לבדיקה. סריקה בלתי פולשנית חשפה חריגות בפאנלים האחוריים של הרכב, ובדיקה פיזית חשפה שש חבילות שהוסתרו בתוך הפאנלים ובהן 14.02 פאונד (כ-6 ק\"ג) אבקת פנטניל לבנה, המקבילה לכ-509,818 כדורי פנטניל, בשווי מוערך של כ-764,727 דולר. קציני CBP החרימו את הסמים, הרכב והטלפון הנייד, הנהג נעצר, והתיק הועבר לטיפול הרשויות הפדרליות לצורך הליך פלילי.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/fentanyl_car.png.jpg.webp?itok=Ajh6mdug",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/fentanyl_car.png.jpg.webp?itok=Ajh6mdug",
+      "https://www.cbp.gov/sites/default/files/styles/400px_newsroom_body_image/public/fentanyl_2.png.webp?itok=HJjpgXSC"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "admin_approved": false,
+    "editor_notes": ""
+  },
+  {
     "run_date": "2026-04-29 00:37 UTC",
     "article_date": "2026-04-28",
     "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-81-million-methamphetamine-pharr",

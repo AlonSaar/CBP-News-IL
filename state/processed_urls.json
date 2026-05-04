@@ -73,5 +73,20 @@
     "status": "added",
     "timestamp": "2026-04-29T00:38:07+00:00",
     "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/felony-child-sex-offender-1000th-apprehension-year-border-patrol": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T12:21:43+00:00",
+    "reason": "date 2015-12-07 before 2026-04-27"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-announces-may-recruitment-events": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T12:21:45+00:00",
+    "reason": "NO: personnel announcement"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-28-million-fentanyl-meth-two-separate": {
+    "status": "added",
+    "timestamp": "2026-05-04T12:22:08+00:00",
+    "quarter": "Q2-2026"
   }
 }
