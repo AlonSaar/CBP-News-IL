@@ -1,12 +1,12 @@
 {
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:22+00:00",
+    "timestamp": "2026-05-04T17:17:06+00:00",
     "reason": "already in articles.json"
   },
   "https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:22+00:00",
+    "timestamp": "2026-05-04T17:17:06+00:00",
     "reason": "already in articles.json"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international": {
@@ -51,42 +51,92 @@
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-air-and-marine-operations-crews-stop-three-smuggling-boats": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:21+00:00",
+    "timestamp": "2026-05-04T17:17:05+00:00",
     "reason": "NO: migrants on foot, not concealed in vehicle"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-host-technology-virtual-career-expo": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:22+00:00",
-    "reason": "NO: personnel announcement"
+    "timestamp": "2026-05-04T17:17:06+00:00",
+    "reason": "NO: no image, personnel/recruitment announcement"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:22+00:00",
+    "timestamp": "2026-05-04T17:17:06+00:00",
     "reason": "already in articles.json"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-hosts-attorney-virtual-career-expo": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:19+00:00",
+    "timestamp": "2026-05-04T17:17:04+00:00",
     "reason": "NO: personnel announcement"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-81-million-methamphetamine-pharr": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:19+00:00",
+    "timestamp": "2026-05-04T17:17:04+00:00",
     "reason": "already in articles.json"
   },
   "https://www.cbp.gov/newsroom/national-media-release/felony-child-sex-offender-1000th-apprehension-year-border-patrol": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:15+00:00",
+    "timestamp": "2026-05-04T17:17:01+00:00",
     "reason": "date 2015-12-07 before 2026-04-28"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-announces-may-recruitment-events": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:17+00:00",
+    "timestamp": "2026-05-04T17:17:02+00:00",
     "reason": "NO: personnel announcement"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-28-million-fentanyl-meth-two-separate": {
     "status": "skipped",
-    "timestamp": "2026-05-04T17:06:17+00:00",
+    "timestamp": "2026-05-04T17:17:02+00:00",
     "reason": "already in articles.json"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/dulles-cbp-officers-intercept-57-pound-london-bound-marijuana-load": {
+    "status": "added",
+    "timestamp": "2026-05-04T17:17:28+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/laredo-cbp-officers-seize-quarter-million-dollars-unreported-us": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:17:31+00:00",
+    "reason": "NO: currency seizure only"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/cbp-launches-mobile-passport-control-four-land-border-pedestrian": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:17:31+00:00",
+    "reason": "date 2026-04-20 before 2026-04-28"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/cbp-fort-lauderdale-seizes-over-8500-counterfeit-designer-brand": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:17:32+00:00",
+    "reason": "date 2026-04-20 before 2026-04-28"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/laredo-cbp-officers-arrest-fugitive-wanted-sex-related-offense": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:17:32+00:00",
+    "reason": "date 2026-04-16 before 2026-04-28"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/san-diego-cbp-field-office-seizes-over-14-million-narcotics-march": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:17:33+00:00",
+    "reason": "date 2026-04-15 before 2026-04-28"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/cbp-officers-seize-more-150000-worth-fake-electronics": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:17:33+00:00",
+    "reason": "date 2026-04-15 before 2026-04-28"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/cbp-atlanta-officers-seize-over-372000-unreported-currency-atlanta": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:17:34+00:00",
+    "reason": "date 2026-04-13 before 2026-04-28"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/over-9-million-counterfeit-jewelry-stopped-louisville-cbp": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:17:35+00:00",
+    "reason": "date 2026-04-13 before 2026-04-28"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/cbp-officers-port-buffalo-seize-100000-noncompliant-batteries": {
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:17:37+00:00",
+    "reason": "date 2026-04-07 before 2026-04-28"
   }
 }

@@ -1,5 +1,23 @@
 [
   {
+    "run_date": "2026-05-04 17:16 UTC",
+    "article_date": "2026-05-01",
+    "url": "https://www.cbp.gov/newsroom/local-media-release/dulles-cbp-officers-intercept-57-pound-london-bound-marijuana-load",
+    "title": "תפיסת כ-26 ק\"ג מריחואנה במזוודות של שני נוסעים בנמל התעופה וושינגטון דאלאס",
+    "location": "נמל הכניסה וושינגטון דאלאס - Washington Dulles International Airport, וירג'יניה",
+    "crossing_type": "סוג מעבר: מעבר אווירי בינלאומי. משמש לבדיקת נוסעים, מזוודות ומטענים בטיסות בינלאומיות.",
+    "body": "קציני CBP תפסו כ-57 פאונד ו-6 אונקיות (כ-26 ק\"ג) מריחואנה שהוסתרו בתוך שתי מזוודות נרשמות של שני נוסעים שניסו להבריח את הסמים ללונדון. במהלך בדיקת מטען שנטען לטיסה לכיוון לונדון, אותרו מספר שקיות שחורות אטומות בוואקום בתוך שתי המזוודות. קציני CBP זיהו את הנוסעים באמצעות תגי המזוודות, פגשו אותם בשער העלייה למטוס, והחזירו אותם יחד עם מזוודותיהם לתחנת הבדיקה של CBP. בבדיקת המזוודות חולצו 50 שקיות אטומות בוואקום שהכילו חומר ירוק עלוני שנבדק בשטח ונמצא חיובי לנוכחות מריחואנה. שווי הסמים הוערך בכ-220,000 דולר. הנעצרים הם קרל קרן ראשד הנסון, בן 31, ותיילשה קלי תרזה קולס, בת 31, שניהם תושבי בולטימור. שניהם הועברו לידי שוטרי Metropolitan Washington Airports Authority Police והואשמו בהחזקת חומרים מבוקרים, הובלה לשטח חבר העמים בכוונה לסחור ביותר מחמישה פאונד מריחואנה, ובקשירת קשר לביצוע עבירות סמים.",
+    "image_url": "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/iad_mj1l_041626.jpg.webp?itok=NJa8WFVT",
+    "image_urls": [
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/iad_mj1l_041626.jpg.webp?itok=NJa8WFVT",
+      "https://www.cbp.gov/sites/default/files/styles/300px_newsroom_body_image/public/iad_mj2l_041626.jpg.webp?itok=ibAVoZFB"
+    ],
+    "quarter": "Q2-2026",
+    "status": "needs-review",
+    "admin_approved": false,
+    "editor_notes": ""
+  },
+  {
     "run_date": "2026-05-04 12:21 UTC",
     "article_date": "2026-04-30",
     "url": "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-28-million-fentanyl-meth-two-separate",
