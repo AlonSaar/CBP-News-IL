@@ -1,12 +1,12 @@
 {
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-weapons-and-parts-deconcini-crossing": {
     "status": "skipped",
-    "timestamp": "2026-04-28T00:36:53+00:00",
+    "timestamp": "2026-05-04T17:06:22+00:00",
     "reason": "already in articles.json"
   },
   "https://www.cbp.gov/newsroom/national-media-release/monkey-and-125-pounds-prohibited-meat-intercepted-agriculture": {
     "status": "skipped",
-    "timestamp": "2026-04-28T00:36:53+00:00",
+    "timestamp": "2026-05-04T17:06:22+00:00",
     "reason": "already in articles.json"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-11-million-cocaine-pharr-international": {
@@ -51,42 +51,42 @@
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-air-and-marine-operations-crews-stop-three-smuggling-boats": {
     "status": "skipped",
-    "timestamp": "2026-04-28T00:36:33+00:00",
+    "timestamp": "2026-05-04T17:06:21+00:00",
     "reason": "NO: migrants on foot, not concealed in vehicle"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-host-technology-virtual-career-expo": {
     "status": "skipped",
-    "timestamp": "2026-04-28T00:36:36+00:00",
-    "reason": "NO: no image, personnel/recruitment announcement"
+    "timestamp": "2026-05-04T17:06:22+00:00",
+    "reason": "NO: personnel announcement"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-over-3000-pounds-methamphetamine-otay-mesa": {
-    "status": "added",
-    "timestamp": "2026-04-28T00:36:53+00:00",
-    "quarter": "Q2-2026"
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:06:22+00:00",
+    "reason": "already in articles.json"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-hosts-attorney-virtual-career-expo": {
     "status": "skipped",
-    "timestamp": "2026-04-29T00:37:49+00:00",
+    "timestamp": "2026-05-04T17:06:19+00:00",
     "reason": "NO: personnel announcement"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-more-81-million-methamphetamine-pharr": {
-    "status": "added",
-    "timestamp": "2026-04-29T00:38:07+00:00",
-    "quarter": "Q2-2026"
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:06:19+00:00",
+    "reason": "already in articles.json"
   },
   "https://www.cbp.gov/newsroom/national-media-release/felony-child-sex-offender-1000th-apprehension-year-border-patrol": {
     "status": "skipped",
-    "timestamp": "2026-05-04T12:21:43+00:00",
-    "reason": "date 2015-12-07 before 2026-04-27"
+    "timestamp": "2026-05-04T17:06:15+00:00",
+    "reason": "date 2015-12-07 before 2026-04-28"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-announces-may-recruitment-events": {
     "status": "skipped",
-    "timestamp": "2026-05-04T12:21:45+00:00",
+    "timestamp": "2026-05-04T17:06:17+00:00",
     "reason": "NO: personnel announcement"
   },
   "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-seize-nearly-28-million-fentanyl-meth-two-separate": {
-    "status": "added",
-    "timestamp": "2026-05-04T12:22:08+00:00",
-    "quarter": "Q2-2026"
+    "status": "skipped",
+    "timestamp": "2026-05-04T17:06:17+00:00",
+    "reason": "already in articles.json"
   }
 }
