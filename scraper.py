@@ -213,6 +213,7 @@ def _scrape_index_page(
     seen_urls: set,
     since: Optional[date] = None,
     until: Optional[date] = None,
+    index_url: str = None,
 ) -> tuple[list[Article], bool]:
     """
     Scrape one page of the CBP news index.
@@ -221,7 +222,8 @@ def _scrape_index_page(
     """
     _INDEX_PATH = "/newsroom/national-media-release"
     _LOCAL_INDEX_PATH = "/newsroom/local-media-release"
-    url = config.CBP_NEWS_INDEX_URL + (f"?page={page}" if page > 0 else "")
+    base = index_url or config.CBP_NEWS_INDEX_URL
+    url = base + (f"?page={page}" if page > 0 else "")
     logger.info("Fetching index page %d: %s", page, url)
 
     try:
@@ -230,12 +232,10 @@ def _scrape_index_page(
         logger.error("Failed to fetch index page %d: %s", page, exc)
         return [], True
 
+    _VALID_PREFIXES = (_INDEX_PATH + "/", _LOCAL_INDEX_PATH + "/")
     all_anchors = soup.find_all(
         "a",
-        href=lambda h: h and (
-            (h.startswith(_INDEX_PATH + "/") and len(h) > len(_INDEX_PATH) + 1) or
-            (h.startswith(_LOCAL_INDEX_PATH + "/") and len(h) > len(_LOCAL_INDEX_PATH) + 1)
-        ),
+        href=lambda h: h and any(h.startswith(p) and len(h) > len(p) for p in _VALID_PREFIXES),
     )
 
     if not all_anchors:
@@ -421,15 +421,19 @@ def list_new(
     # Cap at 3 pages to avoid JS-rendered empty pages when paginating.
     max_pages = 3 if paginate else 1
 
-    for page in range(max_pages):
-        page_articles, stop = _scrape_index_page(page, session, seen_urls, since, until)
-        articles.extend(page_articles)
-        logger.info("Page %d: +%d articles (total so far: %d)", page, len(page_articles), len(articles))
+    index_urls = [config.CBP_NEWS_INDEX_URL, config.CBP_LOCAL_NEWS_INDEX_URL]
 
-        if stop:
-            break
-        if not paginate and len(articles) >= max_articles:
-            break
+    for index_url in index_urls:
+        logger.info("Scanning index: %s", index_url)
+        for page in range(max_pages):
+            page_articles, stop = _scrape_index_page(page, session, seen_urls, since, until, index_url=index_url)
+            articles.extend(page_articles)
+            logger.info("Page %d: +%d articles (total so far: %d)", page, len(page_articles), len(articles))
+
+            if stop:
+                break
+            if not paginate and len(articles) >= max_articles:
+                break
 
     if not paginate:
         articles = articles[:max_articles]
@@ -643,3 +647,4 @@ def fetch_article(url: str, session: Optional[requests.Session] = None) -> Artic
         image_urls=image_urls,
         body=body,
     )
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
