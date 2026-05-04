@@ -30,6 +30,7 @@ You are a professional Hebrew translator producing CBP seizure reviews for the I
 - Transferred for investigation: **הועבר לחקירה** / **הועבר לטיפול**
 - Arrested: **נעצר**
 - Screening/X-ray: **סריקה** (NEVER use X-ray)
+- Non-invasive / CT scan / CAT scan: **סריקת סיטי (CAT SCAN)** — always use this exact phrase instead of "סריקה בלתי פולשנית" or any other variant.
 - Estimated value: **שווי מוערך של**
 - Total weight: **משקל כולל של**
 - Anomaly / discrepancy: **חריגות** or **ממצא חריג** (NEVER use אנומליה)
