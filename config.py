@@ -43,6 +43,7 @@ MAX_TOKENS_TRANSLATION: int = 1500
 # CBP scraping
 # ---------------------------------------------------------------------------
 CBP_NEWS_INDEX_URL: str = "https://www.cbp.gov/newsroom/national-media-release"
+CBP_LOCAL_NEWS_INDEX_URL: str = "https://www.cbp.gov/newsroom/local-media-release"
 CBP_USER_AGENT: str = "Mozilla/5.0 (compatible; CBP-Translator/0.1)"
 HTTP_TIMEOUT_SECONDS: int = 20
 SCRAPE_MAX_ARTICLES_PER_RUN: int = 30

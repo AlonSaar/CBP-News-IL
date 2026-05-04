@@ -220,6 +220,7 @@ def _scrape_index_page(
     should_stop=True when all remaining articles are older than `since`.
     """
     _INDEX_PATH = "/newsroom/national-media-release"
+    _LOCAL_INDEX_PATH = "/newsroom/local-media-release"
     url = config.CBP_NEWS_INDEX_URL + (f"?page={page}" if page > 0 else "")
     logger.info("Fetching index page %d: %s", page, url)
 
@@ -231,7 +232,10 @@ def _scrape_index_page(
 
     all_anchors = soup.find_all(
         "a",
-        href=lambda h: h and h.startswith(_INDEX_PATH + "/") and len(h) > len(_INDEX_PATH) + 1,
+        href=lambda h: h and (
+            (h.startswith(_INDEX_PATH + "/") and len(h) > len(_INDEX_PATH) + 1) or
+            (h.startswith(_LOCAL_INDEX_PATH + "/") and len(h) > len(_LOCAL_INDEX_PATH) + 1)
+        ),
     )
 
     if not all_anchors:
@@ -363,7 +367,7 @@ def list_from_sitemap(
 
     seen: set[str] = set()
     articles: list[Article] = []
-    _PREFIX = "/newsroom/national-media-release/"
+    _PREFIXES = ["/newsroom/national-media-release/", "/newsroom/local-media-release/"]
 
     for sm_url in sub_sitemaps:
         sm_root = _fetch_xml(sm_url)
@@ -375,7 +379,7 @@ def list_from_sitemap(
                 continue
             # Only keep news-release article URLs (not the index itself)
             path = url.replace(_CBP_BASE, "")
-            if not (path.startswith(_PREFIX) and len(path) > len(_PREFIX)):
+            if not any(path.startswith(p) and len(path) > len(p) for p in _PREFIXES):
                 continue
             seen.add(url)
             # Date unknown at this point — pipeline will confirm after fetch
@@ -448,11 +452,13 @@ def list_new_legacy(max_articles: int = config.SCRAPE_MAX_ARTICLES_PER_RUN) -> l
         logger.error("Failed to fetch news index: %s", exc)
         return []
 
-    _INDEX_PATH = "/newsroom/national-media-release"
+    _INDEX_PATHS = ["/newsroom/national-media-release", "/newsroom/local-media-release"]
 
     all_anchors = soup.find_all(
         "a",
-        href=lambda h: h and h.startswith(_INDEX_PATH + "/") and len(h) > len(_INDEX_PATH) + 1,
+        href=lambda h: h and any(
+            h.startswith(p + "/") and len(h) > len(p) + 1 for p in _INDEX_PATHS
+        ),
     )
 
     logger.debug("Found %d raw anchor candidates", len(all_anchors))
