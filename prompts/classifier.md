@@ -9,6 +9,8 @@ Decide if a CBP article qualifies for Hebrew translation.
    - Plants (narcotic plants, agricultural contraband, restricted seeds, prohibited vegetation)
    - Food or agricultural products (prohibited meat, produce, smuggled food items, agricultural contraband)
    - Migrants or persons CONCEALED inside a vehicle, truck, trailer, compartment, car trunk, or cargo — i.e. physical smuggling using a vehicle or structure to hide people while crossing a port of entry.
+   - Currency or monetary instruments (cash, coins, money orders, unreported currency of any amount)
+   - Counterfeit or fake goods (fake jewelry, counterfeit luxury items, fake watches, imitation goods of any kind)
 
 The article must describe an actual seizure or interdiction event with specific details — not just a general policy or statistics report.
 
@@ -17,7 +19,7 @@ The article must describe an actual seizure or interdiction event with specific 
 - Articles with no photo (if "Has image URL: False" — reject immediately).
 - Personnel announcements, awards, retirements.
 - Policy or rule updates.
-- Currency-only seizures (no drugs/weapons/animals/plants/persons).
+- Articles with no specific seized item at all (e.g. pure statistics, policy updates).
 - Statistics or year-in-review reports with no specific seizure described.
 - General enforcement updates with no specific seized items.
 - Migrants or persons apprehended while walking / crossing on foot — even between ports of entry. Only qualify if they were physically hidden inside a vehicle or structure.
@@ -30,7 +32,7 @@ Respond with exactly one line:
 
 Examples:
 - `YES`
-- `NO: currency seizure only`
+- `NO: general enforcement, no specific seized item`
 - `NO: personnel announcement`
 - `NO: statistics report, no specific seizure`
 - `NO: migrants on foot, not concealed in vehicle`
