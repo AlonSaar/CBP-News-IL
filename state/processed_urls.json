@@ -138,5 +138,65 @@
     "status": "skipped",
     "timestamp": "2026-05-04T17:46:04+00:00",
     "reason": "date 2026-04-07 before 2026-04-28"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-officers-stop-cocaine-human-smuggling-attempts-san-diego-ports": {
+    "status": "skipped",
+    "timestamp": "2026-05-11T13:49:03+00:00",
+    "reason": "date 2026-03-31 before 2026-05-04"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-announces-37-additional-partnerships-new-and-expanded-services": {
+    "status": "skipped",
+    "timestamp": "2026-05-11T13:49:04+00:00",
+    "reason": "NO: no image, policy/partnership announcement, no specific seizure"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/laredo-field-office-cbp-officers-one-day-arrest-three-fugitives": {
+    "status": "skipped",
+    "timestamp": "2026-05-11T13:49:06+00:00",
+    "reason": "NO: fugitive arrests, no seized contraband items"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-host-three-day-career-expo-dayton": {
+    "status": "skipped",
+    "timestamp": "2026-05-11T13:49:08+00:00",
+    "reason": "NO: personnel announcement"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/us-border-patrol-agents-seize-cocaine-worth-nearly-15m": {
+    "status": "added",
+    "timestamp": "2026-05-11T13:49:23+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-keeps-mothers-day-flower-shipments-pest-free": {
+    "status": "skipped",
+    "timestamp": "2026-05-11T13:49:25+00:00",
+    "reason": "NO: no image URL"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/san-diego-border-patrol-arrests-two-convicted-child-sex-offenders": {
+    "status": "skipped",
+    "timestamp": "2026-05-11T13:49:27+00:00",
+    "reason": "NO: no image URL"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-seizure-firearm-suppressor-jfk-leads-connecticut-arrest-and": {
+    "status": "added",
+    "timestamp": "2026-05-11T13:49:52+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/philadelphia-cbp-seizes-blue-nitro-gbl-destined-everett-massachusetts": {
+    "status": "added",
+    "timestamp": "2026-05-11T13:50:12+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/philadelphia-cbp-officers-k9-nitro-seize-44k-unreported-currency": {
+    "status": "added",
+    "timestamp": "2026-05-11T13:50:31+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/san-diego-field-office-know-you-go-flower-importations-mother-s-day": {
+    "status": "skipped",
+    "timestamp": "2026-05-11T13:50:34+00:00",
+    "reason": "NO: no image URL"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/united-states-citizen-wanted-california-felony-child-abuse-arrested": {
+    "status": "skipped",
+    "timestamp": "2026-05-11T13:50:37+00:00",
+    "reason": "NO: arrest of a wanted person, no seizure of qualifying contraband"
   }
 }
