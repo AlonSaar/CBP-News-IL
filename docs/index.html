@@ -420,8 +420,8 @@
 
     /* ── Page footer ── */
     .page-footer {
-      text-align: center; padding: 36px; color: #bbb;
-      font-size: 0.78rem; border-top: 1px solid #eaecf0; margin-top: 20px;
+      text-align: center; padding: 36px; color: #000;
+      font-size: 0.95rem; border-top: 1px solid #eaecf0; margin-top: 20px;
     }
 
     /* ── Back to top ── */
@@ -485,7 +485,7 @@
       <div class="stat-label">סקירות בהמתנה</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">11/05/2026</div>
+      <div class="stat-num">12/05/2026</div>
       <div class="stat-label">עדכון אחרון</div>
     </div>
   </div>
@@ -2225,7 +2225,7 @@ function applyAll() {
 
 // ── Build change detector — clears stale shadow edits on new deployment ───────
 (function() {
-  const BUILD_TS = 1778510429;
+  const BUILD_TS = 1778591273;
   const KEY = 'cbp_build_ts';
   const stored = parseInt(localStorage.getItem(KEY) || '0', 10);
   if (stored && BUILD_TS !== stored) {
