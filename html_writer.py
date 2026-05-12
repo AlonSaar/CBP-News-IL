@@ -667,8 +667,8 @@ def generate(articles: list[dict]) -> Path:
 
     /* ── Page footer ── */
     .page-footer {{
-      text-align: center; padding: 36px; color: #bbb;
-      font-size: 0.78rem; border-top: 1px solid #eaecf0; margin-top: 20px;
+      text-align: center; padding: 36px; color: #000;
+      font-size: 0.95rem; border-top: 1px solid #eaecf0; margin-top: 20px;
     }}
 
     /* ── Back to top ── */
