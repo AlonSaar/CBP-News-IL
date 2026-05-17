@@ -36,7 +36,7 @@ jobs:
       - name: Regenerate HTML with updated approvals
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+          GITHUB_PAT: ${{ secrets.GIT_PAT }}
         run: python pipeline.py --regenerate-only --verbose
 
       - name: Copy HTML to docs/ for GitHub Pages
