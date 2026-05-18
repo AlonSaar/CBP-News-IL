@@ -1,8 +1,8 @@
 {
-  "run_date": "2026-05-11T13:48:59+00:00",
+  "run_date": "2026-05-18T11:07:26+00:00",
   "total_fetched": 20,
-  "skipped_dedupe": 8,
-  "skipped_classifier": 8,
-  "translated": 4,
+  "skipped_dedupe": 6,
+  "skipped_classifier": 12,
+  "translated": 2,
   "errors": 0
 }

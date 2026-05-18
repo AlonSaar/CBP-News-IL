@@ -198,5 +198,75 @@
     "status": "skipped",
     "timestamp": "2026-05-11T13:50:37+00:00",
     "reason": "NO: arrest of a wanted person, no seizure of qualifying contraband"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/trump-administration-preparations-fifa-world-cup-2026-pay": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:07:40+00:00",
+    "reason": "date 2025-10-01 before 2026-05-11"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/trump-administration-delivers-full-year-zero-releases-border": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:07:42+00:00",
+    "reason": "NO: no image URL"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-seizes-100m-fentanyl-doses-along-swb-fy26": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:07:44+00:00",
+    "reason": "NO: no image URL"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/san-diego-us-border-patrol-agents-arrest-two-violent-fugitives": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:07:46+00:00",
+    "reason": "NO: no image URL"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/operation-red-mist-cbp-federal-partners-seize-millions-illegal-e": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:07:47+00:00",
+    "reason": "NO: no image URL"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/el-centro-border-patrol-agents-arrest-convicted-murderer-california": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:07:50+00:00",
+    "reason": "NO: arrest of a person on foot/transferred from detention, no seizure of qualifying contraband"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/cbp-hosts-valor-memorial-ceremony-honor-two-fallen-agents": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:07:51+00:00",
+    "reason": "NO: no image, personnel/memorial announcement"
+  },
+  "https://www.cbp.gov/newsroom/national-media-release/chicago-cbp-intercepts-269-fire-conversion-switches-and-suppressors": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:07:52+00:00",
+    "reason": "NO: no image URL"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/cbp-host-global-entry-enrollment-event-during-2026-ipw-conference": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:07:52+00:00",
+    "reason": "date 2026-05-19 after 2026-05-17"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/norfolk-cbp-officers-seize-93-potentially-faulty-ceramic-sinks-china": {
+    "status": "added",
+    "timestamp": "2026-05-18T11:08:14+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/norfolk-cbp-officers-seize-scooters-vehicle-headlamps-and-folding": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:08:17+00:00",
+    "reason": "NO: seized items are consumer safety violations (scooters, headlamps, folding chairs), not in any qualifying category"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/detroit-border-patrol-leads-way-highest-drug-seizures-along-northern": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:08:17+00:00",
+    "reason": "date 2026-03-31 before 2026-05-11"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/philadelphia-cbp-officers-seize-over-32000-unapproved-and-potentially": {
+    "status": "added",
+    "timestamp": "2026-05-18T11:08:40+00:00",
+    "quarter": "Q2-2026"
+  },
+  "https://www.cbp.gov/newsroom/local-media-release/louisville-cbp-intercepts-over-14-million-counterfeit-jewelry": {
+    "status": "skipped",
+    "timestamp": "2026-05-18T11:08:42+00:00",
+    "reason": "NO: no image URL"
   }
 }
